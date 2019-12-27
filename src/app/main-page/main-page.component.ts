@@ -5,8 +5,15 @@ import {map} from 'rxjs/operators';
 
 class Team {
   teamNumber: string;
+  // tslint:disable-next-line:variable-name
   team_name: string;
+  // tslint:disable-next-line:variable-name
   pit_scouting_saved: boolean;
+
+  constructor(iTeamNumber: string, iTeamName: string) {
+    this.teamNumber =  iTeamNumber;
+    this.team_name = iTeamName;
+  }
 }
 
 @Component({
@@ -18,7 +25,8 @@ export class MainPageComponent implements OnInit {
 
   selectedTournament: string;
   selectedTeamNumber;
-  selectedTeam: Team;
+  selectedTeamName: string;
+  selectedTeam;
   tournaments: Observable<any[]>;
   teams: Observable<Team[]>;
 
@@ -27,6 +35,13 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit() {
 
+    this.selectedTournament = localStorage.getItem('tournament');
+    if (this.selectedTournament) {
+      this.tournamentSelect(this.selectedTournament);
+    }
+    this.selectedTeamNumber = localStorage.getItem('teamNumber');
+    this.selectedTeamName = localStorage.getItem('teamName');
+    this.selectedTeam = new Team(this.selectedTeamNumber, this.selectedTeamName);
 
     this.tournaments = this.db.collection('tournaments').snapshotChanges()
       .pipe(map(arr => {
@@ -39,6 +54,7 @@ export class MainPageComponent implements OnInit {
 
   tournamentSelect(tournament) {
     this.selectedTournament = tournament;
+    localStorage.setItem('tournament', tournament);
     this.teams = this.db.collection('tournaments').doc(tournament).collection('teams').snapshotChanges()
       .pipe(map(arr => {
         return  arr.map(snap => {
@@ -51,6 +67,9 @@ export class MainPageComponent implements OnInit {
 
   teamSelect(team: Team) {
     this.selectedTeamNumber = team.teamNumber;
+    this.selectedTeamName = team.team_name;
     this.selectedTeam = team;
+    localStorage.setItem('teamNumber', team.teamNumber);
+    localStorage.setItem('teamName', team.team_name);
   }
 }

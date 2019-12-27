@@ -1,4 +1,4 @@
-<div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="start center" style="height: 1000px">
+<div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="center center" style="height: 850px">
 
   <div fxLayout="row" style="height: 200px">
     <google-chart [type]="'Gauge'" [data]="dtMotors" [options]="dtMotorsOptions"></google-chart>
@@ -8,14 +8,14 @@
   <div fxLayout="column" fxLayoutAlign="center center" style="height: 200px">
 
     <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
-      <div style="width: 400px">
+      <div style="width: 400px; ; text-align: center" >
         wheel type
         <span class="text-data">
         {{ wheelType }}
       </span>
       </div>
 
-      <div style="width: 400px">
+      <div style="width: 400px; text-align: center">
         drive train
         <span class="text-data">
         {{ driveTrain }}
@@ -24,14 +24,14 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
-          <div style="width: 400px">
+          <div style="width: 400px; text-align: center">
             DT Motor Type
             <span class="text-data">
               {{ dtMotorType }}
             </span>
           </div>
 
-          <div style="width: 400px">
+          <div style="width: 400px; text-align: center">
             programming language
             <span class="text-data">
               {{ programmingLanguage }}
@@ -42,14 +42,14 @@
   </div>
 
   <div fxLayout="row" fxLayoutAlign="space-around center" style="height: 200px">
-    <div style="width: 400px">
+    <div style="width: 400px; text-align: center">
       Has Camera
       <span class="boolean-data">
         {{ hasCamera }}
       </span>
     </div>
 
-    <div style="width: 400px">
+    <div style="width: 400px; text-align: center">
       is Panel Speclist
       <span class="boolean-data">
         {{ isPanelSpeclist }}

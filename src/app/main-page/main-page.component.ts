@@ -22,9 +22,11 @@ export class MainPageComponent implements OnInit {
   tournaments: Observable<any[]>;
   teams: Observable<Team[]>;
 
+
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
+
 
     this.tournaments = this.db.collection('tournaments').snapshotChanges()
       .pipe(map(arr => {

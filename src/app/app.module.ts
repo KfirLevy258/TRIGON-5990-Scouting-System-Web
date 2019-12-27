@@ -19,6 +19,8 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { PitScoutingPageComponent } from './pit-scouting-page/pit-scouting-page.component';
 import {FlexModule} from '@angular/flex-layout';
+import { TestComponent } from './test/test.component';
+import {GoogleChartsModule} from 'angular-google-charts';
 
 const routes: Routes = [
 
@@ -28,13 +30,15 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     MainPageComponent,
-    PitScoutingPageComponent
+    PitScoutingPageComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    GoogleChartsModule.forRoot(),
     MatButtonModule,
     MatIconModule,
     MatListModule,

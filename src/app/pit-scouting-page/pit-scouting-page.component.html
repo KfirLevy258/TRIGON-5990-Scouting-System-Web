@@ -1,8 +1,64 @@
-Temp data view
+<div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="start center" style="height: 1000px">
 
-<div>DT Motors {{ dtMotors}}</div>
+  <div fxLayout="row" style="height: 200px">
+    <google-chart [type]="'Gauge'" [data]="dtMotors" [options]="dtMotorsOptions"></google-chart>
+    <google-chart [type]="'Gauge'" [data]="robotDimensions" [options]="robotDimensionsOptions"></google-chart>
+  </div>
 
-<div>Robot Length {{ robotLength}}</div>
-<div>Robot Weight {{ robotWeight}}</div>
-<div>Robot Width {{ robotWidth}}</div>
+  <div fxLayout="column" fxLayoutAlign="center center" style="height: 200px">
+
+    <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
+      <div style="width: 400px">
+        wheel type
+        <span class="text-data">
+        {{ wheelType }}
+      </span>
+      </div>
+
+      <div style="width: 400px">
+        drive train
+        <span class="text-data">
+        {{ driveTrain }}
+      </span>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
+          <div style="width: 400px">
+            DT Motor Type
+            <span class="text-data">
+              {{ dtMotorType }}
+            </span>
+          </div>
+
+          <div style="width: 400px">
+            programming language
+            <span class="text-data">
+              {{ programmingLanguage }}
+            </span>
+          </div>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around center" style="height: 200px">
+    <div style="width: 400px">
+      Has Camera
+      <span class="boolean-data">
+        {{ hasCamera }}
+      </span>
+    </div>
+
+    <div style="width: 400px">
+      is Panel Speclist
+      <span class="boolean-data">
+        {{ isPanelSpeclist }}
+      </span>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="!pitScoutingSaved">No Data</div>
+
+
 

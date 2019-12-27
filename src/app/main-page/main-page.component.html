@@ -27,12 +27,20 @@
 
   <div *ngIf="selectedTeamNumber" class="data-panel" style="float: left">
     <h1> {{ selectedTeamNumber }} - {{ selectedTeam.team_name }}</h1>
+
     <mat-tab-group>
-<!--      <mat-tab label="General Info">General Info</mat-tab>-->
+
+<!--      <mat-tab label="General Info">-->
+<!--        General Info-->
+<!--        <app-dtMotors></app-dtMotors>-->
+<!--      </mat-tab>-->
+
       <mat-tab label="Pit Scouting">
         <app-pit-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-pit-scouting-page>
       </mat-tab>
+
       <mat-tab label="Super Scouting">Super Scouting Data</mat-tab>
+
       <mat-tab label="Games">Games Data</mat-tab>
     </mat-tab-group>
   </div>

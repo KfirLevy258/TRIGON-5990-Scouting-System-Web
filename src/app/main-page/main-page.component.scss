@@ -12,17 +12,15 @@
   width: 300px;
 }
 
-.selected {
-  color: white;
-  background-color: black;
+.saved {
+  color: blue;
 }
 
-.unSelected {
-  color: black;
-  background-color: antiquewhite;
-
+.unsaved {
+  color: red;
 }
 
 .data-panel {
   width: 1000px;
 }
+

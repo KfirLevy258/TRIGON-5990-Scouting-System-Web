@@ -3,6 +3,12 @@ import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
 
+class Team {
+  teamNumber: string;
+  team_name: string;
+  pit_scouting_saved: boolean;
+}
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -11,9 +17,10 @@ import {map} from 'rxjs/operators';
 export class MainPageComponent implements OnInit {
 
   selectedTournament: string;
-  selectedTeam;
+  selectedTeamNumber;
+  selectedTeam: Team;
   tournaments: Observable<any[]>;
-  teams: Observable<any[]>;
+  teams: Observable<Team[]>;
 
   constructor(private db: AngularFirestore) { }
 
@@ -30,18 +37,18 @@ export class MainPageComponent implements OnInit {
 
   tournamentSelect(tournament) {
     this.selectedTournament = tournament;
-    this.teams = this.db.collection('tournaments').doc(tournament).collection('pitScouting').snapshotChanges()
+    this.teams = this.db.collection('tournaments').doc(tournament).collection('teams').snapshotChanges()
       .pipe(map(arr => {
         return  arr.map(snap => {
           const data = snap.payload.doc.data();
           const teamNumber = snap.payload.doc.id;
-          return {teamNumber, ... data};
+          return {teamNumber, ... data} as Team;
         });
       }));
   }
 
-  teamSelect(team) {
+  teamSelect(team: Team) {
+    this.selectedTeamNumber = team.teamNumber;
     this.selectedTeam = team;
-    console.log(team);
   }
 }

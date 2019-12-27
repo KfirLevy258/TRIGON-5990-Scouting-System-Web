@@ -1,29 +1,37 @@
 <div fxLayout="row">
 
-  <div class="select-panel" fxLayout="row" style="float: left">
+  <div class="select-panel" fxLayout="column" >
 
-    <mat-list class="tournament-select" style="float: left">
-      <mat-list-item *ngFor="let tournament of tournaments | async" (click)="tournamentSelect(tournament)">
-        <span [className]="tournament == selectedTournament ? 'selected' : 'unSelected'">
+    <mat-form-field >
+      <mat-label>Tournament Select</mat-label>
+      <mat-select [(value)]="selectedTournament">
+        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament" (click)="tournamentSelect(tournament)">
           {{ tournament }}
-        </span>
-      </mat-list-item>
-    </mat-list>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <mat-list class="team-select" style="float: left">
-      <mat-list-item *ngFor="let team of teams | async" (click)="teamSelect(team)">
-        <span [className]="team == selectedTeam ? 'selected' : 'unSelected'">
-          {{ team.teamNumber }} - {{ team.team_name }}
-        </span>
-      </mat-list-item>
-    </mat-list>
+    <mat-form-field *ngIf="selectedTournament" >
+      <mat-label>Team Select</mat-label>
+      <mat-select [(value)]="selectedTeam">
+        <mat-option *ngFor="let team of teams | async" [value]="team" (click)="teamSelect(team)">
+          <span [className]="team.pit_scouting_saved ? 'saved' : 'unsaved'">
+            {{ team.team_name }}
+          </span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
   </div>
 
-  <div *ngIf="selectedTeam" class="data-panel" style="float: left">
-    <h1> {{ selectedTeam.teamNumber }} - {{ selectedTeam.team_name }}</h1>
+  <div *ngIf="selectedTeamNumber" class="data-panel" style="float: left">
+    <h1> {{ selectedTeamNumber }} - {{ selectedTeam.team_name }}</h1>
     <mat-tab-group>
-      <mat-tab label="General Info">General Info</mat-tab>
-      <mat-tab label="Pit Scouting">Pit Scouting Data</mat-tab>
+<!--      <mat-tab label="General Info">General Info</mat-tab>-->
+      <mat-tab label="Pit Scouting">
+        <app-pit-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-pit-scouting-page>
+      </mat-tab>
       <mat-tab label="Super Scouting">Super Scouting Data</mat-tab>
       <mat-tab label="Games">Games Data</mat-tab>
     </mat-tab-group>

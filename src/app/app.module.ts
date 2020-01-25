@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatIconModule,
+  MatButtonModule, MatCardModule, MatFormFieldModule,
+  MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule,
   MatProgressSpinnerModule, MatSelectModule,
@@ -21,8 +21,23 @@ import { PitScoutingPageComponent } from './pit-scouting-page/pit-scouting-page.
 import {FlexModule} from '@angular/flex-layout';
 import { TestComponent } from './test/test.component';
 import {GoogleChartsModule} from 'angular-google-charts';
+import {LoginComponent} from './login/login.component';
+import {AuthService} from './auth.service';
+import {AuthGuard} from './auth.guard';
+import {ReactiveFormsModule} from '@angular/forms';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import { RootComponent } from './root/root.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: MainPageComponent,
+    canActivate: [AuthGuard],
+    // resolve: {
+    //   notes: AppComponent
+    // }
+  },
+  {path: 'login', component: LoginComponent},
 
 ];
 
@@ -31,16 +46,23 @@ const routes: Routes = [
     AppComponent,
     MainPageComponent,
     PitScoutingPageComponent,
-    TestComponent
+    TestComponent,
+    LoginComponent,
+    RootComponent,
+
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     GoogleChartsModule.forRoot(),
+    ReactiveFormsModule,
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
     MatProgressSpinnerModule,
@@ -50,7 +72,16 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FlexModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      // tslint:disable-next-line:only-arrow-functions
+      useFactory: (as: AuthService) => function() {
+        return as.load();
+      },
+      deps: [AuthService],
+      multi: true
+    },
+  ],  bootstrap: [AppComponent]
 })
 export class AppModule { }

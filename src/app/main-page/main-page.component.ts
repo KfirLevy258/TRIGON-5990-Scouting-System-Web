@@ -35,13 +35,13 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit() {
 
-    this.selectedTournament = localStorage.getItem('tournament');
-    if (this.selectedTournament) {
-      this.tournamentSelect(this.selectedTournament);
-    }
-    this.selectedTeamNumber = localStorage.getItem('teamNumber');
-    this.selectedTeamName = localStorage.getItem('teamName');
-    this.selectedTeam = new Team(this.selectedTeamNumber, this.selectedTeamName);
+    // this.selectedTournament = localStorage.getItem('tournament');
+    // if (this.selectedTournament) {
+    //   this.tournamentSelect(this.selectedTournament);
+    // }
+    // this.selectedTeamNumber = localStorage.getItem('teamNumber');
+    // this.selectedTeamName = localStorage.getItem('teamName');
+    // this.selectedTeam = new Team(this.selectedTeamNumber, this.selectedTeamName);
 
     this.tournaments = this.db.collection('tournaments').snapshotChanges()
       .pipe(map(arr => {

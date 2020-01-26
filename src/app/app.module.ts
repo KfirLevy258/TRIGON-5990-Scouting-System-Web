@@ -59,6 +59,7 @@ const routes: Routes = [
     AngularFireAuthModule,
     GoogleChartsModule.forRoot(),
     ReactiveFormsModule,
+
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -69,6 +70,7 @@ const routes: Routes = [
     MatSelectModule,
     MatTabsModule,
     MatToolbarModule,
+
     RouterModule.forRoot(routes),
     FlexModule,
   ],

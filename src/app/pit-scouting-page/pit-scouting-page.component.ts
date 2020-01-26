@@ -68,7 +68,7 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
         if (res) {
           this.pitScoutingSaved = res.pit_scouting_saved;
           if (this.pitScoutingSaved) {
-            this.robotLength = res['Robot Length'];
+            this.robotLength = res['Pit_scouting']['Robot basic data']['Robot Length'];
             this.robotWeight = res['Robot Weight'];
             this.robotWidth = res['Robot Width'];
             this.dtMotors = [];

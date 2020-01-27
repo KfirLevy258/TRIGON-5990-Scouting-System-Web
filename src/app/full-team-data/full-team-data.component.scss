@@ -1,7 +1,20 @@
 .select-panel {
-  width: 1000px;
-  height: 60px;
-  background-color: antiquewhite;
+  padding-top: 10px;
+  width: 1100px;
+  height: 70px;
+  border: groove;
+}
+
+.panel {
+  padding-top: 25px;
+  width: 1100px;
+  height: 900px;
+  border: groove;
+}
+.set-all {
+  padding-top: 10px;
+  width: 1200px;
+  height: 1000px;
 }
 
 .tournament-select {

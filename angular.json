@@ -64,7 +64,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ScoutingViewer:build"
+            "browserTarget": "ScoutingViewer:build",
+            "proxyConfig": "src/proxy.conf.json"
+
           },
           "configurations": {
             "production": {

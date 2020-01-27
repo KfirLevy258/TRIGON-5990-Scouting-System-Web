@@ -69,7 +69,9 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
             this.robotWeight = res['pit_data']['robot_basic_data']['robot_weight'];
             this.robotWidth = res['pit_data']['robot_basic_data']['robot_width'];
             this.dtMotors = [];
-            this.dtMotors.push(['DT Motors', res['pit_data']['robot_basic_data']['dt_motors']]);
+            this.dtMotors.push(['DT Motors', Number(res['pit_data']['robot_basic_data']['dt_motors'])]);
+            // this.dtMotors.push(['aaa', 4]);
+            console.log(this.dtMotors);
             this.robotDimensions = [];
             this.robotDimensions.push(
               ['Robot Length', res['pit_data']['robot_basic_data']['robot_length']],

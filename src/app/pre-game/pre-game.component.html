@@ -1,1 +1,5 @@
-<p>pre-game Page</p>
+<form [formGroup]="qualNumberForm">
+  <mat-form-field>
+    <input matInput formControlName="qualNumber" placeholder="example 42" (change)="qualSelected()">
+  </mat-form-field>
+</form>

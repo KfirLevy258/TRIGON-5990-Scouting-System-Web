@@ -29,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 import { PreGameComponent } from './pre-game/pre-game.component';
 import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
 import { UsersManagementComponent } from './users-management/users-management.component';
+import {HttpClientModule} from "@angular/common/http";
 
 const routes: Routes = [
   {
@@ -80,9 +81,11 @@ const routes: Routes = [
     AngularFireAuthModule,
     GoogleChartsModule.forRoot(),
     ReactiveFormsModule,
+    HttpClientModule,
 
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,

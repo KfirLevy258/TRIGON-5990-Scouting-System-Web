@@ -11,7 +11,6 @@ export class AuthService {
 
   loaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   authUser$: BehaviorSubject<AuthUser> = new BehaviorSubject<AuthUser>(null);
-
   constructor(private auth: AngularFireAuth) {
 
     this.auth.authState

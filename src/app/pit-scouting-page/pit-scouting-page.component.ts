@@ -46,9 +46,6 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
   programmingLanguage: string;
   wheelType: string;
 
-  hasCamera: boolean;
-  isPanelSpeclist: boolean;
-
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
@@ -68,26 +65,17 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
         if (res) {
           this.pitScoutingSaved = res.pit_scouting_saved;
           if (this.pitScoutingSaved) {
-            this.robotLength = res['Pit_scouting']['Robot basic data']['Robot Length'];
-            this.robotWeight = res['Robot Weight'];
-            this.robotWidth = res['Robot Width'];
+            this.robotLength = res['pit_data']['robot_basic_data']['robot_length'];
+            this.robotWeight = res['pit_data']['robot_basic_data']['robot_weight'];
+            this.robotWidth = res['pit_data']['robot_basic_data']['robot_width'];
             this.dtMotors = [];
-            this.dtMotors.push(['DT Motors', res['DT Motors']]);
+            this.dtMotors.push(['DT Motors', res['pit_data']['robot_basic_data']['dt_motors']]);
             this.robotDimensions = [];
             this.robotDimensions.push(
-              ['Robot Length', res['Robot Length']],
-              ['Robot Weight', res['Robot Weight']],
-              ['Robot Width', res['Robot Width']],
+              ['Robot Length', res['pit_data']['robot_basic_data']['robot_length']],
+              ['Robot Weight', res['pit_data']['robot_basic_data']['robot_weight']],
+              ['Robot Width', res['pit_data']['robot_basic_data']['robot_width']],
             );
-            this.driveTrain = res['Drive Train'];
-            this.wheelType = res['Wheel Type'];
-            this.dtMotorType = res['DT Motor type'];
-            this.programmingLanguage = res['Programming Language'];
-
-            this.hasCamera = res['Has Camera'];
-            this.isPanelSpeclist = res['is Panel Speclist'];
-
-            console.log(this.hasCamera, this.isPanelSpeclist);
           }
         }
 

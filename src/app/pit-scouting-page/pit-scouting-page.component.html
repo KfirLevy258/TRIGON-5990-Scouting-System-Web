@@ -1,6 +1,5 @@
 <div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="center center" style="height: 850px">
 
-
   <div fxLayout="row" style="height: 200px">
     <google-chart [type]="'Gauge'" [data]="dtMotors" [options]="dtMotorsOptions"></google-chart>
     <google-chart [type]="'Gauge'" [data]="robotDimensions" [options]="robotDimensionsOptions"></google-chart>
@@ -12,7 +11,9 @@
       <div style="width: 400px; ; text-align: center" >
         wheel type
         <span class="text-data">
-        {{ wheelType }}
+<!--          3-->
+          {{ wheelType }}
+<!--        {{ wheelType }}-->
       </span>
       </div>
 
@@ -40,22 +41,6 @@
           </div>
     </div>
 
-  </div>
-
-  <div fxLayout="row" fxLayoutAlign="space-around center" style="height: 200px">
-    <div style="width: 400px; text-align: center">
-      Has Camera
-      <span class="boolean-data">
-        {{ hasCamera }}
-      </span>
-    </div>
-
-    <div style="width: 400px; text-align: center">
-      is Panel Speclist
-      <span class="boolean-data">
-        {{ isPanelSpeclist }}
-      </span>
-    </div>
   </div>
 
 </div>

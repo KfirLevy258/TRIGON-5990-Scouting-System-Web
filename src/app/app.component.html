@@ -1,24 +1,23 @@
 <div fxLayout="column" class="page-wrap">
   <mat-toolbar  class="mat-theme-loaded-marker" color="primary">
+      <mat-toolbar-row>
+        <span> TRIGON Scouting Viewer</span>
 
-    <mat-toolbar-row>
-      <span> TRIGON Scouting Viewer</span>
+        <!--      <span fxFlex="1 1 auto"></span>-->
 
-<!--      <span fxFlex="1 1 auto"></span>-->
+        <button *ngIf="!authUser" mat-button [routerLink]="['login']">
+          <mat-icon>person_outline</mat-icon>
+        </button>
+        <button *ngIf="authUser" mat-button [matMenuTriggerFor]="logoutMenu">
+          <mat-icon>person</mat-icon>
+          {{ userName }}
+        </button>
 
-      <button *ngIf="!authUser" mat-button [routerLink]="['login']">
-        <mat-icon>person_outline</mat-icon>
-      </button>
-      <button *ngIf="authUser" mat-button [matMenuTriggerFor]="logoutMenu">
-        <mat-icon>person</mat-icon>
-        {{ userName }}
-      </button>
+        <mat-menu #logoutMenu="matMenu">
+          <button mat-menu-item (click)="logout()">logout</button>
+        </mat-menu>
 
-      <mat-menu #logoutMenu="matMenu">
-        <button mat-menu-item (click)="logout()">logout</button>
-      </mat-menu>
-
-    </mat-toolbar-row>
+      </mat-toolbar-row>
   </mat-toolbar>
 
   <div fxLayout="row">

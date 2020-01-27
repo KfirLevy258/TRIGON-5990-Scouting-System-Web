@@ -20,6 +20,19 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-<!--  <app-main-page></app-main-page>-->
-  <router-outlet></router-outlet>
+  <div fxLayout="row">
+    <div class="nav-panel" fxLayout="column" fxLayoutAlign="start start">
+      <button mat-button [routerLink]="['']">Home</button>
+      <button mat-button [routerLink]="['pre-game']">Pre Game</button>
+      <button mat-button [routerLink]="['alliance-selection']">Alliance Selection </button>
+      <button mat-button [routerLink]="['full_team_data']">Full Team Data </button>
+      <button mat-button [routerLink]="['users-management']">Users Management </button>
+    </div>
+
+    <div class="main-panel">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+
 </div>

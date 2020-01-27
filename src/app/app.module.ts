@@ -13,29 +13,48 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import {RouterModule, Routes} from '@angular/router';
-import { MainPageComponent } from './main-page/main-page.component';
+import { FullTeamDataComponent } from './full-team-data/full-team-data.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { PitScoutingPageComponent } from './pit-scouting-page/pit-scouting-page.component';
 import {FlexModule} from '@angular/flex-layout';
-import { TestComponent } from './test/test.component';
 import {GoogleChartsModule} from 'angular-google-charts';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
-import { RootComponent } from './root/root.component';
+import { HomeComponent } from './home/home.component';
+import { PreGameComponent } from './pre-game/pre-game.component';
+import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
+import { UsersManagementComponent } from './users-management/users-management.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent,
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'pre-game',
+    component: PreGameComponent,
     canActivate: [AuthGuard],
-    // resolve: {
-    //   notes: AppComponent
-    // }
+  },
+  {
+    path: 'alliance-selection',
+    component: AllianceSelectionComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'full_team_data',
+    component: FullTeamDataComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'users-management',
+    component: UsersManagementComponent,
+    canActivate: [AuthGuard],
   },
   {path: 'login', component: LoginComponent},
 
@@ -44,11 +63,13 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MainPageComponent,
+    FullTeamDataComponent,
     PitScoutingPageComponent,
-    TestComponent,
     LoginComponent,
-    RootComponent,
+    HomeComponent,
+    PreGameComponent,
+    AllianceSelectionComponent,
+    UsersManagementComponent,
 
   ],
   imports: [

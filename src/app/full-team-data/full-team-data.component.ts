@@ -18,10 +18,10 @@ class Team {
 
 @Component({
   selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+  templateUrl: './full-team-data.component.html',
+  styleUrls: ['./full-team-data.component.scss']
 })
-export class MainPageComponent implements OnInit {
+export class FullTeamDataComponent implements OnInit {
 
   selectedTournament: string;
   selectedTeamNumber;

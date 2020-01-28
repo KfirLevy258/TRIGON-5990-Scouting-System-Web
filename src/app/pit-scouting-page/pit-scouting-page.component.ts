@@ -21,11 +21,7 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
   dtMotors: Array<Array<any>> = [];
   dtMotorsOptions = {
     min: 0,
-    max: 4,
-    redFrom: 3,
-    redTo: 4,
-    yellowFrom: 2,
-    yellowTo: 3,
+    max: 13,
     minorTicks: 1,
     width: 180, height: 180,
   };

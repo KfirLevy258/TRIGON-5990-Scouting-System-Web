@@ -1,47 +1,42 @@
 <div fxLayout="column">
+  <div class="set-all" align="center">
+    <div class="select-panel" fxLayout="row" >
 
-  <div class="select-panel" fxLayout="row" >
+      <mat-form-field style="width: 200px; margin-left: auto; margin-right: auto">
+        <mat-label>Tournament Select</mat-label>
+        <mat-select [(value)]="selectedTournament">
+          <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament" (click)="tournamentSelect(tournament)">
+            {{ tournament }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field style="width: 200px; margin-left: auto; margin-right: auto">
-      <mat-label>Tournament Select</mat-label>
-      <mat-select [(value)]="selectedTournament">
-        <mat-option *ngFor="let tournament of tournaments | async" [value]="tournament" (click)="tournamentSelect(tournament)">
-          {{ tournament }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field *ngIf="selectedTournament" style="width: 200px; margin-left: auto; margin-right: auto" >
-      <mat-label>Team Select</mat-label>
-      <mat-select [(value)]="selectedTeam">
-        <mat-option *ngFor="let team of teams | async" [value]="team" (click)="teamSelect(team)">
+      <mat-form-field *ngIf="selectedTournament" style="width: 200px; margin-left: auto; margin-right: auto" >
+        <mat-label>Team Select</mat-label>
+        <mat-select [(value)]="selectedTeam">
+          <mat-option *ngFor="let team of teams | async" [value]="team" (click)="teamSelect(team)">
           <span [className]="team.pit_scouting_saved ? 'saved' : 'unsaved'">
             {{ team.teamNumber }} - {{ team.team_name }}
           </span>
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
 
-  </div>
+    </div>
+    <div *ngIf="selectedTeamNumber" class="data-panel" style="float: left">
+      <h1> {{ selectedTeamNumber }} - {{ selectedTeamName }}</h1>
 
-  <div *ngIf="selectedTeamNumber" class="data-panel" style="float: left">
-    <h1> {{ selectedTeamNumber }} - {{ selectedTeamName }}</h1>
+      <mat-tab-group>
 
-    <mat-tab-group>
+        <mat-tab label="Pit Scouting">
+          <app-pit-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-pit-scouting-page>
+        </mat-tab>
 
-<!--      <mat-tab label="General Info">-->
-<!--        General Info-->
-<!--        <app-dtMotors></app-dtMotors>-->
-<!--      </mat-tab>-->
+        <mat-tab label="Super Scouting">Super Scouting Data</mat-tab>
 
-      <mat-tab label="Pit Scouting">
-        <app-pit-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-pit-scouting-page>
-      </mat-tab>
-
-      <mat-tab label="Super Scouting">Super Scouting Data</mat-tab>
-
-      <mat-tab label="Games">Games Data</mat-tab>
-    </mat-tab-group>
+        <mat-tab label="Games">Games Data</mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
 </div>

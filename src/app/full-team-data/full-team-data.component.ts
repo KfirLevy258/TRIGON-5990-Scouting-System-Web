@@ -34,15 +34,6 @@ export class FullTeamDataComponent implements OnInit {
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
-
-    // this.selectedTournament = localStorage.getItem('tournament');
-    // if (this.selectedTournament) {
-    //   this.tournamentSelect(this.selectedTournament);
-    // }
-    // this.selectedTeamNumber = localStorage.getItem('teamNumber');
-    // this.selectedTeamName = localStorage.getItem('teamName');
-    // this.selectedTeam = new Team(this.selectedTeamNumber, this.selectedTeamName);
-
     this.tournaments = this.db.collection('tournaments').snapshotChanges()
       .pipe(map(arr => {
         return arr.map(snap => {

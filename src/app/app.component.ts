@@ -1,21 +1,20 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {Observable} from 'rxjs';
+import {map, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   authUser;
   userName;
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngOnInit() {
-    this.getUserName();
-  }
+  tournaments: Observable<any[]>;
+  selectedTournament: string;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -24,6 +23,28 @@ export class AppComponent {
       .subscribe(authUser => {
         this.authUser = authUser;
       });
+  }
+
+  ngOnInit() {
+    this.selectedTournament = localStorage.getItem('tournament');
+    this.tournaments = this.db.collection('tournaments').snapshotChanges()
+      .pipe(map(arr => {
+        return arr.map(snap => {
+          return snap.payload.doc.id;
+        });
+      }));
+    this.getUserName();
+  }
+
+  tournamentSelect(tournament) {
+    this.selectedTournament = tournament;
+    localStorage.setItem('tournament', tournament);
+    this.db.collection('tournaments').doc(tournament).get()
+      .pipe(take(1))
+      .subscribe(tour => {
+        localStorage.setItem('event_key', tour.data().event_key);
+      });
+
   }
 
   getUserName() {

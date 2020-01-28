@@ -4,8 +4,17 @@
 }
 
 .nav-panel {
-  width: 200px;
+  min-width: 256px;
   height: 800px;
   background-color: #323232;
   color: #acacac;
 }
+
+.tournament-select {
+  width: 200px;
+  color: #acacac;
+}
+
+::ng-deep .mat-select-value{
+  color: #acacac !important;  }
+

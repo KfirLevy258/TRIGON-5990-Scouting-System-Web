@@ -27,20 +27,28 @@ export class FullTeamDataComponent implements OnInit {
   selectedTeamNumber;
   selectedTeamName: string;
   selectedTeam;
-  tournaments: Observable<any[]>;
+  // tournaments: Observable<any[]>;
   teams: Observable<Team[]>;
 
 
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
-    this.tournaments = this.db.collection('tournaments').snapshotChanges()
+    this.selectedTournament = localStorage.getItem('tournament');
+    // this.tournaments = this.db.collection('tournaments').snapshotChanges()
+    //   .pipe(map(arr => {
+    //     return arr.map(snap => {
+    //       return snap.payload.doc.id;
+    //     });
+    //   }));
+    this.teams = this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').snapshotChanges()
       .pipe(map(arr => {
-        return arr.map(snap => {
-          return snap.payload.doc.id;
+        return  arr.map(snap => {
+          const data = snap.payload.doc.data();
+          const teamNumber = snap.payload.doc.id;
+          return {teamNumber, ... data} as Team;
         });
       }));
-
   }
 
   tournamentSelect(tournament) {

@@ -1,3 +1,40 @@
+// style to make app take whole page height
+
+:host {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.sticky-footer-layout {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: stretch;
+
+  header {
+    background: gray;
+    padding: 15px;
+    text-align: center;
+  }
+  main {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: auto;
+  }
+  footer {
+    background: gray;
+    padding: 15px;
+    text-align: center;
+  }
+}
+
+// end  style
+
 .page-wrap {
   margin: 0;
   padding: 0;
@@ -5,9 +42,14 @@
 
 .nav-panel {
   min-width: 256px;
-  height: 800px;
+  height: 100%;
+  min-height: 100%;
   background-color: #323232;
   color: #acacac;
+}
+
+.main-panel {
+  //background-color: antiquewhite;
 }
 
 .tournament-select {

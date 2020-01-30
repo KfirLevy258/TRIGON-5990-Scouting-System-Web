@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from './auth.service';
 import {Router} from '@angular/router';
 import {AngularFirestore} from '@angular/fire/firestore';
@@ -10,7 +10,7 @@ import {map, take} from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   authUser;
   userName;
   tournaments: Observable<any[]>;
@@ -22,18 +22,24 @@ export class AppComponent implements OnInit{
     this.authService.authUser$
       .subscribe(authUser => {
         this.authUser = authUser;
+        this.loadTournaments();
       });
   }
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
+    if (this.authUser) {
+      this.loadTournaments();
+    }
+  }
+
+  loadTournaments() {
     this.tournaments = this.db.collection('tournaments').snapshotChanges()
       .pipe(map(arr => {
         return arr.map(snap => {
           return snap.payload.doc.id;
         });
       }));
-    this.getUserName();
   }
 
   tournamentSelect(tournament) {
@@ -44,11 +50,7 @@ export class AppComponent implements OnInit{
       .subscribe(tour => {
         localStorage.setItem('event_key', tour.data().event_key);
       });
-
-  }
-
-  getUserName() {
-    console.log(this.authUser.name);
+    this.router.navigateByUrl('');
   }
 
   logout() {

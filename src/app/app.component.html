@@ -24,9 +24,9 @@
     <div fxLayout="row" fxFlexFill>
       <div class="nav-panel" fxLayout="column" fxLayoutAlign="start start">
         <button mat-button [routerLink]="['']">Home</button>
-        <button mat-button [routerLink]="['pre-game']">Pre Game</button>
-        <button mat-button [routerLink]="['alliance-selection']">Alliance Selection </button>
-        <button mat-button [routerLink]="['full_team_data']">Full Team Data </button>
+        <button mat-button [routerLink]="['pre-game']" [disabled]="!selectedTournament">Pre Game</button>
+        <button mat-button [routerLink]="['alliance-selection']" [disabled]="!selectedTournament">Alliance Selection </button>
+        <button mat-button [routerLink]="['full_team_data']" [disabled]="!selectedTournament">Full Team Data </button>
         <button mat-button [routerLink]="['users-management']">Users Management </button>
 
         <mat-form-field style="margin-left: 15px; margin-top: 20px">

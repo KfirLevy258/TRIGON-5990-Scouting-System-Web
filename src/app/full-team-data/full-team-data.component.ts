@@ -27,7 +27,6 @@ export class FullTeamDataComponent implements OnInit {
   selectedTeamNumber;
   selectedTeamName: string;
   selectedTeam;
-  // tournaments: Observable<any[]>;
   teams: Observable<Team[]>;
 
 
@@ -35,26 +34,8 @@ export class FullTeamDataComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
-    // this.tournaments = this.db.collection('tournaments').snapshotChanges()
-    //   .pipe(map(arr => {
-    //     return arr.map(snap => {
-    //       return snap.payload.doc.id;
-    //     });
-    //   }));
-    this.teams = this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').snapshotChanges()
-      .pipe(map(arr => {
-        return  arr.map(snap => {
-          const data = snap.payload.doc.data();
-          const teamNumber = snap.payload.doc.id;
-          return {teamNumber, ... data} as Team;
-        });
-      }));
-  }
 
-  tournamentSelect(tournament) {
-    this.selectedTournament = tournament;
-    localStorage.setItem('tournament', tournament);
-    this.teams = this.db.collection('tournaments').doc(tournament).collection('teams').snapshotChanges()
+    this.teams = this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').snapshotChanges()
       .pipe(map(arr => {
         return  arr.map(snap => {
           const data = snap.payload.doc.data();

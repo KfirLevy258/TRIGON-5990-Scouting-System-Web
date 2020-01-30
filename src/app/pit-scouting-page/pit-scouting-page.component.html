@@ -1,42 +1,111 @@
-<div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="start start" style="height: 850px">
+<div *ngIf="pitScoutingSaved" fxLayout="column" fxLayoutAlign="start center">
 
-  <div fxLayout="row" style="height: 200px">
-    <google-chart [type]="'Gauge'" [data]="dtMotors" [options]="dtMotorsOptions"></google-chart>
-    <google-chart [type]="'Gauge'" [data]="robotDimensions" [options]="robotDimensionsOptions"></google-chart>
-  </div>
+  <h2 class="section-head">Basic Ability</h2>
 
-  <div fxLayout="column" fxLayoutAlign="center center" style="height: 200px">
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
 
-    <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
-      <div style="width: 400px; ; text-align: center" >
-        wheel type
-        <span class="text-data">
-          {{ robotWeight }}
-        </span>
-      </div>
-
-      <div style="width: 400px; text-align: center">
-        drive train
-        <span class="text-data">
-        {{ driveTrain }}
-      </span>
-      </div>
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>power cells at startUp</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.powerCellsAtStartup }}</h2>
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="space-around center" style="width: 900px">
-          <div style="width: 400px; text-align: center">
-            DT Motor Type
-            <span class="text-data">
-              {{ dtMotorType }}
-            </span>
-          </div>
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>start anywhere</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.startAnywhere }}</h2>
+    </div>
 
-          <div style="width: 400px; text-align: center">
-            programming language
-            <span class="text-data">
-              {{ programmingLanguage }}
-            </span>
-          </div>
+  </div>
+
+  <h2 class="section-head">Chassis Overall strength</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>conversion ratio</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.conversionRatio }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>dt Motor Type</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.dtMotorType }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Wheel Diameter</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.wheelDiameter }}</h2>
+    </div>
+
+  </div>
+
+  <h2 class="section-head">End Game</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Can Climb ?</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.canClimb }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Climb Height</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.climbHeight }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Min Climb</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.minClimb }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Max Climb</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.maxClimb }}</h2>
+    </div>
+
+  </div>
+
+  <h2 class="section-head">Game</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Power Cells</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.powerCells }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Rotate Roulette ?</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.rotateRoulette }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Stop Roulette ?</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.stopRoulette }}</h2>
+    </div>
+
+  </div>
+
+  <h2 class="section-head">Basic Robot Data</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>dt Motors</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.dtMotors }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Robot Length</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.robotLength }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Robot Weight</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.robotWeight }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Robot Width</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ pitScouting.robotWidth }}</h2>
     </div>
 
   </div>

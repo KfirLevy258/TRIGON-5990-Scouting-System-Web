@@ -1,34 +1,46 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {GoogleChartComponent} from 'angular-google-charts';
+import {ChartDataSets} from 'chart.js';
+import {Color, Label} from 'ng2-charts';
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
-export class TestComponent implements OnInit, AfterViewInit {
-  myData = [
-    ['London', 8136000],
-    ['New York', 8538000],
-    ['Paris', 2244000],
-    ['Berlin', 3470000],
-    ['Kairo', 19500000],
+export class TestComponent implements OnInit {
+
+  lineChartData: ChartDataSets[] = [
+    { data: [85, 72, 78, 75, 77, 75], label: 'Crude oil prices' },
+    // { data: [72, 78, 75, 77, 75, 82], label: 'Processed oil prices' },
   ];
 
-  @ViewChild('chart', {static: true})
-  chart: GoogleChartComponent;
+  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+
+  lineChartOptions = {
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          min: 50,
+        }
+      }]
+    }
+  };
+
+  lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,255,0,0.28)',
+    },
+  ];
+
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
 
   ngOnInit() {
-    const wrapper = this.chart.wrapper;
-
-    // wrapper.draw(myAdvancedData);
-  }
-
-  ngAfterViewInit(): void {
 
   }
 
-  test() {
-    console.log(this.chart.wrapper.setOption('title', 'aaa'));
-  }
 }

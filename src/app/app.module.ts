@@ -19,7 +19,6 @@ import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { TeamPitScouting } from './team-pit-scouting/team-pit-scouting.component';
 import {FlexModule} from '@angular/flex-layout';
-import {GoogleChartsModule} from 'angular-google-charts';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
@@ -29,9 +28,10 @@ import { HomeComponent } from './home/home.component';
 import { PreGameComponent } from './pre-game/pre-game.component';
 import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
 import { UsersManagementComponent } from './users-management/users-management.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
 import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouting.component';
 import { TestComponent } from './test/test.component';
+import {ChartsModule} from 'ng2-charts';
 
 const routes: Routes = [
   {
@@ -84,7 +84,6 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    GoogleChartsModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,
 
@@ -104,6 +103,7 @@ const routes: Routes = [
 
     RouterModule.forRoot(routes),
     FlexModule,
+    ChartsModule
   ],
   providers: [
     {

@@ -1,9 +1,11 @@
-<google-chart #chart
-  [data]="myData"
-  title="chart  title"
-  type="LineChart">
-
-</google-chart>
-
-
-<button (click)="test()">Click</button>
+<div class="chart-wrapper">
+  <canvas baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+  </canvas>
+</div>

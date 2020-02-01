@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
 
+export class LineCoeffs {
+  m: number;
+  n: number;
+}
+
 export class AutoUpperShot {
   innerScore: number;
   outerScore: number;
@@ -19,6 +24,7 @@ export class TeleopUpperShot {
 export class Game {
   gameNumber: string;
   color: string;
+  gameWon: boolean;
 
   // preGame
   startingPosition: string;
@@ -59,10 +65,12 @@ export class Game {
 }
 
 export class ProcessedGames {
-  gamesPlayed: number;
-  teleopTotalUpperScore: number;
-  teleopTotalUpperShots: number;
-  teleopTotalUpperScores: Array<[string, number]>;
+  gamesPlayed = 0;
+  gamesWon = 0;
+  gamesVector: Array<string> = [];
+  gamesScoresVector: Array<number> = [];
+
+
   teleopDetailedScores: Array<[string, number, number]>;
 }
 @Injectable({
@@ -83,6 +91,7 @@ export class GameService {
           game.gameNumber = gameNumber;
           game.color = data['Game scouting'].allianceColor;
           game.startingPosition = data['Game scouting'].PreGame.startingPosition;
+          game.gameWon = data['Game scouting'].gameWon;
 
           // Auto
           game.autoPowerCellsOnAutoEnd = data['Game scouting'].Auto.autoPowerCellsOnRobotEndOfAuto;
@@ -145,19 +154,44 @@ export class GameService {
 
     processedGames.gamesPlayed = games.length;
 
-    processedGames.teleopTotalUpperScore = 0;
-    processedGames.teleopTotalUpperShots = 0;
-    processedGames.teleopTotalUpperScores = [];
+
     processedGames.teleopDetailedScores = [];
     games.forEach(game => {
-      processedGames.teleopTotalUpperScore += game.teleopInnerScore + game.teleopOuterScore;
-      processedGames.teleopTotalUpperScores.push([game.gameNumber, game.teleopInnerScore + game.teleopOuterScore]);
-      processedGames.teleopTotalUpperShots += game.teleopUpperTotalShots;
+      processedGames.gamesVector.push(game.gameNumber);
+      processedGames.gamesWon += game.gameWon ? 1 : 0;
+      processedGames.gamesScoresVector.push(this.calcGameScore(game));
+
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
       });
     });
 
     return processedGames;
+  }
+
+  calcGameScore(game: Game) {
+    return game.teleopBottomScore + 2 * game.teleopOuterScore + 3 * game.teleopInnerScore +
+      2 * game.autoBottomScore + 4 * game.autoOuterScore + 6 * game.autoInnerScore;
+  }
+
+  calcRegression(xVector: Array<number>, yVector: Array<number>): LineCoeffs {
+    const result: LineCoeffs = new LineCoeffs();
+
+    let mx = 0; let my = 0;
+    let sx = 0; let sy = 0;
+    let n = 0;
+    let  sx2 = 0;
+    xVector.forEach(x => {
+      n += 1;
+      sx += x;
+      sx2 += x * x;
+    });
+    yVector.forEach(y => {
+      sy += y;
+    });
+    mx = sx / n;
+    my = sy / n;
+
+    return result;
   }
 }

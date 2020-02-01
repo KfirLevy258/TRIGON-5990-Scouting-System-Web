@@ -5,22 +5,22 @@
   <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label>games played</label>
+      <label fxFlexAlign="center">games played</label>
       <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesPlayed }}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label>games won</label>
+      <label fxFlexAlign="center">games won</label>
       <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesWon }}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label>Average Score</label>
+      <label fxFlexAlign="center">Average Score</label>
       <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.avgGameScore | number:'1.2-2'}}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label>Predicted Score</label>
+      <label fxFlexAlign="center">Predicted Score</label>
       <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.predictedGameScore | number:'1.2-2'}}</h2>
     </div>
 
@@ -42,12 +42,36 @@
 
   <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
 
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Outer AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGOuter }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Inner AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGInner }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Bottom AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGBottom }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Game pisces AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.autoAVG }}</h2>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
     <div class="chart-wrapper">
       <canvas baseChart
               [datasets]="autoBottomScoreData"
               [labels]="gamesLabels"
               [options]="lineChartOptions"
-              [colors]="lineChartColors"
+              [colors]="lineChartColors[1]"
               [legend]="lineChartLegend"
               [chartType]="lineChartType"
               [plugins]="lineChartPlugins">
@@ -110,7 +134,7 @@
               [datasets]="autoBottomScorePctData"
               [labels]="gamesLabels"
               [options]="lineChartOptions"
-              [colors]="lineChartColors"
+              [colors]="lineChartColors[1]"
               [legend]="lineChartLegend"
               [chartType]="lineChartType"
               [plugins]="lineChartPlugins">

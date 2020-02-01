@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
+import {range} from "rxjs";
+import {log} from "util";
 
 export class LineCoeffs {
   m: number;
@@ -71,6 +73,10 @@ export class ProcessedGames {
   gamesScoresVector: Array<number> = [];
   avgGameScore = 0;
   predictedGameScore: number;
+  autoAVGInner = 0;
+  autoAVGOuter = 0;
+  autoAVGBottom = 0;
+  autoAVG = 0;
 
   autoBottomScoreVector: Array<number> = [];
   autoBottomScorePctVector: Array<number> = [];
@@ -172,7 +178,6 @@ export class GameService {
       const gameScore = this.calcGameScore(game);
       processedGames.gamesScoresVector.push(gameScore);
       processedGames.avgGameScore += gameScore;
-
       processedGames.autoBottomScoreVector.push(game.autoBottomScore);
       processedGames.autoBottomScorePctVector.push(game.autoBottomScore / game.autoBottomShots * 100);
       processedGames.autoInnerScoreVector.push(game.autoInnerScore);
@@ -182,7 +187,9 @@ export class GameService {
       processedGames.autoTotalScoreVector.push(game.autoInnerScore + game.autoOuterScore + game.autoBottomScore);
       processedGames.autoTotalScorePctVector.push((game.autoInnerScore + game.autoOuterScore + game.autoBottomScore) /
         (game.autoUpperTotalShots + game.autoBottomShots) * 100);
-
+      processedGames.autoAVGInner += game.autoInnerScore;
+      processedGames.autoAVGOuter += + game.autoOuterScore;
+      processedGames.autoAVGBottom += game.autoBottomScore;
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
       });
@@ -191,7 +198,10 @@ export class GameService {
     processedGames.avgGameScore = processedGames.avgGameScore / processedGames.gamesPlayed;
     const gamesScoreLine = this.calc1dRegression(processedGames.gamesScoresVector);
     processedGames.predictedGameScore = gamesScoreLine.m * games.length + gamesScoreLine.n;
-
+    processedGames.autoAVGInner = processedGames.autoAVGInner / games.length;
+    processedGames.autoAVGOuter = processedGames.autoAVGOuter / games.length;
+    processedGames.autoAVGBottom = processedGames.autoAVGBottom / games.length;
+    processedGames.autoAVG = processedGames.autoAVGInner + processedGames.autoAVGOuter + processedGames.autoAVGBottom;
     return processedGames;
   }
 

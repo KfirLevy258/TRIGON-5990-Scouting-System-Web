@@ -34,7 +34,6 @@ export class UsersManagementComponent implements OnInit {
          return {uid, ... data} as User;
        });
      }));
-
    this.users$.subscribe(res => console.log(res));
   }
 

@@ -4,22 +4,21 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatFormFieldModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatProgressSpinnerModule, MatSelectModule,
+  MatProgressSpinnerModule, MatSelectModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 import {RouterModule, Routes} from '@angular/router';
-import { FullTeamDataComponent } from './full-team-data/full-team-data.component';
+import { TeamFullData } from './team-full-data/team-full-data.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import { PitScoutingPageComponent } from './pit-scouting-page/pit-scouting-page.component';
+import { TeamPitScouting } from './team-pit-scouting/team-pit-scouting.component';
 import {FlexModule} from '@angular/flex-layout';
-import {GoogleChartsModule} from 'angular-google-charts';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
@@ -29,7 +28,10 @@ import { HomeComponent } from './home/home.component';
 import { PreGameComponent } from './pre-game/pre-game.component';
 import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
 import { UsersManagementComponent } from './users-management/users-management.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
+import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouting.component';
+import { TestComponent } from './test/test.component';
+import {ChartsModule} from 'ng2-charts';
 
 const routes: Routes = [
   {
@@ -49,28 +51,31 @@ const routes: Routes = [
   },
   {
     path: 'full_team_data',
-    component: FullTeamDataComponent,
+    component: TeamFullData,
     canActivate: [AuthGuard],
   },
   {
-    path: 'users-management',
+    path: 'users$-management',
     component: UsersManagementComponent,
     canActivate: [AuthGuard],
   },
   {path: 'login', component: LoginComponent},
+  {path: 'test', component: TestComponent}
 
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    FullTeamDataComponent,
-    PitScoutingPageComponent,
+    TeamFullData,
+    TeamPitScouting,
     LoginComponent,
     HomeComponent,
     PreGameComponent,
     AllianceSelectionComponent,
     UsersManagementComponent,
+    TeamGameScoutingComponent,
+    TestComponent,
 
   ],
   imports: [
@@ -79,12 +84,12 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    GoogleChartsModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,
 
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -92,11 +97,13 @@ const routes: Routes = [
     MatMenuModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatTableModule,
     MatTabsModule,
     MatToolbarModule,
 
     RouterModule.forRoot(routes),
     FlexModule,
+    ChartsModule
   ],
   providers: [
     {

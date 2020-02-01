@@ -29,10 +29,11 @@ export class PitScouting {
 
 @Component({
   selector: 'app-pit-scouting-page',
-  templateUrl: './pit-scouting-page.component.html',
-  styleUrls: ['./pit-scouting-page.component.scss']
+  templateUrl: './team-pit-scouting.component.html',
+  styleUrls: ['./team-pit-scouting.component.scss']
 })
-export class PitScoutingPageComponent implements OnInit, OnChanges {
+// tslint:disable-next-line:component-class-suffix
+export class TeamPitScouting implements OnInit, OnChanges {
   @Input() tournament;
   @Input() teamNumber;
 
@@ -103,25 +104,8 @@ export class PitScoutingPageComponent implements OnInit, OnChanges {
             this.pitScouting.robotLength = res.pit_data.robot_basic_data.robot_length;
             this.pitScouting.robotWeight = res.pit_data.robot_basic_data.robot_weight;
             this.pitScouting.robotWidth = res.pit_data.robot_basic_data.robot_width;
-
-            console.log(this.pitScouting);
-            // this.robotLength = res['pit_data']['robot_basic_data']['robot_length'];
-            // this.robotWeight = res['pit_data']['robot_basic_data']['robot_weight'];
-            // this.robotWidth = res['pit_data']['robot_basic_data']['robot_width'];
-            // this.dtMotors = [];
-            // this.dtMotors.push(['DT Motors', Number(res['pit_data']['robot_basic_data']['dt_motors'])]);
-            // // this.dtMotors.push(['aaa', 4]);
-            // console.log(this.dtMotors);
-            // this.robotDimensions = [];
-            // this.robotDimensions.push(
-            //   ['Robot Length', res['pit_data']['robot_basic_data']['robot_length']],
-            //   ['Robot Weight', res['pit_data']['robot_basic_data']['robot_weight']],
-            //   ['Robot Width', res['pit_data']['robot_basic_data']['robot_width']],
-            // );
           }
         }
-
-
       });
   }
 }

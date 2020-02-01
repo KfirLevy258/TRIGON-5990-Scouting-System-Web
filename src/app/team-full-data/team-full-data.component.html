@@ -21,13 +21,16 @@
 
       <mat-tab-group>
 
+        <mat-tab label="Games">
+          <app-team-game-scouting [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting>
+        </mat-tab>
+
         <mat-tab label="Pit Scouting">
           <app-pit-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-pit-scouting-page>
         </mat-tab>
 
         <mat-tab label="Super Scouting">Super Scouting Data</mat-tab>
 
-        <mat-tab label="Games">Games Data</mat-tab>
       </mat-tab-group>
     </div>
   </div>

@@ -18,10 +18,11 @@ class Team {
 
 @Component({
   selector: 'app-main-page',
-  templateUrl: './full-team-data.component.html',
-  styleUrls: ['./full-team-data.component.scss']
+  templateUrl: './team-full-data.component.html',
+  styleUrls: ['./team-full-data.component.scss']
 })
-export class FullTeamDataComponent implements OnInit {
+// tslint:disable-next-line:component-class-suffix
+export class TeamFullData implements OnInit {
 
   selectedTournament: string;
   selectedTeamNumber;
@@ -46,6 +47,7 @@ export class FullTeamDataComponent implements OnInit {
   }
 
   teamSelect(team: Team) {
+    console.log(team);
     this.selectedTeamNumber = team.teamNumber;
     this.selectedTeamName = team.team_name;
     this.selectedTeam = team;

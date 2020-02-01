@@ -1,0 +1,44 @@
+<div *ngIf="games.length > 0" fxLayout="column" fxLayoutAlign="start center" style="background-color: antiquewhite">
+
+  <h2 class="section-head">Summary Data</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>games played</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesPlayed }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>total Teleop upper Score</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">
+        {{ processedGames.teleopTotalUpperScore }} / {{ processedGames.teleopTotalUpperShots }}
+      </h2>
+    </div>
+
+  </div>
+
+  <google-chart
+                title="Upper Score Per Game"
+                type="LineChart"
+                [data]="processedGames.teleopTotalUpperScores"
+                [columnNames]="columnNames"
+                [options]="options"
+                [width]="width"
+                [height]="height">
+  </google-chart>
+
+  <google-chart
+    title="Upper Score Locations"
+    type="BubbleChart"
+    [data]="processedGames.teleopDetailedScores"
+    [columnNames]="columnNames2"
+    [options]="options"
+    [width]="width"
+    [height]="height">
+  </google-chart>
+</div>
+
+<div *ngIf="games.length == 0" fxLayout="column" fxLayoutAlign="start center">
+  No Data
+</div>

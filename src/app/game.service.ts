@@ -69,7 +69,17 @@ export class ProcessedGames {
   gamesWon = 0;
   gamesVector: Array<string> = [];
   gamesScoresVector: Array<number> = [];
+  avgGameScore = 0;
+  predictedGameScore: number;
 
+  autoBottomScoreVector: Array<number> = [];
+  autoBottomScorePctVector: Array<number> = [];
+  autoInnerScoreVector: Array<number> = [];
+  autoOuterScoreVector: Array<number> = [];
+  autoUpperScoreVector: Array<number> = [];
+  autoUpperScorePctVector: Array<number> = [];
+  autoTotalScoreVector: Array<number> = [];
+  autoTotalScorePctVector: Array<number> = [];
 
   teleopDetailedScores: Array<[string, number, number]>;
 }
@@ -159,12 +169,28 @@ export class GameService {
     games.forEach(game => {
       processedGames.gamesVector.push(game.gameNumber);
       processedGames.gamesWon += game.gameWon ? 1 : 0;
-      processedGames.gamesScoresVector.push(this.calcGameScore(game));
+      const gameScore = this.calcGameScore(game);
+      processedGames.gamesScoresVector.push(gameScore);
+      processedGames.avgGameScore += gameScore;
+
+      processedGames.autoBottomScoreVector.push(game.autoBottomScore);
+      processedGames.autoBottomScorePctVector.push(game.autoBottomScore / game.autoBottomShots * 100);
+      processedGames.autoInnerScoreVector.push(game.autoInnerScore);
+      processedGames.autoOuterScoreVector.push(game.autoOuterScore);
+      processedGames.autoUpperScoreVector.push(game.autoInnerScore + game.autoOuterScore);
+      processedGames.autoUpperScorePctVector.push((game.autoInnerScore + game.autoOuterScore) / game.autoUpperTotalShots * 100);
+      processedGames.autoTotalScoreVector.push(game.autoInnerScore + game.autoOuterScore + game.autoBottomScore);
+      processedGames.autoTotalScorePctVector.push((game.autoInnerScore + game.autoOuterScore + game.autoBottomScore) /
+        (game.autoUpperTotalShots + game.autoBottomShots) * 100);
 
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
       });
     });
+
+    processedGames.avgGameScore = processedGames.avgGameScore / processedGames.gamesPlayed;
+    const gamesScoreLine = this.calc1dRegression(processedGames.gamesScoresVector);
+    processedGames.predictedGameScore = gamesScoreLine.m * games.length + gamesScoreLine.n;
 
     return processedGames;
   }
@@ -192,6 +218,39 @@ export class GameService {
     mx = sx / n;
     my = sy / n;
 
+    let nominator = 0;
+    for (let i = 0; i < xVector.length; i++) {
+      nominator += (xVector[i] - mx) * (yVector[i] - my);
+    }
+    result.m = nominator / sx2;
+    result.n = my - result.m * mx;
     return result;
   }
+
+  calc1dRegression(yVector: Array<number>): LineCoeffs {
+    const result: LineCoeffs = new LineCoeffs();
+
+    let mx = 0; let my = 0;
+    let sx = 0; let sy = 0;
+    let n = 0;
+    let  sx2 = 0;
+    for (let i = 0; i < yVector.length; i++) {
+      n += 1;
+      sx += i + 1;
+      sx2 += (i + 1) * (i + 1);
+      sy += yVector[i];
+
+    }
+    mx = sx / n;
+    my = sy / n;
+
+    let nominator = 0;
+    for (let i = 0; i < yVector.length; i++) {
+      nominator += (i + 1 - mx) * (yVector[i] - my);
+    }
+    result.m = nominator / sx2;
+    result.n = my - result.m * mx;
+    return result;
+  }
+
 }

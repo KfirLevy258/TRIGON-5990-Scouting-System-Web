@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {GoogleChartComponent} from 'angular-google-charts';
 import {ChartDataSets} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 

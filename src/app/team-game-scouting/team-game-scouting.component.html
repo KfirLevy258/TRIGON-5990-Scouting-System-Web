@@ -10,37 +10,136 @@
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label>total Teleop upper Score</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">
-        {{ processedGames.teleopTotalUpperScore }} / {{ processedGames.teleopTotalUpperShots }}
-      </h2>
+      <label>games won</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesWon }}</h2>
     </div>
 
-  </div>
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Average Score</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.avgGameScore | number:'1.2-2'}}</h2>
+    </div>
 
-  <div fxLayout="row">
-
-    <div fxLayout="column" fxLayoutAlign="start">
-      <mat-checkbox [checked]="teleopInnerSelect" (change)="teleopInnerSelect = !teleopInnerSelect; drawTeleopScores()">inner</mat-checkbox>
-      <mat-checkbox [checked]="teleopOuterSelect" (change)="teleopOuterSelect = !teleopOuterSelect; drawTeleopScores()">outer</mat-checkbox>
-      <mat-checkbox [checked]="teleopUpperSelect" (change)="teleopUpperSelect = !teleopUpperSelect; drawTeleopScores()">upper</mat-checkbox>
-      <mat-checkbox [checked]="teleopBottomSelect" (change)="teleopBottomSelect = !teleopBottomSelect; drawTeleopScores()">bottom</mat-checkbox>
-
-
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label>Predicted Score</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.predictedGameScore | number:'1.2-2'}}</h2>
     </div>
 
     <div class="chart-wrapper">
       <canvas baseChart
-              [datasets]="teleopScoreData"
-              [labels]="teleopScoreLabels"
-              [options]="teleopScoreOptions"
-              [colors]="teleopScoreColors"
-              [legend]="teleopScoreLegend"
-              [chartType]="teleopScoreType"
-              [plugins]="teleopScorePlugins">
+              [datasets]="gamesScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
       </canvas>
     </div>
 
+  </div>
+
+  <h2 class="section-head">Autonomous</h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoBottomScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+<!--    <div class="chart-wrapper">-->
+<!--      <canvas baseChart-->
+<!--              [datasets]="autoInnerScoreData"-->
+<!--              [labels]="gamesLabels"-->
+<!--              [options]="lineChartOptions"-->
+<!--              [colors]="lineChartColors"-->
+<!--              [legend]="lineChartLegend"-->
+<!--              [chartType]="lineChartType"-->
+<!--              [plugins]="lineChartPlugins">-->
+<!--      </canvas>-->
+<!--    </div>-->
+
+<!--    <div class="chart-wrapper">-->
+<!--      <canvas baseChart-->
+<!--              [datasets]="autoOuterScoreData"-->
+<!--              [labels]="gamesLabels"-->
+<!--              [options]="lineChartOptions"-->
+<!--              [colors]="lineChartColors"-->
+<!--              [legend]="lineChartLegend"-->
+<!--              [chartType]="lineChartType"-->
+<!--              [plugins]="lineChartPlugins">-->
+<!--      </canvas>-->
+<!--    </div>-->
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoUpperScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoTotalScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoBottomScorePctData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoUpperScorePctData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoTotalScorePctData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
   </div>
 
 

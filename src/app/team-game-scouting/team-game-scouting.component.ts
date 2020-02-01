@@ -29,14 +29,10 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
 
   constructor(private gameService: GameService) { }
 
-  // teleop Score Graph
-  teleopInnerScore: DataSet = new DataSet('inner score');
-  teleopOuterScore: DataSet = new DataSet('outer score');
-  teleopUpperScore: DataSet = new  DataSet('upper score');
-  teleopBottomScore: DataSet = new DataSet('bottom Score');
-  teleopScoreData: ChartDataSets[] = [];
-  teleopScoreLabels: Label[] = [];
-  teleopScoreOptions = {
+  gamesScoreData: ChartDataSets[] = [];
+  gamesLabels: Label[] = [];
+
+  lineChartOptions = {
     responsive: true,
     scales: {
       yAxes: [{
@@ -46,23 +42,25 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
       }]
     }
   };
-
-  teleopScoreColors: Color[] = [
+  lineChartColors: Color[] = [
     {
       borderColor: 'black',
       backgroundColor: 'rgba(255,255,0,0.28)',
     },
   ];
+  lineChartLegend = true;
+  lineChartPlugins = [];
+  lineChartType = 'line';
 
-  teleopScoreLegend = true;
-  teleopScorePlugins = [];
-  teleopScoreType = 'line';
+  autoBottomScoreData: ChartDataSets[] = [];
+  autoInnerScoreData: ChartDataSets[] = [];
+  autoOuterScoreData: ChartDataSets[] = [];
+  autoUpperScoreData: ChartDataSets[] = [];
+  autoTotalScoreData: ChartDataSets[] = [];
 
-  teleopInnerSelect = false;
-  teleopOuterSelect = false;
-  teleopUpperSelect = true;
-  teleopBottomSelect = true;
-
+  autoBottomScorePctData: ChartDataSets[] = [];
+  autoUpperScorePctData: ChartDataSets[] = [];
+  autoTotalScorePctData: ChartDataSets[] = [];
   ngOnInit() {
 
 
@@ -72,31 +70,34 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
     this.games$ = this.gameService.getGames(this.tournament, this.teamNumber);
     this.games$
       .subscribe(res => {
-        this.teleopInnerScore.data = [];
-        this.teleopOuterScore.data = [];
-        this.teleopUpperScore.data = [];
-        this.teleopBottomScore.data = [];
-        this.teleopScoreLabels = [];
+        this.gamesScoreData = [];
+        this.autoBottomScoreData = [];
+        this.autoInnerScoreData = [];
+        this.autoOuterScoreData = [];
+        this.autoUpperScoreData = [];
+        this.autoTotalScoreData = [];
+        this.autoBottomScorePctData = [];
+        this.autoUpperScorePctData = [];
+        this.autoTotalScorePctData = [];
 
         this.games = res;
         this.processedGames = this.gameService.processGames(res);
-        res.forEach(game => {
-          this.teleopScoreLabels.push(game.gameNumber);
-          this.teleopInnerScore.data.push(game.teleopInnerScore);
-          this.teleopOuterScore.data.push(game.teleopOuterScore);
-          this.teleopUpperScore.data.push(game.teleopInnerScore + game.teleopOuterScore);
-          this.teleopBottomScore.data.push(game.teleopBottomScore);
-          this.drawTeleopScores();
-        });
+        this.gamesLabels = this.processedGames.gamesVector;
+        this.gamesScoreData.push({ data: this.processedGames.gamesScoresVector, label: 'Games Scores' });
+        this.autoBottomScoreData.push({ data: this.processedGames.autoBottomScoreVector, label: 'Bottom Score'});
+        // this.autoInnerScoreData.push({ data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'});
+        // this.autoOuterScoreData.push({ data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'});
+        this.autoUpperScoreData.push(
+          { data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'},
+          { data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'},
+          { data: this.processedGames.autoUpperScoreVector, label: 'Upper Score'}
+          );
+        this.autoTotalScoreData.push({ data: this.processedGames.autoTotalScoreVector, label: 'Total Score'});
+        this.autoBottomScorePctData.push({ data: this.processedGames.autoBottomScorePctVector, label: 'Bottom Score %'});
+        this.autoUpperScorePctData.push({ data: this.processedGames.autoUpperScorePctVector, label: 'Upper Score %'});
+        this.autoTotalScorePctData.push({ data: this.processedGames.autoTotalScorePctVector, label: 'Total Score %'});
+
       });
   }
 
-  drawTeleopScores() {
-    this.teleopScoreData = [];
-    if (this.teleopInnerSelect) { this.teleopScoreData.push(this.teleopInnerScore); }
-    if (this.teleopOuterSelect) { this.teleopScoreData.push(this.teleopOuterScore); }
-    if (this.teleopUpperSelect) { this.teleopScoreData.push(this.teleopUpperScore); }
-    if (this.teleopBottomSelect) { this.teleopScoreData.push(this.teleopBottomScore); }
-
-  }
 }

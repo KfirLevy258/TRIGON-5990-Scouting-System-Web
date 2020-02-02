@@ -77,6 +77,10 @@ export class ProcessedGames {
   autoAVGOuter = 0;
   autoAVGBottom = 0;
   autoAVG = 0;
+  teleopAVGOuter = 0;
+  teleopAVGInner = 0;
+  teleopAVGBottom  = 0;
+  teleopAVG = 0;
 
   autoBottomScoreVector: Array<number> = [];
   autoBottomScorePctVector: Array<number> = [];
@@ -189,6 +193,9 @@ export class GameService {
         (game.autoUpperTotalShots + game.autoBottomShots) * 100);
       processedGames.autoAVGInner += game.autoInnerScore;
       processedGames.autoAVGOuter += + game.autoOuterScore;
+      processedGames.teleopAVGOuter += game.teleopOuterScore;
+      processedGames.teleopAVGInner += game.teleopInnerScore;
+      processedGames.teleopAVGBottom += game.teleopBottomScore;
       processedGames.autoAVGBottom += game.autoBottomScore;
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
@@ -201,6 +208,10 @@ export class GameService {
     processedGames.autoAVGInner = processedGames.autoAVGInner / games.length;
     processedGames.autoAVGOuter = processedGames.autoAVGOuter / games.length;
     processedGames.autoAVGBottom = processedGames.autoAVGBottom / games.length;
+    processedGames.teleopAVGBottom = processedGames.teleopAVGBottom / games.length;
+    processedGames.teleopAVGInner = processedGames.teleopAVGInner / games.length;
+    processedGames.teleopAVGOuter = processedGames.teleopAVGOuter / games.length;
+    processedGames.teleopAVG = processedGames.teleopAVGBottom + processedGames.teleopAVGInner + processedGames.teleopAVGOuter;
     processedGames.autoAVG = processedGames.autoAVGInner + processedGames.autoAVGOuter + processedGames.autoAVGBottom;
     return processedGames;
   }

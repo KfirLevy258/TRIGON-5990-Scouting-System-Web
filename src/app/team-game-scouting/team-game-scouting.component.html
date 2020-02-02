@@ -166,7 +166,31 @@
     </div>
   </div>
 
+  <h2 class="section-head">Teleop</h2>
 
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Outer AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGOuter }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Inner AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGInner }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Bottom AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGBottom }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Game pisces AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopAVG }}</h2>
+    </div>
+
+  </div>
 
 </div>
 

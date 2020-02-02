@@ -4,7 +4,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule,
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule,
@@ -32,6 +32,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouting.component';
 import { TestComponent } from './test/test.component';
 import {ChartsModule} from 'ng2-charts';
+import {EditUserDialogComponent} from './edit-user-dialog/edit-user-dialog.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,7 @@ const routes: Routes = [
     UsersManagementComponent,
     TeamGameScoutingComponent,
     TestComponent,
+    EditUserDialogComponent
 
   ],
   imports: [
@@ -90,6 +92,7 @@ const routes: Routes = [
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -115,6 +118,10 @@ const routes: Routes = [
       deps: [AuthService],
       multi: true
     },
-  ],  bootstrap: [AppComponent]
+  ],
+  entryComponents: [
+    EditUserDialogComponent
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

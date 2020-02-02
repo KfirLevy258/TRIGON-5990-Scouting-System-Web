@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+
+  <h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+
+  <mat-dialog-content>
+
+    <div style="width: 300px; margin: auto; display: flex" (click)="FileSelect.click()">
+      <img class="large-icon" *ngIf="photoFileURL" [src]="photoFileURL" alt="">
+      <img *ngIf="!photoFileURL && user?.photoURL"
+           class="large-icon" [src]="user.photoURL" alt="">
+      <img *ngIf="!photoFileURL && !user?.photoURL"
+           alt="no photo"
+           class="large-icon" src="assets/empty-profile.png">
+    </div>
+    <input hidden type="file" #FileSelect (change)="loadPhotoFile($event)">
+
+    <ng-container [formGroup]="form">
+
+      <mat-form-field>
+        <input matInput placeholder="full name" formControlName="name">
+      </mat-form-field>
+
+      <div style="margin-top: 10px; margin-bottom: 20px">
+        <mat-label style="margin-right: 20px">is Team Member</mat-label>
+        <mat-checkbox  formControlName="teamMember"></mat-checkbox>
+      </div>
+
+      <div style="margin-top: 10px; margin-bottom: 20px">
+        <mat-label style="margin-right: 20px">is Team Leader</mat-label>
+        <mat-checkbox  formControlName="teamLeader"></mat-checkbox>
+      </div>
+
+      <div style="margin-top: 10px; margin-bottom: 20px">
+        <mat-label style="margin-right: 20px">is admin</mat-label>
+        <mat-checkbox  formControlName="admin"></mat-checkbox>
+      </div>
+
+      <mat-form-field>
+        <input matInput placeholder="email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="password" placeholder="password" formControlName="password">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="phone number" formControlName="phoneNumber">
+      </mat-form-field>
+
+    </ng-container>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+
+    <button mat-raised-button (click)="cancel()">
+      Cancel
+    </button>
+
+    <button mat-raised-button color="primary"
+            [disabled]="!form?.valid"
+            (click)="save()">
+      Save
+    </button>
+
+  </mat-dialog-actions>
+
+</div>
+

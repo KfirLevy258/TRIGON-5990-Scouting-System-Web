@@ -1,66 +1,71 @@
-<mat-table [dataSource]="users$ | async" class="mat-elevation-z8 user-table">
+<div fxLayout="column" fxLayoutAlign="start center" >
+  <mat-table [dataSource]="users$ | async" class="mat-elevation-z8 user-table">
 
-  <ng-container matColumnDef="photo">
-    <mat-header-cell *matHeaderCellDef class="icon"> profile photo </mat-header-cell>
-    <mat-cell *matCellDef="let element" (click)="test(element)" class="icon">
-      <img *ngIf="element['photoURL']"
-           class="user-img" [src]="element['photoURL']" alt="">
-      <img *ngIf="!element['photoURL']"
-           alt="no photo"
-           class="user-img" src="assets/empty-profile.png">
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="photo">
+      <mat-header-cell *matHeaderCellDef class="icon"> profile photo </mat-header-cell>
+      <mat-cell *matCellDef="let element" (click)="test(element)" class="icon">
+        <img *ngIf="element['photoURL']"
+             class="user-img" [src]="element['photoURL']" alt="">
+        <img *ngIf="!element['photoURL']"
+             alt="no photo"
+             class="user-img" src="assets/empty-profile.png">
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="displayName">
-    <mat-header-cell *matHeaderCellDef class="displayName"> display name </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="displayName"> {{element.displayName}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef class="displayName"> full name </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="displayName"> {{element.name}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef class="email"> email </mat-header-cell>
-    <mat-cell *matCellDef="let element" class="email"> {{element["email"]}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef class="email"> email </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="email"> {{element["email"]}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="teamMember">
-    <mat-header-cell *matHeaderCellDef class="active"> team Member ?</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="active">
-      <mat-checkbox [checked]="element['teamMember']" (change)="activeChange(element)"></mat-checkbox>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="teamMember">
+      <mat-header-cell *matHeaderCellDef class="active"> team Member ?</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="active">
+        <mat-checkbox [checked]="element['teamMember']" (change)="teamMemberChange(element)"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="teamLeader">
-    <mat-header-cell *matHeaderCellDef class="active"> team Member ?</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="active">
-      <mat-checkbox [checked]="element['teamLeader']" (change)="activeChange(element)"></mat-checkbox>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="teamLeader">
+      <mat-header-cell *matHeaderCellDef class="active"> team Leader ?</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="active">
+        <mat-checkbox [checked]="element['teamLeader']" (change)="teamLeaderChange(element)"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="Admin">
-    <mat-header-cell *matHeaderCellDef class="active"> team Member ?</mat-header-cell>
-    <mat-cell *matCellDef="let element" class="active">
-      <mat-checkbox [checked]="element['Admin']" (change)="activeChange(element)"></mat-checkbox>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="admin">
+      <mat-header-cell *matHeaderCellDef class="active"> admin ?</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="active">
+        <mat-checkbox [checked]="element['admin']" (change)="adminChange(element)"></mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="Actions">
-    <mat-header-cell *matHeaderCellDef class="actions"> Actions</mat-header-cell>
-    <mat-cell  *matCellDef="let element" class="actions">
+    <ng-container matColumnDef="Actions">
+      <mat-header-cell *matHeaderCellDef class="actions"> Actions</mat-header-cell>
+      <mat-cell  *matCellDef="let element" class="actions">
 
-      <button mat-raised-button id="edit-button" color="primary"
-              class="action-button"
-              (click)="editUser(element)">
-        <mat-icon>edit</mat-icon>
-      </button>
+        <button mat-raised-button id="edit-button" color="primary"
+                class="action-button"
+                (click)="editUser(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
 
-      <button mat-raised-button id="delete-button" color="error"
-              class="action-button"
-              (click)="deleteUser(element)">
-        <mat-icon>delete</mat-icon>
-      </button>
+        <button mat-raised-button id="delete-button" color="error"
+                class="action-button"
+                (click)="deleteUser(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
 
-    </mat-cell>
-  </ng-container>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+
+

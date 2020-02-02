@@ -33,6 +33,9 @@ import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouti
 import { TestComponent } from './test/test.component';
 import {ChartsModule} from 'ng2-charts';
 import {EditUserDialogComponent} from './edit-user-dialog/edit-user-dialog.component';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {VerifyDialogComponent} from './verify-dialog/verify-dialog.component';
 
 const routes: Routes = [
   {
@@ -77,7 +80,8 @@ const routes: Routes = [
     UsersManagementComponent,
     TeamGameScoutingComponent,
     TestComponent,
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    VerifyDialogComponent
 
   ],
   imports: [
@@ -86,6 +90,8 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireFunctionsModule,
     ReactiveFormsModule,
     HttpClientModule,
 
@@ -100,6 +106,7 @@ const routes: Routes = [
     MatMenuModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
@@ -120,7 +127,8 @@ const routes: Routes = [
     },
   ],
   entryComponents: [
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    VerifyDialogComponent
   ],
   bootstrap: [AppComponent]
 })

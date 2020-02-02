@@ -61,7 +61,6 @@ export class EditUserDialogComponent {
       admin: [''],
       email: ['', Validators.email],
       password: ['', Validators.minLength(6)],
-      phoneNumber: [''],
       // controls used to pass data to validator
       mode: [this.mode],
       currentUser: [this.user]

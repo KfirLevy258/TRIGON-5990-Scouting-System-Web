@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {defaultDialogConfig} from '../default-dialog-config';
 import {EditUserDialogComponent} from '../edit-user-dialog/edit-user-dialog.component';
+import {AngularFireFunctions} from '@angular/fire/functions';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {VerifyDialogComponent} from '../verify-dialog/verify-dialog.component';
 
 export class User {
   uid: string;
@@ -25,8 +28,11 @@ export class UsersManagementComponent implements OnInit {
 
   users$: Observable<User[]>;
   displayedColumns: string[] = ['photo', 'name', 'email', 'teamMember', 'teamLeader', 'admin', 'Actions'];
+  isLoading: boolean;
 
   constructor(private db: AngularFirestore,
+              private aff: AngularFireFunctions,
+              private storage: AngularFireStorage,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -91,9 +97,101 @@ export class UsersManagementComponent implements OnInit {
           delete editedUser.password;
 
           this.updateUser(editedUser);
-
+          if (photoFile) {
+            this.updatePhoto(editedUser.uid, photoFile)
+              .catch(err => console.log(err));
+          }
+          if (currentUser.email !== editedUser.email) {
+            this.aff.functions.httpsCallable('updateEmail')({
+              uid: editedUser.uid,
+              email: editedUser.email
+            });
+          }
+          if (password) {
+            this.aff.functions.httpsCallable('resetPassword')({
+              uid: editedUser.uid,
+              password
+            });
+          }
         }
       });
   }
 
+  deleteUser(user: User) {
+    const dialogConfig = defaultDialogConfig();
+
+    dialogConfig.data = {
+      dialogTitle: 'User Delete',
+      message: 'Delete user ' + user.name + ' ?'
+    };
+
+    // ToDO - button focus after return from dialog
+    this.dialog.open(VerifyDialogComponent, dialogConfig)
+      .afterClosed()
+      .pipe(
+        take(1)
+      )
+      .subscribe(okToDelete => {
+        if (okToDelete) {
+          this.db.collection('users').doc(user.uid).delete()
+            .then(res => {
+              this.aff.functions.httpsCallable('deleteUser')({
+                uid: user.uid
+              });
+            });
+        }
+      });
+  }
+
+  addUser() {
+    const dialogConfig = defaultDialogConfig();
+
+    dialogConfig.data = {
+      dialogTitle: 'Add User',
+      mode: 'create'
+    };
+
+    this.dialog.open(EditUserDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe(res => {
+        if (res) {
+          this.isLoading = true;
+          const photoFile = res.photoFile;
+          const newUser = res.user;
+          this.createUser(newUser, photoFile)
+            .then(createdUser => {
+              this.isLoading = false;
+            });
+        }
+      });
+  }
+
+  async createUser(newUser, photoFile: File) {
+    const addResult = await this.aff.functions.httpsCallable('createUser')({
+      name: newUser.name,
+      email: newUser.email,
+      password: newUser.password,
+      phoneNumber: newUser.phoneNumber,
+    });
+    const userRecord = addResult.data;
+    const uid = userRecord.uid;
+
+    if (photoFile) {
+      await this.updatePhoto(uid, photoFile);
+    }
+    return uid;
+  }
+
+  async updatePhoto(uid: string, file: File) {
+    const path = `users/${uid}`;
+
+    const result = await this.storage.upload(path, file);
+    const url = await result.ref.getDownloadURL();
+
+    await this.db.collection('users').doc(uid).update({
+      photoURL: url
+    });
+
+    return url;
+  }
 }

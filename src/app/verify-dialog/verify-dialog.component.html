@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+  <mat-dialog-content>
+
+    <span> {{ message }}</span>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+
+    <button mat-raised-button (click)="cancel()">
+      Cancel
+    </button>
+
+    <button mat-raised-button color="warn"
+            (click)="ok()">
+      Ok
+    </button>
+  </mat-dialog-actions>
+</div>
+

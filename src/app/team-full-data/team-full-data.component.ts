@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
+import {Route, Router} from '@angular/router';
 
 class Team {
   teamNumber: string;

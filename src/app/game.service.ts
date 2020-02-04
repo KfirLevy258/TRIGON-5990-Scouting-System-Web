@@ -81,6 +81,13 @@ export class ProcessedGames {
   teleopAVGInner = 0;
   teleopAVGBottom  = 0;
   teleopAVG = 0;
+  teleopUpperTotalShot = 0;
+  teleopBottomTotalShot = 0;
+  teleopTotalShot = 0;
+  teleopUpperSuccess = 0;
+  teleopBottomSuccess = 0;
+  teleopTotalSuccess = 0;
+  teleopInnerOuterRatio;
 
   autoBottomScoreVector: Array<number> = [];
   autoBottomScorePctVector: Array<number> = [];
@@ -129,7 +136,6 @@ export class GameService {
           game.trenchBallCollected3 = data['Game scouting'].Auto.trench3BallCollected;
           game.trenchBallCollected4 = data['Game scouting'].Auto.trench4BallCollected;
           game.trenchBallCollected5 = data['Game scouting'].Auto.trench5BallCollected;
-
           game.autoUpperTotalShots = data['Game scouting'].Auto.upperShoot;
           const shots = data['Game scouting'].Auto.upperData;
           shots.forEach(shot => {
@@ -197,13 +203,22 @@ export class GameService {
       processedGames.teleopAVGInner += game.teleopInnerScore;
       processedGames.teleopAVGBottom += game.teleopBottomScore;
       processedGames.autoAVGBottom += game.autoBottomScore;
+      // @ts-ignore
+      processedGames.teleopUpperTotalShot += game.teleopUpperTotalShots;
+      processedGames.teleopBottomTotalShot += game.teleopBottomShots;
+
+      processedGames.teleopTotalShot += game.teleopUpperTotalShots + game.teleopBottomShots;
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
       });
     });
-
     processedGames.avgGameScore = processedGames.avgGameScore / processedGames.gamesPlayed;
     const gamesScoreLine = this.calc1dRegression(processedGames.gamesScoresVector);
+    // tslint:disable-next-line:max-line-length
+    processedGames.teleopUpperSuccess = Math.round(((processedGames.teleopAVGOuter + processedGames.teleopAVGInner) / processedGames.teleopUpperTotalShot) * 100);
+    processedGames.teleopBottomSuccess = Math.round(((processedGames.teleopAVGBottom) / processedGames.teleopBottomTotalShot) * 100);
+    processedGames.teleopTotalSuccess = Math.round(((processedGames.teleopAVGBottom + processedGames.teleopAVGOuter + processedGames.teleopAVGInner) / (processedGames.teleopBottomTotalShot + processedGames.teleopUpperTotalShot)) * 100);
+    processedGames.teleopInnerOuterRatio = processedGames.teleopAVGInner + '/' + processedGames.teleopAVGOuter;
     processedGames.predictedGameScore = gamesScoreLine.m * games.length + gamesScoreLine.n;
     processedGames.autoAVGInner = processedGames.autoAVGInner / games.length;
     processedGames.autoAVGOuter = processedGames.autoAVGOuter / games.length;

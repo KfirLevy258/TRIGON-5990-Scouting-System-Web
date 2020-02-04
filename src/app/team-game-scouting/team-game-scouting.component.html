@@ -192,6 +192,30 @@
 
   </div>
 
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Inner / Outer</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopInnerOuterRatio }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Upper success rate</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopUpperSuccess }}%</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Bottom success rate</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopBottomSuccess }}%</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Total success rate</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopTotalSuccess }}%</h2>
+    </div>
+
+  </div>
+
 </div>
 
 <div *ngIf="games.length == 0" fxLayout="column" fxLayoutAlign="start center">

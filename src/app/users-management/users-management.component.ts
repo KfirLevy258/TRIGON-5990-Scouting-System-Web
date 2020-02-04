@@ -4,10 +4,10 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 import {defaultDialogConfig} from '../default-dialog-config';
-import {EditUserDialogComponent} from '../edit-user-dialog/edit-user-dialog.component';
 import {AngularFireFunctions} from '@angular/fire/functions';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {VerifyDialogComponent} from '../verify-dialog/verify-dialog.component';
+import {DialogVerifyComponent} from '../dialog-verify/dialog-verify.component';
+import {UserEditDialogComponent} from '../user-edit-dialog/user-edit-dialog.component';
 
 export class User {
   uid: string;
@@ -87,7 +87,7 @@ export class UsersManagementComponent implements OnInit {
 
     console.log(currentUser);
 
-    this.dialog.open(EditUserDialogComponent, dialogConfig)
+    this.dialog.open(UserEditDialogComponent, dialogConfig)
       .afterClosed()
       .subscribe(res => {
         if (res) {
@@ -126,7 +126,7 @@ export class UsersManagementComponent implements OnInit {
     };
 
     // ToDO - button focus after return from dialog
-    this.dialog.open(VerifyDialogComponent, dialogConfig)
+    this.dialog.open(DialogVerifyComponent, dialogConfig)
       .afterClosed()
       .pipe(
         take(1)
@@ -134,7 +134,7 @@ export class UsersManagementComponent implements OnInit {
       .subscribe(okToDelete => {
         if (okToDelete) {
           this.db.collection('users').doc(user.uid).delete()
-            .then(res => {
+            .then(() => {
               this.aff.functions.httpsCallable('deleteUser')({
                 uid: user.uid
               });
@@ -151,7 +151,7 @@ export class UsersManagementComponent implements OnInit {
       mode: 'create'
     };
 
-    this.dialog.open(EditUserDialogComponent, dialogConfig)
+    this.dialog.open(UserEditDialogComponent, dialogConfig)
       .afterClosed()
       .subscribe(res => {
         if (res) {
@@ -159,7 +159,7 @@ export class UsersManagementComponent implements OnInit {
           const photoFile = res.photoFile;
           const newUser = res.user;
           this.createUser(newUser, photoFile)
-            .then(createdUser => {
+            .then(() => {
               this.isLoading = false;
             });
         }

@@ -1,19 +1,31 @@
 <div fxLayout="column" fxLayoutAlign="start center" >
 
-  <form [formGroup]="qualNumberForm">
+  <form [formGroup]="gameNumberForm">
     <mat-form-field>
-      <input matInput formControlName="qualNumber" placeholder="example 42" (change)="qualSelected()">
+      <input matInput formControlName="gameNumber" placeholder="game Number" >
     </mat-form-field>
+
+    <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>
   </form>
 
   <div fxLayout="row" fxFlexFill>
 
     <div fxFlex fxLayout="column" fxLayoutAlign="start center">
-      Blue
+      <h2 style="color: blue">Blue Teams</h2>
+      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: blue">
+        <h3> {{ blueTeams[0] }} </h3>
+        <h3> {{ blueTeams[1] }} </h3>
+        <h3> {{ blueTeams[2] }} </h3>
+      </div>
     </div>
 
     <div fxFlex fxLayout="column" fxLayoutAlign="start center">
-      Red
+      <h2 style="color: red">Red Teams</h2>
+      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">
+        <h3> {{ redTeams[0] }} </h3>
+        <h3> {{ redTeams[1] }} </h3>
+        <h3> {{ redTeams[2] }} </h3>
+      </div>
     </div>
 
   </div>

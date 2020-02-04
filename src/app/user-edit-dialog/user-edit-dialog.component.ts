@@ -34,10 +34,10 @@ const myFormValidator: ValidatorFn = (fg: FormGroup) => {
 
 @Component({
   selector: 'app-edit-user-dialog',
-  templateUrl: './edit-user-dialog.component.html',
-  styleUrls: ['./edit-user-dialog.component.scss']
+  templateUrl: './user-edit-dialog.component.html',
+  styleUrls: ['./user-edit-dialog.component.scss']
 })
-export class EditUserDialogComponent {
+export class UserEditDialogComponent {
 
   form: FormGroup;
   photoFileURL;
@@ -47,7 +47,7 @@ export class EditUserDialogComponent {
   mode: 'create' | 'update';
 
   constructor(private fb: FormBuilder,
-              private dialogRef: MatDialogRef<EditUserDialogComponent>,
+              private dialogRef: MatDialogRef<UserEditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) data) {
 
     this.dialogTitle = data.dialogTitle;

@@ -3,15 +3,15 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-verify-dialog',
-  templateUrl: './verify-dialog.component.html',
-  styleUrls: ['./verify-dialog.component.scss']
+  templateUrl: './dialog-verify.component.html',
+  styleUrls: ['./dialog-verify.component.scss']
 })
-export class VerifyDialogComponent {
+export class DialogVerifyComponent {
 
   dialogTitle: string;
   message: string;
 
-  constructor(private dialogRef: MatDialogRef<VerifyDialogComponent>,
+  constructor(private dialogRef: MatDialogRef<DialogVerifyComponent>,
               @Inject(MAT_DIALOG_DATA) data) {
 
     this.dialogTitle = data.dialogTitle;

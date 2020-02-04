@@ -23,7 +23,7 @@ import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
 import {ReactiveFormsModule} from '@angular/forms';
-import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 import { HomeComponent } from './home/home.component';
 import { PreGameComponent } from './pre-game/pre-game.component';
 import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
@@ -32,10 +32,11 @@ import {HttpClientModule} from '@angular/common/http';
 import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouting.component';
 import { TestComponent } from './test/test.component';
 import {ChartsModule} from 'ng2-charts';
-import {EditUserDialogComponent} from './edit-user-dialog/edit-user-dialog.component';
+import {UserEditDialogComponent} from './user-edit-dialog/user-edit-dialog.component';
 import {AngularFireFunctionsModule} from '@angular/fire/functions';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import {VerifyDialogComponent} from './verify-dialog/verify-dialog.component';
+import {DialogVerifyComponent} from './dialog-verify/dialog-verify.component';
+import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
 
 const routes: Routes = [
   {
@@ -80,8 +81,9 @@ const routes: Routes = [
     UsersManagementComponent,
     TeamGameScoutingComponent,
     TestComponent,
-    EditUserDialogComponent,
-    VerifyDialogComponent
+    UserEditDialogComponent,
+    DialogVerifyComponent,
+    DialogAlertComponent
 
   ],
   imports: [
@@ -127,8 +129,9 @@ const routes: Routes = [
     },
   ],
   entryComponents: [
-    EditUserDialogComponent,
-    VerifyDialogComponent
+    UserEditDialogComponent,
+    DialogVerifyComponent,
+    DialogAlertComponent
   ],
   bootstrap: [AppComponent]
 })

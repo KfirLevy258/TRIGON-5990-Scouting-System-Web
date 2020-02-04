@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {defaultDialogConfig} from '../default-dialog-config';
+import {MatDialog} from '@angular/material';
+import {DialogAlertComponent} from '../dialog-alert/dialog-alert.component';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-pre-game',
@@ -9,65 +13,57 @@ import {AngularFirestore} from '@angular/fire/firestore';
   styleUrls: ['./pre-game.component.scss']
 })
 export class PreGameComponent implements OnInit {
-  qualNumberForm: FormGroup;
-  qualNumber: string;
+  gameNumberForm: FormGroup;
+  gameNumber: string;
   eventKey: string;
   blueTeams: Array<string> = [];
-  readTeams: Array<string> = [];
+  redTeams: Array<string> = [];
 
   constructor(private fb: FormBuilder,
               private http: HttpClient,
+              private dialog: MatDialog,
               private db: AngularFirestore) {
-    this.qualNumberForm = fb.group({
-      qualNumber: ['', [Validators.required]]
+    this.gameNumberForm = fb.group({
+      gameNumber: ['', [Validators.required]]
     });
   }
 
   ngOnInit() {
     this.eventKey = localStorage.getItem('event_key');
   }
-  getTeamAverageScore(teamNumber: string) {
-    this.db.collection('tournaments').doc(localStorage.getItem('tournament'))
-      .collection('teams').doc(teamNumber).get().subscribe((res: any) => {
-      console.log(res);
-    });
-    // .valueChanges()
-    // .subscribe((res: any) => {
-    //   if (res) {
-    //     this.pitScoutingSaved = res.pit_scouting_saved;
-    //     if (this.pitScoutingSaved) {
-    //       this.robotLength = res['pit_data']['robot_basic_data']['robot_length'];
-    //       this.robotWeight = res['pit_data']['robot_basic_data']['robot_weight'];
-    //       this.robotWidth = res['pit_data']['robot_basic_data']['robot_width'];
-    //       this.dtMotors = [];
-    //       this.dtMotors.push(['DT Motors', Number(res['pit_data']['robot_basic_data']['dt_motors'])]);
-    //       // this.dtMotors.push(['aaa', 4]);
-    //       console.log(this.dtMotors);
-    //       this.robotDimensions = [];
-    //       this.robotDimensions.push(
-    //         ['Robot Length', res['pit_data']['robot_basic_data']['robot_length']],
-    //         ['Robot Weight', res['pit_data']['robot_basic_data']['robot_weight']],
-    //         ['Robot Width', res['pit_data']['robot_basic_data']['robot_width']],
-    //       );
-    //     }
-    //   }
+
+  gameSelected() {
+    this.gameNumber = this.gameNumberForm.getRawValue().gameNumber;
+    this.getTeams();
+
   }
-  qualSelected() {
-    this.qualNumber = this.qualNumberForm.getRawValue().qualNumber;
+
+  getTeams() {
+    const dialogConfig = defaultDialogConfig();
+
+    dialogConfig.data = {
+      dialogTitle: 'Pre Game',
+      message: 'invalid game number'
+    };
 
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('X-TBA-Auth-Key', 'ptM95D6SCcHO95D97GLFStGb4cWyxtBKNOI9FX5QmBirDnjebphZAEpPcwXNr4vH');
-    this.http.get('https://www.thebluealliance.com/api/v3/match/' + this.eventKey + '_qm' + this.qualNumber, {headers})
+    this.http.get('https://www.thebluealliance.com/api/v3/match/' + this.eventKey + '_qm' + this.gameNumber, {headers})
       .subscribe((matchData: any) => {
-        this.blueTeams = matchData.alliances.blue.team_keys;
-        this.readTeams = matchData.alliances.red.team_keys;
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.blueTeams.length; i++) {
-          this.readTeams[i] = (this.readTeams[i].substring(3, 10));
+        if (matchData) {
+          this.blueTeams = matchData.alliances.blue.team_keys;
+          this.redTeams = matchData.alliances.red.team_keys;
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.blueTeams.length; i++) {
+            this.redTeams[i] = (this.redTeams[i].substring(3, 10));
+            this.blueTeams[i] = (this.blueTeams[i].substring(3, 10));
+          }
         }
-        console.log(this.readTeams);
-        this.getTeamAverageScore(this.readTeams[1]);
+      }, () => {
+        this.dialog.open(DialogAlertComponent, dialogConfig)
+          .afterClosed()
+          .pipe(take(1))
+          .subscribe();
       });
-    console.log(this.qualNumber);
   }
 }

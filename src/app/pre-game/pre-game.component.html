@@ -8,7 +8,7 @@
     <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>
   </form>
 
-  <div fxLayout="row" fxFlexFill>
+  <div *ngIf="gameNumber && !isLoading" fxLayout="row" fxFlexFill>
 
     <div fxFlex fxLayout="column" fxLayoutAlign="start center">
       <h2 style="color: blue">Blue Teams</h2>
@@ -17,6 +17,18 @@
         <h3> {{ blueTeams[1] }} </h3>
         <h3> {{ blueTeams[2] }} </h3>
       </div>
+
+      <div style="display: block">
+        <canvas baseChart
+                [datasets]="blueTeamsScores"
+                [labels]="blueTeams"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
     </div>
 
     <div fxFlex fxLayout="column" fxLayoutAlign="start center">
@@ -26,8 +38,24 @@
         <h3> {{ redTeams[1] }} </h3>
         <h3> {{ redTeams[2] }} </h3>
       </div>
+
+      <div style="display: block">
+        <canvas baseChart
+                [datasets]="redTeamsScores"
+                [labels]="redTeams"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
     </div>
 
+  </div>
+
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
   </div>
 
 

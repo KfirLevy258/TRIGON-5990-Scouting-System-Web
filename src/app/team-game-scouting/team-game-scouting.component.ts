@@ -4,14 +4,14 @@ import {Observable} from 'rxjs';
 import {ChartDataSets} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
-class DataSet {
-  data: Array<number> = [];
-  label: string;
-
-  constructor(public _label: string) {
-    this.label = _label;
-  }
-}
+// class DataSet {
+//   data: Array<number> = [];
+//   label: string;
+//
+//   constructor(public _label: string) {
+//     this.label = _label;
+//   }
+// }
 
 @Component({
   selector: 'app-team-game-scouting',

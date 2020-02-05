@@ -57,6 +57,10 @@ export class PreGameComponent implements OnInit {
   barChartLegend = true;
   barChartPlugins = [];
 
+  blueScore = 0;
+  redScore = 0;
+  blueWinPercent = 0;
+  redWinPercent = 0;
   blueTeamsScores: ChartDataSets[] = [];
   redTeamsScores: ChartDataSets[] = [];
 
@@ -140,7 +144,12 @@ export class PreGameComponent implements OnInit {
         this.processedGamesRed1 = this.gameService.processGames(this.gamesRed1);
         this.processedGamesRed2 = this.gameService.processGames(this.gamesRed2);
         this.processedGamesRed3 = this.gameService.processGames(this.gamesRed3);
-
+        // tslint:disable-next-line:max-line-length
+        this.blueScore = this.processedGamesBlue1.predictedGameScore + this.processedGamesBlue2.predictedGameScore + this.processedGamesBlue3.predictedGameScore;
+        // tslint:disable-next-line:max-line-length
+        this.redScore = this.processedGamesRed1.predictedGameScore + this.processedGamesRed2.predictedGameScore + this.processedGamesRed3.predictedGameScore;
+        this.blueWinPercent = Math.round((this.blueScore / (this.redScore + this.blueScore)) * 100);
+        this.redWinPercent = Math.round((this.redScore / (this.blueScore + this.redScore)) * 100);
         this.blueTeamsScores.push({
           data: [
             this.processedGamesBlue1.avgGameScore,

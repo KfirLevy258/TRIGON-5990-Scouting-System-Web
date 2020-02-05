@@ -71,7 +71,7 @@
               [datasets]="autoBottomScoreData"
               [labels]="gamesLabels"
               [options]="lineChartOptions"
-              [colors]="lineChartColors[1]"
+              [colors]="bottomLineColor"
               [legend]="lineChartLegend"
               [chartType]="lineChartType"
               [plugins]="lineChartPlugins">
@@ -127,44 +127,44 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+<!--  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>-->
 
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoBottomScorePctData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors[1]"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
+<!--    <div class="chart-wrapper">-->
+<!--      <canvas baseChart-->
+<!--              [datasets]="autoBottomScorePctData"-->
+<!--              [labels]="gamesLabels"-->
+<!--              [options]="lineChartOptions"-->
+<!--              [colors]="bottomLineColor"-->
+<!--              [legend]="lineChartLegend"-->
+<!--              [chartType]="lineChartType"-->
+<!--              [plugins]="lineChartPlugins">-->
+<!--      </canvas>-->
+<!--    </div>-->
 
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoUpperScorePctData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
+<!--    <div class="chart-wrapper">-->
+<!--      <canvas baseChart-->
+<!--              [datasets]="autoUpperScorePctData"-->
+<!--              [labels]="gamesLabels"-->
+<!--              [options]="lineChartOptions"-->
+<!--              [colors]="lineChartColors"-->
+<!--              [legend]="lineChartLegend"-->
+<!--              [chartType]="lineChartType"-->
+<!--              [plugins]="lineChartPlugins">-->
+<!--      </canvas>-->
+<!--    </div>-->
 
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoTotalScorePctData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
-  </div>
+<!--    <div class="chart-wrapper">-->
+<!--      <canvas baseChart-->
+<!--              [datasets]="autoTotalScorePctData"-->
+<!--              [labels]="gamesLabels"-->
+<!--              [options]="lineChartOptions"-->
+<!--              [colors]="lineChartColors"-->
+<!--              [legend]="lineChartLegend"-->
+<!--              [chartType]="lineChartType"-->
+<!--              [plugins]="lineChartPlugins">-->
+<!--      </canvas>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <h2 class="section-head">Teleop</h2>
 
@@ -212,6 +212,46 @@
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Total success rate</label>
       <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopTotalSuccess }}%</h2>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="teleopBottomScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="bottomLineColor"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="teleopOuterScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="outerLineColor"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="teleopInnerScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="innerLineColor"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
     </div>
 
   </div>

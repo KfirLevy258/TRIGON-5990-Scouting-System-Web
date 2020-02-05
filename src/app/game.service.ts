@@ -98,6 +98,9 @@ export class ProcessedGames {
   autoTotalScoreVector: Array<number> = [];
   autoTotalScorePctVector: Array<number> = [];
 
+  teleopInnerScoreVector: Array<number> = [];
+  teleopOuterScoreVector: Array<number> = [];
+  teleopBottomScoreVector: Array<number> = [];
   teleopDetailedScores: Array<[string, number, number]>;
 }
 @Injectable({
@@ -191,6 +194,9 @@ export class GameService {
       processedGames.autoBottomScoreVector.push(game.autoBottomScore);
       processedGames.autoBottomScorePctVector.push(game.autoBottomScore / game.autoBottomShots * 100);
       processedGames.autoInnerScoreVector.push(game.autoInnerScore);
+      processedGames.teleopInnerScoreVector.push(game.teleopInnerScore);
+      processedGames.teleopOuterScoreVector.push(game.teleopOuterScore);
+      processedGames.teleopBottomScoreVector.push(game.teleopBottomScore);
       processedGames.autoOuterScoreVector.push(game.autoOuterScore);
       processedGames.autoUpperScoreVector.push(game.autoInnerScore + game.autoOuterScore);
       processedGames.autoUpperScorePctVector.push((game.autoInnerScore + game.autoOuterScore) / game.autoUpperTotalShots * 100);

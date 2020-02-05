@@ -48,6 +48,24 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
       backgroundColor: 'rgba(255,255,0,0.28)',
     },
   ];
+  outerLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,0,0,0.28)',
+    },
+  ];
+  innerLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(0,158,255,0.28)',
+    },
+  ];
+  bottomLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(0,255,00,0.28)',
+    },
+  ];
   lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType = 'line';
@@ -61,6 +79,11 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
   autoBottomScorePctData: ChartDataSets[] = [];
   autoUpperScorePctData: ChartDataSets[] = [];
   autoTotalScorePctData: ChartDataSets[] = [];
+
+  teleopOuterScoreData: ChartDataSets[] = [];
+  teleopInnerScoreData: ChartDataSets[] = [];
+  teleopBottomScoreData: ChartDataSets[] = [];
+
   ngOnInit() {
 
 
@@ -79,6 +102,9 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
         this.autoBottomScorePctData = [];
         this.autoUpperScorePctData = [];
         this.autoTotalScorePctData = [];
+        this.teleopOuterScoreData = [];
+        this.teleopInnerScoreData = [];
+        this.teleopBottomScoreData = [];
 
         this.games = res;
         this.processedGames = this.gameService.processGames(res);
@@ -96,7 +122,9 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
         this.autoBottomScorePctData.push({ data: this.processedGames.autoBottomScorePctVector, label: 'Bottom Score %'});
         this.autoUpperScorePctData.push({ data: this.processedGames.autoUpperScorePctVector, label: 'Upper Score %'});
         this.autoTotalScorePctData.push({ data: this.processedGames.autoTotalScorePctVector, label: 'Total Score %'});
-
+        this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'})
+        this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});
+        this.teleopBottomScoreData.push({data: this.processedGames.teleopBottomScoreVector, label: 'Bottom Score'});
       });
   }
 

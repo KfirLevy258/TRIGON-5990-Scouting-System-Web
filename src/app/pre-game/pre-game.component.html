@@ -10,29 +10,76 @@
 
   <div *ngIf="gameNumber && !isLoading" fxLayout="row" fxFlexFill>
 
-    <div fxFlex fxLayout="column" fxLayoutAlign="start center">
-      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
+
+      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill >
+
         <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
           <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px; text-align: center">{{ blueScore }} pts</h2>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore }} pts</h2>
         </div>
+
         <h2 style="color: blue">Blue Teams</h2>
+
         <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-          <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px">{{ blueWinPercent }}%</h2>
+          <label fxFlexAlign="center" style="font-size: 13px">Win percent</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueWinPercent }}%</h2>
         </div>
       </div>
+
       <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: blue">
         <h3> {{ blueTeams[0] }} </h3>
         <h3> {{ blueTeams[1] }} </h3>
         <h3> {{ blueTeams[2] }} </h3>
       </div>
 
+      <h2 class="section-head">Autonomous</h2>
+
       <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center">Inner AVG</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexFill>{{ blueAutoInnerAVG }}</h2>
+        </div>
+
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center">Outer AVG</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexFill>{{ blueAutoOuterAVG }}</h2>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around">
         <div style="display: block">
           <canvas baseChart
-                  [datasets]="blueTeamsScores"
+                  [datasets]="blueAutoOuterAVGVector"
                   [labels]="blueTeams"
+                  [colors]="outerLineColor"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType">
+          </canvas>
+        </div>
+
+        <div style="display: block">
+          <canvas baseChart
+                  [datasets]="blueAutoInnerAVGVector"
+                  [labels]="blueTeams"
+                  [colors]="innerLineColor"
+                  [options]="barChartOptions"
+                  [plugins]="barChartPlugins"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType">
+          </canvas>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around">
+        <div style="display: block">
+          <canvas baseChart
+                  [datasets]="blueAutoBottomAVGVector"
+                  [labels]="blueTeams"
+                  [colors]="bottomLineColor"
                   [options]="barChartOptions"
                   [plugins]="barChartPlugins"
                   [legend]="barChartLegend"

@@ -95,8 +95,8 @@ export class ProcessedGames {
   teleopBottomSuccess = 0;
   teleopTotalSuccess = 0;
   teleopInnerOuterRatio;
-  teleopTrenchRotateAVG = 0;
-  teleopTrenchStopAVG = 0;
+  teleopTrenchRotate = 0;
+  teleopTrenchStop = 0;
   teleopCyclesAVG = 0;
 
   autoBottomScoreVector: Array<number> = [];
@@ -214,10 +214,10 @@ export class GameService {
         }
       });
       if (game.trenchRotate) {
-        processedGames.teleopTrenchRotateAVG += 1;
+        processedGames.teleopTrenchRotate += 1;
       }
       if (game.trenchStop) {
-        processedGames.teleopTrenchStopAVG += 1;
+        processedGames.teleopTrenchStop += 1;
       }
       processedGames.gamesVector.push(game.gameNumber);
       processedGames.gamesWon += game.gameWon ? 1 : 0;
@@ -273,8 +273,6 @@ export class GameService {
     processedGames.autoAVGPowerCellsEndOfAuto = processedGames.autoAVGPowerCellsEndOfAuto / games.length;
     processedGames.teleopAVG = processedGames.teleopAVGBottom + processedGames.teleopAVGInner + processedGames.teleopAVGOuter;
     processedGames.autoAVG = processedGames.autoAVGInner + processedGames.autoAVGOuter + processedGames.autoAVGBottom;
-    processedGames.teleopTrenchStopAVG = processedGames.teleopTrenchStopAVG / games.length;
-    processedGames.teleopTrenchRotateAVG = processedGames.teleopTrenchRotateAVG / games.length;
     processedGames.teleopCyclesAVG = processedGames.teleopCyclesAVG / games.length;
     processedGames.autoAVGTotalCollect = processedGames.autoAVGTrenchCollect + processedGames.autoAVGClimbCollect;
     return processedGames;

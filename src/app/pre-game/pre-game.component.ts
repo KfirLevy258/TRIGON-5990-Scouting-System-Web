@@ -8,7 +8,7 @@ import {DialogAlertComponent} from '../dialog-alert/dialog-alert.component';
 import {take} from 'rxjs/operators';
 import {Game, GameService, ProcessedGames} from '../game.service';
 import {forkJoin, merge, zip} from 'rxjs';
-import {Label} from 'ng2-charts';
+import {Color, Label} from 'ng2-charts';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
@@ -17,6 +17,24 @@ import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
   styleUrls: ['./pre-game.component.scss']
 })
 export class PreGameComponent implements OnInit {
+  outerLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,0,0,0.28)',
+    },
+  ];
+  innerLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(0,0,255,0.28)',
+    },
+  ];
+  bottomLineColor: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(0,255,00,0.28)',
+    },
+  ];
   gameNumberForm: FormGroup;
   gameNumber: string;
   eventKey: string;
@@ -63,6 +81,11 @@ export class PreGameComponent implements OnInit {
   redWinPercent = 0;
   blueTeamsScores: ChartDataSets[] = [];
   redTeamsScores: ChartDataSets[] = [];
+  blueAutoInnerAVGVector: ChartDataSets[] = [];
+  blueAutoOuterAVGVector: ChartDataSets[] = [];
+  blueAutoBottomAVGVector: ChartDataSets[] = [];
+  blueAutoInnerAVG = 0;
+  blueAutoOuterAVG = 0;
 
   constructor(private fb: FormBuilder,
               private http: HttpClient,
@@ -150,6 +173,32 @@ export class PreGameComponent implements OnInit {
         this.redScore = this.processedGamesRed1.predictedGameScore + this.processedGamesRed2.predictedGameScore + this.processedGamesRed3.predictedGameScore;
         this.blueWinPercent = Math.round((this.blueScore / (this.redScore + this.blueScore)) * 100);
         this.redWinPercent = Math.round((this.redScore / (this.blueScore + this.redScore)) * 100);
+        this.blueAutoInnerAVG = this.processedGamesBlue1.autoAVGInner + this.processedGamesBlue2.autoAVGInner + this.processedGamesBlue3.autoAVGInner;
+        this.blueAutoOuterAVG = this.processedGamesBlue1.autoAVGOuter + this.processedGamesBlue2.autoAVGOuter + this.processedGamesBlue3.autoAVGOuter;
+        this.blueAutoInnerAVGVector.push({
+          data: [
+            this.processedGamesBlue1.autoAVGInner,
+            this.processedGamesBlue2.autoAVGInner,
+            this.processedGamesBlue3.autoAVGInner,
+          ],
+          label: 'Average Inner Score'
+        });
+        this.blueAutoOuterAVGVector.push({
+          data: [
+            this.processedGamesBlue1.autoAVGOuter,
+            this.processedGamesBlue2.autoAVGOuter,
+            this.processedGamesBlue3.autoAVGOuter,
+          ],
+          label: 'Average Outer Score'
+        });
+        this.blueAutoBottomAVGVector.push({
+          data: [
+            this.processedGamesBlue1.autoAVGBottom,
+            this.processedGamesBlue2.autoAVGBottom,
+            this.processedGamesBlue3.autoAVGBottom,
+          ],
+          label: 'Average Bottom Score'
+        });
         this.blueTeamsScores.push({
           data: [
             this.processedGamesBlue1.avgGameScore,

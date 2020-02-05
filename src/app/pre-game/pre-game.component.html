@@ -10,9 +10,9 @@
 
   <div *ngIf="gameNumber && !isLoading" fxLayout="row" fxFlexFill>
 
-    <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
 
-      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill >
+      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="height-fix">
 
         <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
           <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
@@ -91,7 +91,7 @@
 
     </div>
 
-    <div fxFlex fxLayout="column" fxLayoutAlign="start center">
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
       <h2 style="color: red">Red Teams</h2>
       <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">
         <h3> {{ redTeams[0] }} </h3>
@@ -123,7 +123,7 @@
         </canvas>
       </div>
 
-    </div>
+    </div >
 
   </div>
 

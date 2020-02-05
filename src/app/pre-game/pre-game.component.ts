@@ -102,9 +102,9 @@ export class PreGameComponent implements OnInit {
     this.tournament = localStorage.getItem('tournament');
 
     // ToDo - Remove
-    // this.gameNumber = '42';
-    // this.isLoading = true;
-    // this.getTeams();
+    this.gameNumber = '42';
+    this.isLoading = true;
+    this.getTeams();
   }
 
   gameSelected() {

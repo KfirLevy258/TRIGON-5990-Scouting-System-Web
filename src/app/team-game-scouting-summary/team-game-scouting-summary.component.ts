@@ -4,21 +4,12 @@ import {Observable} from 'rxjs';
 import {ChartDataSets} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
-// class DataSet {
-//   data: Array<number> = [];
-//   label: string;
-//
-//   constructor(public _label: string) {
-//     this.label = _label;
-//   }
-// }
-
 @Component({
-  selector: 'app-team-game-scouting',
-  templateUrl: './team-game-scouting.component.html',
-  styleUrls: ['./team-game-scouting.component.scss']
+  selector: 'app-team-game-scouting-summary',
+  templateUrl: './team-game-scouting-summary.component.html',
+  styleUrls: ['./team-game-scouting-summary.component.scss']
 })
-export class TeamGameScoutingComponent implements OnInit, OnChanges {
+export class TeamGameScoutingSummaryComponent implements OnInit, OnChanges {
   @Input() tournament;
   @Input() teamNumber;
 
@@ -124,7 +115,7 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
         this.autoBottomScorePctData.push({ data: this.processedGames.autoBottomScorePctVector, label: 'Bottom Score %'});
         this.autoUpperScorePctData.push({ data: this.processedGames.autoUpperScorePctVector, label: 'Upper Score %'});
         this.autoTotalScorePctData.push({ data: this.processedGames.autoTotalScorePctVector, label: 'Total Score %'});
-        this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'})
+        this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'});
         this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});
         this.teleopBottomScoreData.push({data: this.processedGames.teleopBottomScoreVector, label: 'Bottom Score'});
         this.teleopCyclesData.push({data: this.processedGames.teleopCyclesVector, label: 'Upper cycles'});

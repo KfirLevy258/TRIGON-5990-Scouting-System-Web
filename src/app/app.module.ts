@@ -29,7 +29,7 @@ import { PreGameComponent } from './pre-game/pre-game.component';
 import { AllianceSelectionComponent } from './alliance-selection/alliance-selection.component';
 import { UsersManagementComponent } from './users-management/users-management.component';
 import {HttpClientModule} from '@angular/common/http';
-import { TeamGameScoutingComponent } from './team-game-scouting/team-game-scouting.component';
+import { TeamGameScoutingSummaryComponent } from './team-game-scouting-summary/team-game-scouting-summary.component';
 import { TestComponent } from './test/test.component';
 import {ChartsModule} from 'ng2-charts';
 import {UserEditDialogComponent} from './user-edit-dialog/user-edit-dialog.component';
@@ -37,6 +37,7 @@ import {AngularFireFunctionsModule} from '@angular/fire/functions';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {DialogVerifyComponent} from './dialog-verify/dialog-verify.component';
 import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
+import { TeamGameScoutingTeleopComponent } from './team-game-scouting-teleop/team-game-scouting-teleop.component';
 
 const routes: Routes = [
   {
@@ -79,11 +80,12 @@ const routes: Routes = [
     PreGameComponent,
     AllianceSelectionComponent,
     UsersManagementComponent,
-    TeamGameScoutingComponent,
+    TeamGameScoutingSummaryComponent,
     TestComponent,
     UserEditDialogComponent,
     DialogVerifyComponent,
-    DialogAlertComponent
+    DialogAlertComponent,
+    TeamGameScoutingTeleopComponent
 
   ],
   imports: [

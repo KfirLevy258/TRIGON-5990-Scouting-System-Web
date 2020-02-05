@@ -5,11 +5,13 @@ import {ChartDataSets} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
 @Component({
-  selector: 'app-team-game-scouting-teleop',
-  templateUrl: './team-game-scouting-teleop.component.html',
-  styleUrls: ['./team-game-scouting-teleop.component.scss']
+  selector: 'app-team-game-scouting-end-game',
+  templateUrl: './team-game-scouting-end-game.html',
+  styleUrls: ['./team-game-scouting-end-game.scss']
 })
-export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
+
+// tslint:disable-next-line:component-class-suffix
+export class TeamGameScoutingEndGame implements OnInit, OnChanges {
 
   @Input() tournament;
   @Input() teamNumber;
@@ -21,7 +23,7 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
 
   constructor(private gameService: GameService) { }
 
-  gamesScoreData: ChartDataSets[] = [];
+  climbLocations: ChartDataSets[] = [];
   gamesLabels: Label[] = [];
 
   lineChartOptions = {
@@ -62,9 +64,6 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
   lineChartPlugins = [];
   lineChartType = 'line';
 
-  teleopOuterScoreData: ChartDataSets[] = [];
-  teleopInnerScoreData: ChartDataSets[] = [];
-  teleopBottomScoreData: ChartDataSets[] = [];
   teleopCyclesData: ChartDataSets[] = [];
 
   ngOnInit() {
@@ -76,18 +75,13 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
     this.games$ = this.gameService.getGames(this.tournament, this.teamNumber);
     this.games$
       .subscribe(res => {
-        this.teleopOuterScoreData = [];
-        this.teleopInnerScoreData = [];
-        this.teleopBottomScoreData = [];
+        this.climbLocations = [];
         this.teleopCyclesData = [];
 
         this.games = res;
         this.processedGames = this.gameService.processGames(res);
         this.gamesLabels = this.processedGames.gamesVector;
-        this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'});
-        this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});
-        this.teleopBottomScoreData.push({data: this.processedGames.teleopBottomScoreVector, label: 'Bottom Score'});
-        this.teleopCyclesData.push({data: this.processedGames.teleopCyclesVector, label: 'Upper cycles'});
+        this.climbLocations.push({ data: this.processedGames.climbLocations, label: 'Games Scores' });
       });
   }
 

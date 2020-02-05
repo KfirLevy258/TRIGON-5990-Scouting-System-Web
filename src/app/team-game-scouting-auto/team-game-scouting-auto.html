@@ -1,0 +1,97 @@
+<div *ngIf="games.length > 0" fxLayout="column" fxLayoutAlign="start center">
+
+  <h2 class="section-head"></h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Outer AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGOuter | number:'1.2-2'}}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Inner AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGInner | number:'1.2-2'}}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Bottom AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGBottom | number:'1.2-2'}}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Game pieces AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.autoAVG | number:'1.2-2'}}</h2>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Power cells collect from trench AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGTrenchCollect | number:'1.2-2'}}</h2>
+    </div>
+
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Power cells collect from climb AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGClimbCollect | number:'1.2-2'}}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Power cells collect AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGTotalCollect | number:'1.2-2'}}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Power cells end of auto AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGPowerCellsEndOfAuto | number:'1.2-2'}}</h2>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoBottomScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="bottomLineColor"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoUpperScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="autoTotalScoreData"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="games.length == 0" fxLayout="column" fxLayoutAlign="start center">
+  No Data
+</div>

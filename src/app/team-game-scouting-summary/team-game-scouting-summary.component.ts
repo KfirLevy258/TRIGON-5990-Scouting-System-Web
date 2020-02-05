@@ -61,21 +61,6 @@ export class TeamGameScoutingSummaryComponent implements OnInit, OnChanges {
   lineChartPlugins = [];
   lineChartType = 'line';
 
-  autoBottomScoreData: ChartDataSets[] = [];
-  autoInnerScoreData: ChartDataSets[] = [];
-  autoOuterScoreData: ChartDataSets[] = [];
-  autoUpperScoreData: ChartDataSets[] = [];
-  autoTotalScoreData: ChartDataSets[] = [];
-
-  autoBottomScorePctData: ChartDataSets[] = [];
-  autoUpperScorePctData: ChartDataSets[] = [];
-  autoTotalScorePctData: ChartDataSets[] = [];
-
-  teleopOuterScoreData: ChartDataSets[] = [];
-  teleopInnerScoreData: ChartDataSets[] = [];
-  teleopBottomScoreData: ChartDataSets[] = [];
-  teleopCyclesData: ChartDataSets[] = [];
-
   ngOnInit() {
 
 
@@ -86,39 +71,11 @@ export class TeamGameScoutingSummaryComponent implements OnInit, OnChanges {
     this.games$
       .subscribe(res => {
         this.gamesScoreData = [];
-        this.autoBottomScoreData = [];
-        this.autoInnerScoreData = [];
-        this.autoOuterScoreData = [];
-        this.autoUpperScoreData = [];
-        this.autoTotalScoreData = [];
-        this.autoBottomScorePctData = [];
-        this.autoUpperScorePctData = [];
-        this.autoTotalScorePctData = [];
-        this.teleopOuterScoreData = [];
-        this.teleopInnerScoreData = [];
-        this.teleopBottomScoreData = [];
-        this.teleopCyclesData = [];
 
         this.games = res;
         this.processedGames = this.gameService.processGames(res);
         this.gamesLabels = this.processedGames.gamesVector;
         this.gamesScoreData.push({ data: this.processedGames.gamesScoresVector, label: 'Games Scores' });
-        this.autoBottomScoreData.push({ data: this.processedGames.autoBottomScoreVector, label: 'Bottom Score'});
-        // this.autoInnerScoreData.push({ data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'});
-        // this.autoOuterScoreData.push({ data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'});
-        this.autoUpperScoreData.push(
-          { data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'},
-          { data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'},
-          { data: this.processedGames.autoUpperScoreVector, label: 'Upper Score'}
-          );
-        this.autoTotalScoreData.push({ data: this.processedGames.autoTotalScoreVector, label: 'Total Score'});
-        this.autoBottomScorePctData.push({ data: this.processedGames.autoBottomScorePctVector, label: 'Bottom Score %'});
-        this.autoUpperScorePctData.push({ data: this.processedGames.autoUpperScorePctVector, label: 'Upper Score %'});
-        this.autoTotalScorePctData.push({ data: this.processedGames.autoTotalScorePctVector, label: 'Total Score %'});
-        this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'});
-        this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});
-        this.teleopBottomScoreData.push({data: this.processedGames.teleopBottomScoreVector, label: 'Bottom Score'});
-        this.teleopCyclesData.push({data: this.processedGames.teleopCyclesVector, label: 'Upper cycles'});
       });
   }
 

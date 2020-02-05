@@ -38,6 +38,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {DialogVerifyComponent} from './dialog-verify/dialog-verify.component';
 import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
 import { TeamGameScoutingTeleopComponent } from './team-game-scouting-teleop/team-game-scouting-teleop.component';
+import {TeamGameScoutingAuto} from "./team-game-scouting-auto/team-game-scouting-auto";
+import {TeamGameScoutingEndGame} from "./team-game-scouting-end-game/team-game-scouting-end-game";
 
 const routes: Routes = [
   {
@@ -85,7 +87,9 @@ const routes: Routes = [
     UserEditDialogComponent,
     DialogVerifyComponent,
     DialogAlertComponent,
-    TeamGameScoutingTeleopComponent
+    TeamGameScoutingTeleopComponent,
+    TeamGameScoutingAuto,
+    TeamGameScoutingEndGame
 
   ],
   imports: [

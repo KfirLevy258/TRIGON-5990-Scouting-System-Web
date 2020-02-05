@@ -98,6 +98,14 @@ export class ProcessedGames {
   teleopTrenchRotate = 0;
   teleopTrenchStop = 0;
   teleopCyclesAVG = 0;
+  climbSuccessfully = 0;
+  climbAttempts = 0;
+  climbSuccess = 0;
+  climbLocationsAVG = 0;
+  totalGamePieces = 0;
+  autoTotalShoot = 0;
+  totalShoots = 0;
+  totalSuccessPercent = 0;
 
   autoBottomScoreVector: Array<number> = [];
   autoBottomScorePctVector: Array<number> = [];
@@ -112,6 +120,7 @@ export class ProcessedGames {
   teleopOuterScoreVector: Array<number> = [];
   teleopBottomScoreVector: Array<number> = [];
   teleopCyclesVector: Array<number> = [];
+  climbLocations: Array<number> = [];
   teleopDetailedScores: Array<[string, number, number]>;
 }
 @Injectable({
@@ -219,6 +228,16 @@ export class GameService {
       if (game.trenchStop) {
         processedGames.teleopTrenchStop += 1;
       }
+      // tslint:disable-next-line:triple-equals
+      if (game.climbStatus == 'טיפס בהצלחה') {
+        processedGames.climbSuccessfully += 1;
+        processedGames.climbAttempts += 1;
+        processedGames.climbLocations.push(Number(game.climbLocation));
+      }
+      // tslint:disable-next-line:triple-equals
+      if (game.climbStatus == 'ניסה ולא הצליח') {
+        processedGames.climbAttempts += 1;
+      }
       processedGames.gamesVector.push(game.gameNumber);
       processedGames.gamesWon += game.gameWon ? 1 : 0;
       const gameScore = this.calcGameScore(game);
@@ -249,11 +268,19 @@ export class GameService {
       processedGames.teleopUpperTotalShot += game.teleopUpperTotalShots;
       processedGames.teleopBottomTotalShot += game.teleopBottomShots;
       processedGames.teleopTotalShot += game.teleopUpperTotalShots + game.teleopBottomShots;
+      processedGames.autoTotalShoot += game.autoUpperTotalShots + game.autoBottomShots;
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
       });
     });
+    processedGames.climbLocations.forEach(location => {
+      processedGames.climbLocationsAVG += location;
+    });
+    // tslint:disable-next-line:max-line-length
+    processedGames.totalGamePieces = processedGames.autoAVGOuter + processedGames.autoAVGInner + processedGames.autoAVGBottom + processedGames.teleopAVGOuter + processedGames.teleopAVGInner + processedGames.teleopAVGBottom;
+    processedGames.totalShoots = processedGames.teleopTotalShot + processedGames.autoTotalShoot;
     processedGames.avgGameScore = processedGames.avgGameScore / processedGames.gamesPlayed;
+    processedGames.climbLocationsAVG = Math.round(processedGames.climbLocationsAVG / processedGames.climbSuccessfully);
     const gamesScoreLine = this.calc1dRegression(processedGames.gamesScoresVector);
     // tslint:disable-next-line:max-line-length
     processedGames.teleopUpperSuccess = Math.round(((processedGames.teleopAVGOuter + processedGames.teleopAVGInner) / processedGames.teleopUpperTotalShot) * 100);
@@ -275,6 +302,8 @@ export class GameService {
     processedGames.autoAVG = processedGames.autoAVGInner + processedGames.autoAVGOuter + processedGames.autoAVGBottom;
     processedGames.teleopCyclesAVG = processedGames.teleopCyclesAVG / games.length;
     processedGames.autoAVGTotalCollect = processedGames.autoAVGTrenchCollect + processedGames.autoAVGClimbCollect;
+    processedGames.climbSuccess = (processedGames.climbSuccessfully / processedGames.climbAttempts) * 100;
+    processedGames.totalSuccessPercent = Math.round((processedGames.totalGamePieces / processedGames.totalShoots) * 100);
     return processedGames;
   }
 

@@ -21,12 +21,20 @@
 
       <mat-tab-group>
 
-        <mat-tab label="Games Summary & Auto">
+        <mat-tab label="Games Summary">
           <app-team-game-scouting-summary [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-summary>
         </mat-tab>
 
-        <mat-tab label="Games Teleop">
+        <mat-tab label="Autonomous">
+          <app-team-game-scouting-auto [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-auto>
+        </mat-tab>
+
+        <mat-tab label="Teleop">
           <app-team-game-scouting-teleop [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-teleop>
+        </mat-tab>
+
+        <mat-tab label="End game">
+          <app-team-game-scouting-end-game [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-end-game>
         </mat-tab>
 
         <mat-tab label="Pit Scouting">

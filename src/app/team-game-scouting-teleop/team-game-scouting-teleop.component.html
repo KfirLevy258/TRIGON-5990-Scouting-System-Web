@@ -1,156 +1,27 @@
 <div *ngIf="games.length > 0" fxLayout="column" fxLayoutAlign="start center">
 
-  <h2 class="section-head">Summary Data</h2>
-
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">games played</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesPlayed }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">games won</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.gamesWon }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Average Score</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.avgGameScore | number:'1.2-2'}}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Predicted Score</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.predictedGameScore | number:'1.2-2'}}</h2>
-    </div>
-
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="gamesScoreData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
-
-  </div>
-
-  <h2 class="section-head">Autonomous</h2>
+  <h2 class="section-head"></h2>
 
   <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Outer AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGOuter }}</h2>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGOuter | number:'1.2-2'}}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Inner AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGInner }}</h2>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGInner | number:'1.2-2'}}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Bottom AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGBottom }}</h2>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGBottom | number:'1.2-2'}}</h2>
     </div>
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Game pisces AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.autoAVG }}</h2>
-    </div>
-
-  </div>
-
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Power cells collect from trench AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGTrenchCollect }}</h2>
-    </div>
-
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Power cells collect from climb AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGClimbCollect }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Power cells collect AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGTotalCollect }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Power cells end of auto AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.autoAVGPowerCellsEndOfAuto }}</h2>
-    </div>
-
-  </div>
-
-
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoBottomScoreData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="bottomLineColor"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoUpperScoreData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
-
-    <div class="chart-wrapper">
-      <canvas baseChart
-              [datasets]="autoTotalScoreData"
-              [labels]="gamesLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
-      </canvas>
-    </div>
-  </div>
-
-  <h2 class="section-head">Teleop</h2>
-
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Outer AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGOuter }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Inner AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGInner }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Bottom AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopAVGBottom }}</h2>
-    </div>
-
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">Game pisces AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopAVG }}</h2>
+      <label fxFlexAlign="center">Game pieces AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center" >{{ processedGames.teleopAVG | number:'1.2-2'}}</h2>
     </div>
 
   </div>
@@ -194,7 +65,7 @@
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Upper cycles AVG</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopCyclesAVG }}</h2>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.teleopCyclesAVG | number:'1.2-2'}}</h2>
     </div>
 
   </div>
@@ -251,8 +122,6 @@
       </canvas>
     </div>
   </div>
-
-  <h2 class="section-head">End game</h2>
 
 </div>
 

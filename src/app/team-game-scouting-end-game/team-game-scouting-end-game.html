@@ -1,0 +1,49 @@
+<div *ngIf="games.length > 0" fxLayout="column" fxLayoutAlign="start center">
+
+  <h2 class="section-head"></h2>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Climbed successfully</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbSuccessfully }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Climb attempts</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbAttempts }}</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Climb success</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbSuccess }}%</h2>
+    </div>
+
+    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+      <label fxFlexAlign="center">Climb locations AVG</label>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbLocationsAVG | number:'1.2-2' }}</h2>
+    </div>
+
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+
+    <div class="chart-wrapper">
+      <canvas baseChart
+              [datasets]="climbLocations"
+              [labels]="gamesLabels"
+              [options]="lineChartOptions"
+              [colors]="bottomLineColor"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="games.length == 0" fxLayout="column" fxLayoutAlign="start center">
+  No Data
+</div>

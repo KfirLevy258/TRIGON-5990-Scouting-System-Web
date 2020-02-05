@@ -83,6 +83,7 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
   teleopOuterScoreData: ChartDataSets[] = [];
   teleopInnerScoreData: ChartDataSets[] = [];
   teleopBottomScoreData: ChartDataSets[] = [];
+  teleopCyclesData: ChartDataSets[] = [];
 
   ngOnInit() {
 
@@ -105,6 +106,7 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
         this.teleopOuterScoreData = [];
         this.teleopInnerScoreData = [];
         this.teleopBottomScoreData = [];
+        this.teleopCyclesData = [];
 
         this.games = res;
         this.processedGames = this.gameService.processGames(res);
@@ -125,6 +127,7 @@ export class TeamGameScoutingComponent implements OnInit, OnChanges {
         this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'})
         this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});
         this.teleopBottomScoreData.push({data: this.processedGames.teleopBottomScoreVector, label: 'Bottom Score'});
+        this.teleopCyclesData.push({data: this.processedGames.teleopCyclesVector, label: 'Upper cycles'});
       });
   }
 

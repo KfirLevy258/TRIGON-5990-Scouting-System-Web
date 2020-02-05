@@ -35,6 +35,9 @@ export class Game {
   autoPowerCellsOnAutoEnd: number;
   autoBottomScore: number;
   autoBottomShots: number;
+  autoTrenchCollect: Array<boolean> = [];
+  autoClimbCollect: Array<boolean> = [];
+
   climbBallCollected1: boolean;
   climbBallCollected2: boolean;
   climbBallCollected3: boolean;
@@ -77,6 +80,10 @@ export class ProcessedGames {
   autoAVGOuter = 0;
   autoAVGBottom = 0;
   autoAVG = 0;
+  autoAVGTrenchCollect = 0;
+  autoAVGClimbCollect = 0;
+  autoAVGPowerCellsEndOfAuto = 0;
+  autoAVGTotalCollect = 0;
   teleopAVGOuter = 0;
   teleopAVGInner = 0;
   teleopAVGBottom  = 0;
@@ -88,6 +95,9 @@ export class ProcessedGames {
   teleopBottomSuccess = 0;
   teleopTotalSuccess = 0;
   teleopInnerOuterRatio;
+  teleopTrenchRotateAVG = 0;
+  teleopTrenchStopAVG = 0;
+  teleopCyclesAVG = 0;
 
   autoBottomScoreVector: Array<number> = [];
   autoBottomScorePctVector: Array<number> = [];
@@ -101,6 +111,7 @@ export class ProcessedGames {
   teleopInnerScoreVector: Array<number> = [];
   teleopOuterScoreVector: Array<number> = [];
   teleopBottomScoreVector: Array<number> = [];
+  teleopCyclesVector: Array<number> = [];
   teleopDetailedScores: Array<[string, number, number]>;
 }
 @Injectable({
@@ -132,6 +143,11 @@ export class GameService {
           game.climbBallCollected3 = data['Game scouting'].Auto.climb3BallCollected;
           game.climbBallCollected4 = data['Game scouting'].Auto.climb4BallCollected;
           game.climbBallCollected5 = data['Game scouting'].Auto.climb5BallCollected;
+          game.autoClimbCollect.push(game.climbBallCollected1);
+          game.autoClimbCollect.push(game.climbBallCollected2);
+          game.autoClimbCollect.push(game.climbBallCollected3);
+          game.autoClimbCollect.push(game.climbBallCollected4);
+          game.autoClimbCollect.push(game.climbBallCollected5);
           game.autoInnerScore = data['Game scouting'].Auto.innerScore;
           game.autoOuterScore = data['Game scouting'].Auto.outerScore;
           game.trenchBallCollected1 = data['Game scouting'].Auto.trench1BallCollected;
@@ -139,6 +155,11 @@ export class GameService {
           game.trenchBallCollected3 = data['Game scouting'].Auto.trench3BallCollected;
           game.trenchBallCollected4 = data['Game scouting'].Auto.trench4BallCollected;
           game.trenchBallCollected5 = data['Game scouting'].Auto.trench5BallCollected;
+          game.autoTrenchCollect.push(game.trenchBallCollected1);
+          game.autoTrenchCollect.push(game.trenchBallCollected2);
+          game.autoTrenchCollect.push(game.trenchBallCollected3);
+          game.autoTrenchCollect.push(game.trenchBallCollected4);
+          game.autoTrenchCollect.push(game.trenchBallCollected5);
           game.autoUpperTotalShots = data['Game scouting'].Auto.upperShoot;
           const shots = data['Game scouting'].Auto.upperData;
           shots.forEach(shot => {
@@ -157,8 +178,8 @@ export class GameService {
           game.trenchRotate = data['Game scouting'].Teleop.Sum.trenchRotate;
           game.trenchStop = data['Game scouting'].Teleop.Sum.trenchStop;
           game.teleopUpperTotalShots = data['Game scouting'].Teleop.Sum.upperShoot;
-          const teleShots = data['Game scouting'].Teleop.upperData;
-          teleShots.forEach(shot => {
+          const teleopShots = data['Game scouting'].Teleop.upperData;
+          teleopShots.forEach(shot => {
             const s = new TeleopUpperShot();
             s.innerScore = shot.innerScore;
             s.outerScore = shot.outerScore;
@@ -172,7 +193,6 @@ export class GameService {
           game.climbLocation = data['Game scouting'].EndGame.climbLocation;
           game.climbStatus = data['Game scouting'].EndGame.climbStatus;
           game.climbFailureReason = data['Game scouting'].EndGame.whyDidntClimb;
-
           return game;
         });
       }));
@@ -180,22 +200,37 @@ export class GameService {
 
   processGames(games: Array<Game>) {
     const processedGames: ProcessedGames = new ProcessedGames();
-
     processedGames.gamesPlayed = games.length;
-
-
     processedGames.teleopDetailedScores = [];
     games.forEach(game => {
+      game.autoTrenchCollect.forEach(collect => {
+        if (collect) {
+          processedGames.autoAVGTrenchCollect += 1;
+        }
+      });
+      game.autoClimbCollect.forEach(collect => {
+        if (collect) {
+          processedGames.autoAVGClimbCollect += 1;
+        }
+      });
+      if (game.trenchRotate) {
+        processedGames.teleopTrenchRotateAVG += 1;
+      }
+      if (game.trenchStop) {
+        processedGames.teleopTrenchStopAVG += 1;
+      }
       processedGames.gamesVector.push(game.gameNumber);
       processedGames.gamesWon += game.gameWon ? 1 : 0;
       const gameScore = this.calcGameScore(game);
       processedGames.gamesScoresVector.push(gameScore);
+      processedGames.autoAVGPowerCellsEndOfAuto += game.autoPowerCellsOnAutoEnd;
       processedGames.avgGameScore += gameScore;
       processedGames.autoBottomScoreVector.push(game.autoBottomScore);
       processedGames.autoBottomScorePctVector.push(game.autoBottomScore / game.autoBottomShots * 100);
       processedGames.autoInnerScoreVector.push(game.autoInnerScore);
       processedGames.teleopInnerScoreVector.push(game.teleopInnerScore);
       processedGames.teleopOuterScoreVector.push(game.teleopOuterScore);
+      processedGames.teleopCyclesVector.push(game.teleopUpperShots.length);
       processedGames.teleopBottomScoreVector.push(game.teleopBottomScore);
       processedGames.autoOuterScoreVector.push(game.autoOuterScore);
       processedGames.autoUpperScoreVector.push(game.autoInnerScore + game.autoOuterScore);
@@ -209,10 +244,10 @@ export class GameService {
       processedGames.teleopAVGInner += game.teleopInnerScore;
       processedGames.teleopAVGBottom += game.teleopBottomScore;
       processedGames.autoAVGBottom += game.autoBottomScore;
+      processedGames.teleopCyclesAVG += game.teleopUpperShots.length;
       // @ts-ignore
       processedGames.teleopUpperTotalShot += game.teleopUpperTotalShots;
       processedGames.teleopBottomTotalShot += game.teleopBottomShots;
-
       processedGames.teleopTotalShot += game.teleopUpperTotalShots + game.teleopBottomShots;
       game.teleopUpperShots.forEach(shot => {
         processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
@@ -223,6 +258,7 @@ export class GameService {
     // tslint:disable-next-line:max-line-length
     processedGames.teleopUpperSuccess = Math.round(((processedGames.teleopAVGOuter + processedGames.teleopAVGInner) / processedGames.teleopUpperTotalShot) * 100);
     processedGames.teleopBottomSuccess = Math.round(((processedGames.teleopAVGBottom) / processedGames.teleopBottomTotalShot) * 100);
+    // tslint:disable-next-line:max-line-length
     processedGames.teleopTotalSuccess = Math.round(((processedGames.teleopAVGBottom + processedGames.teleopAVGOuter + processedGames.teleopAVGInner) / (processedGames.teleopBottomTotalShot + processedGames.teleopUpperTotalShot)) * 100);
     processedGames.teleopInnerOuterRatio = processedGames.teleopAVGInner + '/' + processedGames.teleopAVGOuter;
     processedGames.predictedGameScore = gamesScoreLine.m * games.length + gamesScoreLine.n;
@@ -232,8 +268,15 @@ export class GameService {
     processedGames.teleopAVGBottom = processedGames.teleopAVGBottom / games.length;
     processedGames.teleopAVGInner = processedGames.teleopAVGInner / games.length;
     processedGames.teleopAVGOuter = processedGames.teleopAVGOuter / games.length;
+    processedGames.autoAVGTrenchCollect = processedGames.autoAVGTrenchCollect / games.length;
+    processedGames.autoAVGClimbCollect = processedGames.autoAVGClimbCollect / games.length;
+    processedGames.autoAVGPowerCellsEndOfAuto = processedGames.autoAVGPowerCellsEndOfAuto / games.length;
     processedGames.teleopAVG = processedGames.teleopAVGBottom + processedGames.teleopAVGInner + processedGames.teleopAVGOuter;
     processedGames.autoAVG = processedGames.autoAVGInner + processedGames.autoAVGOuter + processedGames.autoAVGBottom;
+    processedGames.teleopTrenchStopAVG = processedGames.teleopTrenchStopAVG / games.length;
+    processedGames.teleopTrenchRotateAVG = processedGames.teleopTrenchRotateAVG / games.length;
+    processedGames.teleopCyclesAVG = processedGames.teleopCyclesAVG / games.length;
+    processedGames.autoAVGTotalCollect = processedGames.autoAVGTrenchCollect + processedGames.autoAVGClimbCollect;
     return processedGames;
   }
 

@@ -233,6 +233,8 @@ export class GameService {
         processedGames.climbSuccessfully += 1;
         processedGames.climbAttempts += 1;
         processedGames.climbLocations.push(Number(game.climbLocation));
+      } else {
+        processedGames.climbLocations.push(Number(null));
       }
       // tslint:disable-next-line:triple-equals
       if (game.climbStatus == 'ניסה ולא הצליח') {

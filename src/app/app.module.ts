@@ -73,25 +73,26 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TeamFullData,
-    TeamPitScouting,
-    LoginComponent,
-    HomeComponent,
-    PreGameComponent,
-    AllianceSelectionComponent,
-    UsersManagementComponent,
-    TeamGameScoutingSummaryComponent,
-    TestComponent,
-    UserEditDialogComponent,
-    DialogVerifyComponent,
-    DialogAlertComponent,
-    TeamGameScoutingTeleopComponent,
-    TeamGameScoutingAuto,
-    TeamGameScoutingEndGame
+    declarations: [
+        AppComponent,
+        TeamFullData,
+        TeamPitScouting,
+        LoginComponent,
+        HomeComponent,
+        PreGameComponent,
+        AllianceSelectionComponent,
+        UsersManagementComponent,
+        TeamGameScoutingSummaryComponent,
+        TestComponent,
+        UserEditDialogComponent,
+        DialogVerifyComponent,
+        DialogAlertComponent,
+        TeamGameScoutingTeleopComponent,
+        TeamGameScoutingAuto,
+        TeamGameScoutingEndGame,
+        PreGameComponent
 
-  ],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

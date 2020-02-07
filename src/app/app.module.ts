@@ -41,6 +41,7 @@ import { TeamGameScoutingTeleopComponent } from './team-game-scouting-teleop/tea
 import {TeamGameScoutingAuto} from './team-game-scouting-auto/team-game-scouting-auto';
 import {TeamGameScoutingEndGame} from './team-game-scouting-end-game/team-game-scouting-end-game';
 import {TeamSuperScouting} from './team-super-scouting/team-super-scouting';
+import { PreGameAutoComponent } from './pre-game-auto/pre-game-auto.component';
 
 
 const routes: Routes = [
@@ -93,7 +94,9 @@ const routes: Routes = [
     TeamGameScoutingAuto,
     TeamGameScoutingEndGame,
     PreGameComponent,
-    TeamSuperScouting
+    TeamSuperScouting,
+    PreGameAutoComponent,
+
 
   ],
   imports: [

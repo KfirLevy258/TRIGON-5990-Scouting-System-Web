@@ -19,7 +19,7 @@
           <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore }} pts</h2>
         </div>
 
-        <h2 style="color: blue">Blue Teams</h2>
+        <h2 style="color: blue">Blue Alliance</h2>
 
         <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
           <label fxFlexAlign="center" style="font-size: 13px">Win percent</label>
@@ -31,62 +31,6 @@
         <h3> {{ blueTeams[0] }} </h3>
         <h3> {{ blueTeams[1] }} </h3>
         <h3> {{ blueTeams[2] }} </h3>
-      </div>
-
-      <h2 class="section-head">Autonomous</h2>
-
-      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-          <label fxFlexAlign="center">Inner AVG</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexFill>{{ blueAutoInnerAVG }}</h2>
-        </div>
-
-        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-          <label fxFlexAlign="center">Outer AVG</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexFill>{{ blueAutoOuterAVG }}</h2>
-        </div>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around">
-        <div style="display: block">
-          <canvas baseChart
-                  [datasets]="blueAutoOuterAVGVector"
-                  [labels]="blueTeams"
-                  [colors]="outerLineColor"
-                  [options]="barChartOptions"
-                  [plugins]="barChartPlugins"
-                  [legend]="barChartLegend"
-                  [chartType]="barChartType">
-          </canvas>
-        </div>
-
-        <div style="display: block">
-          <canvas baseChart
-                  [datasets]="blueAutoInnerAVGVector"
-                  [labels]="blueTeams"
-                  [colors]="innerLineColor"
-                  [options]="barChartOptions"
-                  [plugins]="barChartPlugins"
-                  [legend]="barChartLegend"
-                  [chartType]="barChartType">
-          </canvas>
-        </div>
-
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign="space-around">
-        <div style="display: block">
-          <canvas baseChart
-                  [datasets]="blueAutoBottomAVGVector"
-                  [labels]="blueTeams"
-                  [colors]="bottomLineColor"
-                  [options]="barChartOptions"
-                  [plugins]="barChartPlugins"
-                  [legend]="barChartLegend"
-                  [chartType]="barChartType">
-          </canvas>
-        </div>
-
       </div>
 
     </div>
@@ -126,6 +70,28 @@
     </div >
 
   </div>
+
+  <div *ngIf="gameNumber && !isLoading" fxLayout="column" fxFlexFill>
+
+  <mat-tab-group fxFlexFill>
+    <mat-tab label="Summary">
+<!--      <app-team-game-scouting-summary></app-team-game-scouting-summary>-->
+    </mat-tab>
+
+    <mat-tab label="Autonomous">
+<!--      <app-pre-game-auto [tournament]="tournament" [teamNumber]="5990"></app-pre-game-auto>-->
+    </mat-tab>
+
+    <mat-tab label="Teleop">
+      <!--          <app-team-game-scouting-summary [tournament]="tournament" [teamNumber]="5990"></app-team-game-scouting-summary>-->
+    </mat-tab>
+
+    <mat-tab label="End game">
+      <!--          <app-team-game-scouting-summary [tournament]="tournament" [teamNumber]="5990"></app-team-game-scouting-summary>-->
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
 
   <div *ngIf="isLoading">
     <mat-spinner></mat-spinner>

@@ -12,7 +12,7 @@ import {Color, Label} from 'ng2-charts';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
-  selector: 'app-pre-game',
+  selector: 'app-pre-game-auto',
   templateUrl: './pre-game.component.html',
   styleUrls: ['./pre-game.component.scss']
 })

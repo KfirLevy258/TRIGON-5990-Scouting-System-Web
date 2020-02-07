@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -14,16 +14,16 @@ export class TestComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
   }
-  testForm: any;
+  testForm: FormGroup;
 
   ngOnInit() {
     this.testForm = this.fb.group({
-      m1: [''],
-      d1: [''],
-      m2: [''],
+      m1: ['60'],
+      d1: ['0'],
+      m2: ['70'],
       d2: [''],
-      m3: [''],
-      d3: [''],
+      m3: ['80'],
+      d3: ['0'],
     });
 
     this.cx = this.canvas.nativeElement.getContext('2d');
@@ -45,10 +45,6 @@ export class TestComponent implements OnInit {
     m3 = Number(this.testForm.value.m3);
     d3 = Number(this.testForm.value.d3);
 
-    console.log(d1);
-
-    console.log(m1 * d1 + m2 * d2 + m3 * d3);
-    console.log((m1 + m2 + m3) * 48 * 2.54 * 0.01  + 93 * 0.453592 * 26 * 2.54 * 0.01);
     this.res = Math.atan((m1 * d1 + m2 * d2 + m3 * d3) / ((m1 + m2 + m3) * PIVOT_TO_RUNG  + MASS * CENTER_OF_MASS_OFFSET)) ;
     this.draw(this.res, d1, d2, d3);
   }
@@ -65,9 +61,12 @@ export class TestComponent implements OnInit {
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#000';
 
+    // this.cx.rotate(angle);
     this.cx.beginPath();
     this.cx.moveTo(200 - 100 * Math.cos(angle), 200 - 100 * Math.sin(angle));
     this.cx.lineTo(200 + 100 * Math.cos(angle), 200 + 100 * Math.sin(angle));
+    // this.cx.moveTo(100, 200);
+    // this.cx.lineTo(300, 200);
     this.cx.stroke();
 
     this.cx.beginPath();
@@ -102,5 +101,26 @@ export class TestComponent implements OnInit {
     console.log('clear');
     this.cx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
 
+  }
+
+  suggest() {
+    let  m1: number; let d1: number;
+    let  m2: number; let d2: number;
+
+    m1 = Number(this.testForm.value.m1);
+    m2 = Number(this.testForm.value.m2);
+
+    if (m1 / m2 < 2.5) {
+      d1 = -0.4 * 1.4;
+      d2 = 0.4 * 1.4 * m1 / m2;
+    } else {
+      d2 = 1.4;
+      d1 = - m2 / m1 * 1.4;
+    }
+    this.testForm.controls.d3.setValue('0');
+    this.testForm.controls.d1.setValue(d1);
+    this.testForm.controls.d2.setValue(d2);
+
+    this.calc();
   }
 }

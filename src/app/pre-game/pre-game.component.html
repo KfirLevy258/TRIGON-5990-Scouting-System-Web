@@ -43,30 +43,6 @@
         <h3> {{ redTeams[2] }} </h3>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
-        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-          <label fxFlexAlign="center">Predicted score</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center">{{ redScore }}</h2>
-        </div>
-
-        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-          <label fxFlexAlign="center">Predicted score</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center">{{ redWinPercent }}%</h2>
-        </div>
-      </div>
-
-
-      <div style="display: block">
-        <canvas baseChart
-                [datasets]="redTeamsScores"
-                [labels]="redTeams"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-        </canvas>
-      </div>
-
     </div >
 
   </div>

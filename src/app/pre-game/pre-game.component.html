@@ -55,11 +55,11 @@
     </mat-tab>
 
     <mat-tab label="Autonomous">
-      <app-pre-game-auto [tournament]="tournament" [teamNumber]="'5990'"></app-pre-game-auto>
+      <app-pre-game-auto [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-auto>
     </mat-tab>
 
     <mat-tab label="Teleop">
-      <!--          <app-team-game-scouting-summary [tournament]="tournament" [teamNumber]="5990"></app-team-game-scouting-summary>-->
+      <app-pre-game-teleop [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-teleop>
     </mat-tab>
 
     <mat-tab label="End game">

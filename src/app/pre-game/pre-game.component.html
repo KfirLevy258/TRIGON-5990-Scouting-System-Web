@@ -51,7 +51,7 @@
 
   <mat-tab-group fxFlexFill>
     <mat-tab label="Summary">
-<!--      <app-team-game-scouting-summary></app-team-game-scouting-summary>-->
+      <app-pre-game-summary [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-summary>
     </mat-tab>
 
     <mat-tab label="Autonomous">
@@ -63,7 +63,7 @@
     </mat-tab>
 
     <mat-tab label="End game">
-      <!--          <app-team-game-scouting-summary [tournament]="tournament" [teamNumber]="5990"></app-team-game-scouting-summary>-->
+      <app-pre-game-end-game [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-end-game>
     </mat-tab>
 
     <mat-tab label="Climb Planner">

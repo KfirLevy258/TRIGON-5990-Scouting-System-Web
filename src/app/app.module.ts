@@ -44,6 +44,8 @@ import {TeamSuperScouting} from './team-super-scouting/team-super-scouting';
 import { PreGameAutoComponent } from './pre-game-auto/pre-game-auto.component';
 import { PreGameClimbPlannerComponent } from './pre-game-climb-planner/pre-game-climb-planner.component';
 import {PreGameTeleopComponentComponent} from "./pre-game-teleop/pre-game-teleop.component";
+import { PreGameSummaryComponent } from './pre-game-summary/pre-game-summary.component';
+import { PreGameEndGameComponent } from './pre-game-end-game/pre-game-end-game.component';
 
 
 const routes: Routes = [
@@ -100,6 +102,8 @@ const routes: Routes = [
     PreGameAutoComponent,
     PreGameClimbPlannerComponent,
     PreGameTeleopComponentComponent,
+    PreGameSummaryComponent,
+    PreGameEndGameComponent,
 
 
   ],

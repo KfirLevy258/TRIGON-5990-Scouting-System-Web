@@ -7,8 +7,8 @@ import {MatDialog} from '@angular/material';
 import {DialogAlertComponent} from '../dialog-alert/dialog-alert.component';
 import {take} from 'rxjs/operators';
 import {Game, GameService, ProcessedGames} from '../game.service';
-import {forkJoin, merge, zip} from 'rxjs';
-import {Color, Label} from 'ng2-charts';
+import {zip} from 'rxjs';
+import {Color} from 'ng2-charts';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
@@ -41,6 +41,8 @@ export class PreGameComponent implements OnInit {
   tournament: string;
   blueTeams: Array<string> = [];
   redTeams: Array<string> = [];
+  homeTeam: string;
+  ourTeams: Array<string>;         // teams including Home Team
   isLoading = false;
 
   gamesBlue1: Array<Game> = [];
@@ -100,6 +102,7 @@ export class PreGameComponent implements OnInit {
   ngOnInit() {
     this.eventKey = localStorage.getItem('event_key');
     this.tournament = localStorage.getItem('tournament');
+    this.homeTeam = localStorage.getItem('homeTeam');
 
     // ToDo - Remove
     this.gameNumber = '42';
@@ -128,14 +131,19 @@ export class PreGameComponent implements OnInit {
         if (matchData) {
           this.blueTeams = matchData.alliances.blue.team_keys;
           this.redTeams = matchData.alliances.red.team_keys;
+          this.ourTeams = null;
           // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.blueTeams.length; i++) {
             this.redTeams[i] = (this.redTeams[i].substring(3, 10));
             this.blueTeams[i] = (this.blueTeams[i].substring(3, 10));
+            if (this.redTeams[i] === this.homeTeam) { this.ourTeams = this.redTeams; }
+            if (this.blueTeams[i] === this.homeTeam) { this.ourTeams = this.blueTeams; }
           }
+          console.log(this.ourTeams);
           this.getGames();
         }
-      }, () => {
+      }, (err) => {
+        console.log(err);
         this.dialog.open(DialogAlertComponent, dialogConfig)
           .afterClosed()
           .pipe(take(1))

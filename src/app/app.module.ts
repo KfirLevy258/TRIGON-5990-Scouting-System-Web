@@ -22,7 +22,7 @@ import {FlexModule} from '@angular/flex-layout';
 import {LoginComponent} from './login/login.component';
 import {AuthService} from './auth.service';
 import {AuthGuard} from './auth.guard';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import { HomeComponent } from './home/home.component';
 import { PreGameComponent } from './pre-game/pre-game.component';
@@ -42,7 +42,7 @@ import {TeamGameScoutingAuto} from './team-game-scouting-auto/team-game-scouting
 import {TeamGameScoutingEndGame} from './team-game-scouting-end-game/team-game-scouting-end-game';
 import {TeamSuperScouting} from './team-super-scouting/team-super-scouting';
 import { PreGameAutoComponent } from './pre-game-auto/pre-game-auto.component';
-import { PreGameTeleopComponentComponent } from './pre-game-teleop/pre-game-teleop.component';
+import { PreGameClimbPlannerComponent } from './pre-game-climb-planner/pre-game-climb-planner.component';
 
 
 const routes: Routes = [
@@ -97,7 +97,7 @@ const routes: Routes = [
     PreGameComponent,
     TeamSuperScouting,
     PreGameAutoComponent,
-    PreGameTeleopComponentComponent,
+    PreGameClimbPlannerComponent,
 
 
   ],
@@ -130,7 +130,8 @@ const routes: Routes = [
 
     RouterModule.forRoot(routes),
     FlexModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule
   ],
   providers: [
     {

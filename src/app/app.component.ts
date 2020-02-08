@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   userName;
   tournaments: Observable<any[]>;
   selectedTournament: string;
+  homeTeam: string;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -28,6 +29,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
+    this.homeTeam = localStorage.getItem('homeTeam');
+
     if (this.authUser) {
       this.loadTournaments();
     }
@@ -60,5 +63,10 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('login');
       })
       .catch(err => console.log(err));
+  }
+
+  homeTeamChange(event) {
+    localStorage.setItem('homeTeam', event.target.value);
+    this.router.navigateByUrl('');
   }
 }

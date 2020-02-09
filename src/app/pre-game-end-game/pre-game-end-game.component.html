@@ -1,1 +1,68 @@
-<p>pre-game-end-game works!</p>
+<div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="data-box">
+
+  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="data-box">
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="blueClimbAttemptsBar"
+                [labels]="blueTeams"
+                [colors]="innerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="blueClimbSucceedBar"
+                [labels]="blueTeams"
+                [colors]="outerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="blueClimbSucceedPercentBar"
+                [labels]="blueTeams"
+                [colors]="bottomLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="blueClimbSucceedPie"
+                [labels]="blueTeams"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend">
+        </canvas>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
+    <h2 style="color: red">Red Teams</h2>
+  </div >
+
+</div>
+
+

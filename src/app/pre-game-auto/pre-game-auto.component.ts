@@ -2,6 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ProcessedGames} from '../game.service';
 import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
 import {Color} from "ng2-charts";
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import {validate} from "codelyzer/walkerFactory/walkerFn";
+import {formatNumber} from "@angular/common";
 
 @Component({
   selector: 'app-pre-game-auto',
@@ -42,21 +45,21 @@ export class PreGameAutoComponent implements OnInit {
   ];
   barChartOptions: ChartOptions = {
     responsive: true,
-    scales: { xAxes: [{}], yAxes: [{
-        ticks: {
-          min: 0,
-        }
-      }] },
+    scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
       datalabels: {
         anchor: 'end',
         align: 'end',
-      }
-    }
+        font: {
+          size: 15,
+        },
+        formatter: Math.round,
+      },
+    },
   };
   barChartType: ChartType = 'bar';
   barChartLegend = true;
-  barChartPlugins = [];
+  barChartPlugins = [pluginDataLabels];
   pieChartType: ChartType = 'pie';
   pieChartLegend = true;
   pieChartPlugins = [];

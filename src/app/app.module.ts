@@ -43,9 +43,10 @@ import {TeamGameScoutingEndGame} from './team-game-scouting-end-game/team-game-s
 import {TeamSuperScouting} from './team-super-scouting/team-super-scouting';
 import { PreGameAutoComponent } from './pre-game-auto/pre-game-auto.component';
 import { PreGameClimbPlannerComponent } from './pre-game-climb-planner/pre-game-climb-planner.component';
-import {PreGameTeleopComponentComponent} from "./pre-game-teleop/pre-game-teleop.component";
+import {PreGameTeleopComponentComponent} from './pre-game-teleop/pre-game-teleop.component';
 import { PreGameSummaryComponent } from './pre-game-summary/pre-game-summary.component';
 import { PreGameEndGameComponent } from './pre-game-end-game/pre-game-end-game.component';
+import { DialogAlliancesComponent } from './dialog-alliances/dialog-alliances.component';
 
 
 const routes: Routes = [
@@ -104,6 +105,7 @@ const routes: Routes = [
     PreGameTeleopComponentComponent,
     PreGameSummaryComponent,
     PreGameEndGameComponent,
+    DialogAlliancesComponent,
 
 
   ],
@@ -153,7 +155,8 @@ const routes: Routes = [
   entryComponents: [
     UserEditDialogComponent,
     DialogVerifyComponent,
-    DialogAlertComponent
+    DialogAlertComponent,
+    DialogAlliancesComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 
@@ -9,6 +9,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class TestComponent implements OnInit {
   res: number;
+  angleDeg: number;
+
   @ViewChild('canvas', {static: true}) canvas: ElementRef;
   private cx: CanvasRenderingContext2D;
 
@@ -27,7 +29,6 @@ export class TestComponent implements OnInit {
     });
 
     this.cx = this.canvas.nativeElement.getContext('2d');
-    console.log(this.cx);
   }
 
   calc() {
@@ -47,6 +48,7 @@ export class TestComponent implements OnInit {
 
     this.res = Math.atan((m1 * d1 + m2 * d2 + m3 * d3) / ((m1 + m2 + m3) * PIVOT_TO_RUNG  + MASS * CENTER_OF_MASS_OFFSET)) ;
     this.draw(this.res, d1, d2, d3);
+    this.angleDeg = this.res / Math.PI * 180;
   }
 
   draw(angle: number, d1: number, d2: number, d3: number) {
@@ -65,8 +67,7 @@ export class TestComponent implements OnInit {
     this.cx.beginPath();
     this.cx.moveTo(200 - 100 * Math.cos(angle), 200 - 100 * Math.sin(angle));
     this.cx.lineTo(200 + 100 * Math.cos(angle), 200 + 100 * Math.sin(angle));
-    // this.cx.moveTo(100, 200);
-    // this.cx.lineTo(300, 200);
+
     this.cx.stroke();
 
     this.cx.beginPath();

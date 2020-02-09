@@ -10,6 +10,7 @@ import {Game, GameService, ProcessedGames} from '../game.service';
 import {zip} from 'rxjs';
 import {Color} from 'ng2-charts';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {DialogAlliancesComponent} from '../dialog-alliances/dialog-alliances.component';
 
 @Component({
   selector: 'app-pre-game',
@@ -105,9 +106,9 @@ export class PreGameComponent implements OnInit {
     this.homeTeam = localStorage.getItem('homeTeam');
 
     // ToDo - Remove
-    this.gameNumber = '42';
-    this.isLoading = true;
-    this.getTeams();
+    // this.gameNumber = '42';
+    // this.isLoading = true;
+    // this.getTeams();
   }
 
   gameSelected() {
@@ -148,6 +149,24 @@ export class PreGameComponent implements OnInit {
           .afterClosed()
           .pipe(take(1))
           .subscribe();
+      });
+  }
+
+  manualTeamsSelect() {
+    const dialogConfig = defaultDialogConfig();
+
+    dialogConfig.data = {
+      dialogTitle: 'Manual Teams Select',
+    };
+
+    this.dialog.open(DialogAlliancesComponent, dialogConfig)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(res => {
+        this.blueTeams = res.blueTeams;
+        this.redTeams = res.redTeams;
+        this.gameNumber = '0';
+        console.log(this.redTeams);
       });
   }
 

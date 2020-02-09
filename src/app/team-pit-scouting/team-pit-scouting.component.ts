@@ -1,31 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import {createPerformWatchHost} from '@angular/compiler-cli/src/perform_watch';
+import {PitScouting, PitScoutingService} from '../pit-scouting.service';
 
-export class PitScouting {
-  powerCellsAtStartup: string;
-  startAnywhere: boolean;
 
-  conversionRatio: string;
-  dtMotorType: string;
-  wheelDiameter: string;
-
-  canClimb: boolean;
-  climbHeight: string;
-  maxClimb: string;
-  minClimb: string;
-
-  powerCells: string;
-  rotateRoulette: boolean;
-  stopRoulette: boolean;
-
-  dtMotors: string;
-  robotLength: string;
-  robotWeight: string;
-  robotWidth: string;
-}
 
 @Component({
   selector: 'app-pit-scouting-page',
@@ -65,7 +42,8 @@ export class TeamPitScouting implements OnInit, OnChanges {
   };
 
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore,
+              private pitScoutingService: PitScoutingService) { }
 
   ngOnInit() {
     this.getData();

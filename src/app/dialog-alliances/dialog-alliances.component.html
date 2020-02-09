@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutAlign="center center" >
+  <h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+  <mat-dialog-content>
+
+    <form [formGroup]="form">
+
+      <div fxLayout="row" fxLayoutAlign="space-evenly">
+
+        <div fxLayout="column" style="margin-left: 20px; margin-right: 20px">
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="blue1"
+                   formControlName="blue1">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="blue2"
+                   formControlName="blue2">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="blue3"
+                   formControlName="blue3">
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="column" style="margin-left: 20px; margin-right: 20px">
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="red1"
+                   formControlName="red1">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="red2"
+                   formControlName="red2">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="red3"
+                   formControlName="red3">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+
+    <button mat-raised-button (click)="cancel()">
+      Cancel
+    </button>
+
+    <button mat-raised-button color="warn"
+            (click)="ok()">
+      Ok
+    </button>
+  </mat-dialog-actions>
+</div>

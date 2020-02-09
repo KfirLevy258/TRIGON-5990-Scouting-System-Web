@@ -69,11 +69,6 @@
   <div *ngIf="gameNumber && !isLoading" fxLayout="column" fxFlexFill>
 
   <mat-tab-group fxFlexFill>
-    <mat-tab label="Summary">
-      <app-pre-game-summary
-        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
-      ></app-pre-game-summary>
-    </mat-tab>
 
     <mat-tab label="Autonomous">
       <app-pre-game-auto
@@ -83,11 +78,17 @@
     </mat-tab>
 
     <mat-tab label="Teleop">
-      <app-pre-game-teleop [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-teleop>
+      <app-pre-game-teleop
+        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
+        [red1]="processedGamesRed1" [red2]="processedGamesRed2" [red3]="processedGamesRed3" [redTeams]="redTeams">
+      </app-pre-game-teleop>
     </mat-tab>
 
     <mat-tab label="End game">
-      <app-pre-game-end-game [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-end-game>
+      <app-pre-game-end-game
+        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
+        [red1]="processedGamesRed1" [red2]="processedGamesRed2" [red3]="processedGamesRed3" [redTeams]="redTeams">
+      </app-pre-game-end-game>
     </mat-tab>
 
 

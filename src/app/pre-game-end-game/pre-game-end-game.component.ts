@@ -14,6 +14,11 @@ export class PreGameEndGameComponent implements OnInit {
   @Input() blue2: ProcessedGames;
   @Input() blue3: ProcessedGames;
   @Input() blueTeams: Array<string>;
+  @Input() red1: ProcessedGames;
+  @Input() red2: ProcessedGames;
+  @Input() red3: ProcessedGames;
+  @Input() redTeams: Array<string>
+
   outerLineColor: Color[] = [
     {
       borderColor: 'black',
@@ -105,12 +110,19 @@ export class PreGameEndGameComponent implements OnInit {
   lineChartPlugins = [];
   lineChartType = 'line';
 
-  games = 0;
-  gamesList: Array<string> = [];
+  blueGames = 0;
+  blueGamesList: Array<string> = [];
   blueClimbAttemptsBar: ChartDataSets[] = [];
   blueClimbSucceedBar: ChartDataSets[] = [];
   blueClimbSucceedPercentBar: ChartDataSets[] = [];
   blueClimbSucceedPie: ChartDataSets[] = [];
+
+  redGames = 0;
+  redGamesList: Array<string> = [];
+  redClimbAttemptsBar: ChartDataSets[] = [];
+  redClimbSucceedBar: ChartDataSets[] = [];
+  redClimbSucceedPercentBar: ChartDataSets[] = [];
+  redClimbSucceedPie: ChartDataSets[] = [];
 
 
   constructor() { }
@@ -148,18 +160,64 @@ export class PreGameEndGameComponent implements OnInit {
       ],
       label: 'Climb success'
     });
-    if (this.blue1.gamesPlayed > this.games) {
-      this.games = this.blue1.gamesPlayed;
+    if (this.blue1.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue1.gamesPlayed;
     }
-    if (this.blue2.gamesPlayed > this.games) {
-      this.games = this.blue2.gamesPlayed;
+    if (this.blue2.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue2.gamesPlayed;
     }
-    if (this.blue3.gamesPlayed > this.games) {
-      this.games = this.blue3.gamesPlayed;
+    if (this.blue3.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue3.gamesPlayed;
     }
     // tslint:disable-next-line:variable-name
-    for (let _i = 1; _i < (this.games + 1); _i++) {
-      this.gamesList.push(_i.toString());
+    for (let _i = 1; _i < (this.blueGames + 1); _i++) {
+      this.blueGamesList.push(_i.toString());
+    }
+
+    this.redClimbAttemptsBar.push({
+      data: [
+        this.red1.climbAttempts,
+        this.red2.climbAttempts,
+        this.red3.climbAttempts,
+      ],
+      label: 'Climb attempts'
+    });
+    this.redClimbSucceedBar.push({
+      data: [
+        this.red1.climbSuccessfully,
+        this.red2.climbSuccessfully,
+        this.red3.climbSuccessfully,
+      ],
+      label: 'Climb success'
+    });
+    this.redClimbSucceedPercentBar.push({
+      data: [
+        this.red1.climbSuccess,
+        this.red2.climbSuccess,
+        this.red3.climbSuccess
+      ],
+      label: 'Success percent'
+    });
+    this.redClimbSucceedPie.push({
+      data: [
+        this.red1.climbSuccess,
+        this.red2.climbSuccess,
+        this.red3.climbSuccess
+      ],
+      label: 'Climb success'
+    });
+    if (this.red1.gamesPlayed > this.redGames) {
+      this.redGames = this.red1.gamesPlayed;
+    }
+    if (this.red2.gamesPlayed > this.redGames) {
+      this.redGames = this.red2.gamesPlayed;
+    }
+    if (this.red3.gamesPlayed > this.redGames) {
+      this.redGames = this.red3.gamesPlayed;
+    }
+    // tslint:disable-next-line:variable-name
+    for (let _i = 1; _i < (this.redGames + 1); _i++) {
+      this.redGamesList.push(_i.toString());
     }
   }
 

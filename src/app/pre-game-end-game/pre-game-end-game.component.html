@@ -60,7 +60,63 @@
   </div>
 
   <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
-    <h2 style="color: red">Red Teams</h2>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redClimbAttemptsBar"
+                [labels]="redTeams"
+                [colors]="innerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redClimbSucceedBar"
+                [labels]="redTeams"
+                [colors]="outerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redClimbSucceedPercentBar"
+                [labels]="redTeams"
+                [colors]="bottomLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redClimbSucceedPie"
+                [labels]="redTeams"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend">
+        </canvas>
+      </div>
+
+    </div>
+
+
   </div >
 
 </div>

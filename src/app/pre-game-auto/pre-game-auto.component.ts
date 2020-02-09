@@ -111,7 +111,7 @@ export class PreGameAutoComponent implements OnInit {
     this.redInnerAVG = this.red1.autoAVGInner + this.red2.autoAVGInner + this.red3.autoAVGInner;
     this.redOuterAVG = this.red1.autoAVGOuter + this.red2.autoAVGOuter + this.red3.autoAVGOuter;
     this.redBottomAVG = this.red1.autoAVGBottom + this.red2.autoAVGBottom + this.red3.autoAVGBottom;
-    this.redTotalScore = this.blueInnerAVG + this.blueOuterAVG + this.blueBottomAVG;
+    this.redTotalScore = this.redInnerAVG + this.redOuterAVG + this.redBottomAVG;
     this.blueAutoInnerAVGVector.push({
       data: [
         this.blue1.autoAVGInner,

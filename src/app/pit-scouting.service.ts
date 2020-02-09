@@ -36,12 +36,10 @@ export class PitScoutingService {
   constructor(private db: AngularFirestore) { }
 
   getPitScoutingData$(tournament: string, teamNumber: string): Observable<PitScouting> {
-    console.log(tournament, teamNumber);
     return this.db.collection('tournaments').doc(tournament)
       .collection('teams').doc(teamNumber).snapshotChanges()
       .pipe(
         map(doc => {
-          console.log(doc.payload.data());
           const docData: any = doc.payload.data();
           const pitScouting: PitScouting = new PitScouting();
           pitScouting.pitScoutingSaved = docData.pit_scouting_saved;

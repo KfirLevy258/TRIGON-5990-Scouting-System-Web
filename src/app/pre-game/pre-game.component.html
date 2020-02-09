@@ -1,86 +1,84 @@
-<app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>
+<div fxLayout="column" fxLayoutAlign="start center" >
 
-<!--<div fxLayout="column" fxLayoutAlign="start center" >-->
+  <form [formGroup]="gameNumberForm">
+    <mat-form-field>
+      <input matInput formControlName="gameNumber" placeholder="game Number" >
+    </mat-form-field>
 
-<!--  <form [formGroup]="gameNumberForm">-->
-<!--    <mat-form-field>-->
-<!--      <input matInput formControlName="gameNumber" placeholder="game Number" >-->
-<!--    </mat-form-field>-->
+    <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>
+    <button mat-raised-button (click)="manualTeamsSelect()" style="margin-left: 20px">Manual Teams Select</button>
 
-<!--    <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>-->
-<!--    <button mat-raised-button (click)="manualTeamsSelect()" style="margin-left: 20px">Manual Teams Select</button>-->
+  </form>
 
-<!--  </form>-->
+  <div *ngIf="gameNumber && !isLoading" fxLayout="row" fxFlexFill>
 
-<!--  <div *ngIf="gameNumber && !isLoading" fxLayout="row" fxFlexFill>-->
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
 
-<!--    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="height-fix">
 
-<!--      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="height-fix">-->
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore | number:'1.2-2' }} pts</h2>
+        </div>
 
-<!--        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">-->
-<!--          <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>-->
-<!--          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore }} pts</h2>-->
-<!--        </div>-->
+        <h2 style="color: blue">Blue Alliance</h2>
 
-<!--        <h2 style="color: blue">Blue Alliance</h2>-->
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center" style="font-size: 13px">Win percent</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueWinPercent }}%</h2>
+        </div>
+      </div>
 
-<!--        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">-->
-<!--          <label fxFlexAlign="center" style="font-size: 13px">Win percent</label>-->
-<!--          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueWinPercent }}%</h2>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: blue">
+        <h3> {{ blueTeams[0] }} </h3>
+        <h3> {{ blueTeams[1] }} </h3>
+        <h3> {{ blueTeams[2] }} </h3>
+      </div>
 
-<!--      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: blue">-->
-<!--        <h3> {{ blueTeams[0] }} </h3>-->
-<!--        <h3> {{ blueTeams[1] }} </h3>-->
-<!--        <h3> {{ blueTeams[2] }} </h3>-->
-<!--      </div>-->
+    </div>
 
-<!--    </div>-->
+    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+      <h2 style="color: red">Red Teams</h2>
+      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">
+        <h3> {{ redTeams[0] }} </h3>
+        <h3> {{ redTeams[1] }} </h3>
+        <h3> {{ redTeams[2] }} </h3>
+      </div>
 
-<!--    <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
-<!--      <h2 style="color: red">Red Teams</h2>-->
-<!--      <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">-->
-<!--        <h3> {{ redTeams[0] }} </h3>-->
-<!--        <h3> {{ redTeams[1] }} </h3>-->
-<!--        <h3> {{ redTeams[2] }} </h3>-->
-<!--      </div>-->
+    </div >
 
-<!--    </div >-->
+  </div>
 
-<!--  </div>-->
+  <div *ngIf="gameNumber && !isLoading" fxLayout="column" fxFlexFill>
 
-<!--  <div *ngIf="gameNumber && !isLoading" fxLayout="column" fxFlexFill>-->
+  <mat-tab-group fxFlexFill>
+    <mat-tab label="Summary">
+      <app-pre-game-summary [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-summary>
+    </mat-tab>
 
-<!--  <mat-tab-group fxFlexFill>-->
-<!--    <mat-tab label="Summary">-->
-<!--      <app-pre-game-summary [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-summary>-->
-<!--    </mat-tab>-->
+    <mat-tab label="Autonomous">
+      <app-pre-game-auto [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-auto>
+    </mat-tab>
 
-<!--    <mat-tab label="Autonomous">-->
-<!--      <app-pre-game-auto [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-auto>-->
-<!--    </mat-tab>-->
+    <mat-tab label="Teleop">
+      <app-pre-game-teleop [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-teleop>
+    </mat-tab>
 
-<!--    <mat-tab label="Teleop">-->
-<!--      <app-pre-game-teleop [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-teleop>-->
-<!--    </mat-tab>-->
+    <mat-tab label="End game">
+      <app-pre-game-end-game [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-end-game>
+    </mat-tab>
 
-<!--    <mat-tab label="End game">-->
-<!--      <app-pre-game-end-game [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-end-game>-->
-<!--    </mat-tab>-->
+    <mat-tab label="Climb Planner">
+      <app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>
+    </mat-tab>
+  </mat-tab-group>
 
-<!--    <mat-tab label="Climb Planner">-->
-<!--      <app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>-->
-<!--    </mat-tab>-->
-<!--  </mat-tab-group>-->
+</div>
 
-<!--</div>-->
-
-<!--  <div *ngIf="isLoading">-->
-<!--    <mat-spinner></mat-spinner>-->
-<!--  </div>-->
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
 
 
 
-<!--</div>-->
+</div>

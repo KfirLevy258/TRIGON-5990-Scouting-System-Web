@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {defaultDialogConfig} from '../default-dialog-config';
 import {MatDialog} from '@angular/material';
 import {DialogAlertComponent} from '../dialog-alert/dialog-alert.component';
@@ -93,8 +92,7 @@ export class PreGameComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private http: HttpClient,
               private dialog: MatDialog,
-              private gameService: GameService,
-              private db: AngularFirestore) {
+              private gameService: GameService) {
     this.gameNumberForm = fb.group({
       gameNumber: ['', [Validators.required]]
     });
@@ -106,9 +104,9 @@ export class PreGameComponent implements OnInit {
     this.homeTeam = localStorage.getItem('homeTeam');
 
     // ToDo - Remove
-    // this.gameNumber = '42';
-    // this.isLoading = true;
-    // this.getTeams();
+    this.gameNumber = '42';
+    this.isLoading = true;
+    this.getTeams();
   }
 
   gameSelected() {
@@ -140,7 +138,6 @@ export class PreGameComponent implements OnInit {
             if (this.redTeams[i] === this.homeTeam) { this.ourTeam = this.redTeams; }
             if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
-          console.log(this.ourTeam);
           this.getGames();
         }
       }, (err) => {

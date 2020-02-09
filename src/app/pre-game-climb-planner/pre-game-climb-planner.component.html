@@ -19,6 +19,18 @@
       <mat-cell *matCellDef="let element" class="robotWeight"> {{element.robotClimbData.robotWeight}} </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="climbRange">
+      <mat-header-cell *matHeaderCellDef class="climbRange"> Climb  Range </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="climbRange">
+        <span *ngIf="element.robotClimbData.canClimb === true">
+          {{element.robotClimbData.minClimbHeight}} - {{ element.robotClimbData.maxClimbHeight }}
+        </span>
+        <span *ngIf="element.robotClimbData.canClimb === false">
+          Can't Climb
+        </span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="distance">
       <mat-header-cell *matHeaderCellDef class="weight"> Distance fromCenter </mat-header-cell>
       <mat-cell *matCellDef="let element" class="distance">
@@ -29,12 +41,11 @@
 
     <ng-container matColumnDef="Actions">
       <mat-header-cell *matHeaderCellDef class="actions"> Actions</mat-header-cell>
-      <mat-cell  *matCellDef="let element" class="actions">
-
-        <button mat-raised-button id="edit-button" color="primary"
+      <mat-cell *matCellDef="let element; let rowIndex = index" class="actions">
+        <button *ngIf="rowIndex  !== 2" mat-raised-button id="edit-button" color="primary"
                 class="action-button"
-                (click)="swap(element)">
-          <mat-icon>swap</mat-icon>
+                (click)="swapDown(rowIndex)">
+          <mat-icon>arrow_downward</mat-icon>
         </button>
 
 

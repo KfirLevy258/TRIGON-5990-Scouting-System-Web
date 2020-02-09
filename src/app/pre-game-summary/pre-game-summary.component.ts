@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProcessedGames} from "../game.service";
-import {Color} from "ng2-charts";
-import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
+import {ProcessedGames} from '../game.service';
+import {Color} from 'ng2-charts';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
   selector: 'app-pre-game-summary',
@@ -48,11 +48,15 @@ export class PreGameSummaryComponent implements OnInit {
       datalabels: {
         anchor: 'end',
         align: 'end',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        }
       }
     }
   };  barChartType: ChartType = 'bar';
   barChartLegend = true;
-  barChartPlugins = [];
+  barChartPlugins = [
+  ];
   pieChartType: ChartType = 'pie';
   pieChartLegend = true;
   pieChartPlugins = [];
@@ -95,7 +99,8 @@ export class PreGameSummaryComponent implements OnInit {
         this.blue2.autoAVGBottom,
         this.blue3.autoAVGBottom,
       ],
-      label: 'Average Bottom Score'
+      label: 'Average Bottom Score',
+
     });
     this.blueAutoTotalScoreVector.push({
       data: [

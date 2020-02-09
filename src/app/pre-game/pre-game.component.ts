@@ -43,7 +43,7 @@ export class PreGameComponent implements OnInit {
   blueTeams: Array<string> = [];
   redTeams: Array<string> = [];
   homeTeam: string;
-  ourTeams: Array<string>;         // teams including Home Team
+  ourTeam: Array<string>;         // teams including Home Team
   isLoading = false;
 
   gamesBlue1: Array<Game> = [];
@@ -132,15 +132,15 @@ export class PreGameComponent implements OnInit {
         if (matchData) {
           this.blueTeams = matchData.alliances.blue.team_keys;
           this.redTeams = matchData.alliances.red.team_keys;
-          this.ourTeams = null;
+          this.ourTeam = null;
           // tslint:disable-next-line:prefer-for-of
           for (let i = 0; i < this.blueTeams.length; i++) {
             this.redTeams[i] = (this.redTeams[i].substring(3, 10));
             this.blueTeams[i] = (this.blueTeams[i].substring(3, 10));
-            if (this.redTeams[i] === this.homeTeam) { this.ourTeams = this.redTeams; }
-            if (this.blueTeams[i] === this.homeTeam) { this.ourTeams = this.blueTeams; }
+            if (this.redTeams[i] === this.homeTeam) { this.ourTeam = this.redTeams; }
+            if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
-          console.log(this.ourTeams);
+          console.log(this.ourTeam);
           this.getGames();
         }
       }, (err) => {

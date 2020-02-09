@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 export class PitScouting {
+  pitScoutingSaved: boolean;
+
   powerCellsAtStartup: string;
   startAnywhere: boolean;
 
@@ -39,27 +41,33 @@ export class PitScoutingService {
       .collection('teams').doc(teamNumber).snapshotChanges()
       .pipe(
         map(doc => {
+          console.log(doc.payload.data());
+          const docData: any = doc.payload.data();
           const pitScouting: PitScouting = new PitScouting();
-          // pitScouting.powerCellsAtStartup = doc.pit_data.basic_ability.power_cells_at_start;
-          // pitScouting.startAnywhere = doc.pit_data.basic_ability.start_from_everywhere;
-          //
-          // pitScouting.conversionRatio = doc.pit_data.chassis_overall_strength.conversion_ratio;
-          // pitScouting.dtMotorType = doc.pit_data.chassis_overall_strength.dt_motor_type;
-          // pitScouting.wheelDiameter = doc.pit_data.chassis_overall_strength.wheel_diameter;
-          //
-          // pitScouting.canClimb = doc.pit_data.end_game.can_climb;
-          // pitScouting.climbHeight = doc.pit_data.end_game.climb_height;
-          // pitScouting.maxClimb = doc.pit_data.end_game.max_climb;
-          // pitScouting.minClimb = doc.pit_data.end_game.min_climb;
-          //
-          // pitScouting.powerCells = doc.pit_data.game.power_cells;
-          // pitScouting.rotateRoulette = doc.pit_data.game.rotate_roulette;
-          // pitScouting.stopRoulette = doc.pit_data.game.stop_roulette;
-          //
-          // pitScouting.dtMotors = doc.pit_data.robot_basic_data.dt_motors;
-          // pitScouting.robotLength = doc.pit_data.robot_basic_data.robot_length;
-          // pitScouting.robotWeight = doc.pit_data.robot_basic_data.robot_weight;
-          // pitScouting.robotWidth = doc.pit_data.robot_basic_data.robot_width;
+          pitScouting.pitScoutingSaved = docData.pit_scouting_saved;
+          if (docData.pit_scouting_saved) {
+            pitScouting.powerCellsAtStartup = docData.pit_data.basic_ability.power_cells_at_start;
+            pitScouting.startAnywhere = docData.pit_data.basic_ability.start_from_everywhere;
+
+            pitScouting.conversionRatio = docData.pit_data.chassis_overall_strength.conversion_ratio;
+            pitScouting.dtMotorType = docData.pit_data.chassis_overall_strength.dt_motor_type;
+            pitScouting.wheelDiameter = docData.pit_data.chassis_overall_strength.wheel_diameter;
+
+            pitScouting.canClimb = docData.pit_data.end_game.can_climb;
+            pitScouting.climbHeight = docData.pit_data.end_game.climb_height;
+            pitScouting.maxClimb = docData.pit_data.end_game.max_climb;
+            pitScouting.minClimb = docData.pit_data.end_game.min_climb;
+
+            pitScouting.powerCells = docData.pit_data.game.power_cells;
+            pitScouting.rotateRoulette = docData.pit_data.game.rotate_roulette;
+            pitScouting.stopRoulette = docData.pit_data.game.stop_roulette;
+
+            pitScouting.dtMotors = docData.pit_data.robot_basic_data.dt_motors;
+            pitScouting.robotLength = docData.pit_data.robot_basic_data.robot_length;
+            pitScouting.robotWeight = docData.pit_data.robot_basic_data.robot_weight;
+            pitScouting.robotWidth = docData.pit_data.robot_basic_data.robot_width;
+          }
+
           return pitScouting;
         })
       );

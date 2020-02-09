@@ -1,10 +1,47 @@
 <div fxLayout="column" fxLayoutAlign="start center">
 
-  <div *ngIf="!ourTeams">
+  <div *ngIf="!ourTeam">
     The Home team is not in either alliance
   </div>
 
-  <div *ngIf="ourTeams">
-    {{ ourTeams[1] }}
+  <div *ngIf="ourTeam">
   </div>
+
+  <mat-table [dataSource]="climbPlan" class="climb-planner-table">
+
+    <ng-container matColumnDef="teamNumber">
+      <mat-header-cell *matHeaderCellDef class="teamNumber"> Robot Number </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="teamNumber"> {{element.robotClimbData.teamNumber}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <mat-header-cell *matHeaderCellDef class="weight"> Robot Weight </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="robotWeight"> {{element.robotClimbData.robotWeight}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <mat-header-cell *matHeaderCellDef class="weight"> Distance fromCenter </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="distance">
+        <input matInput [value]="element.climbD" (change)="changeDistance(element, $event)">
+<!--        {{element.climbD }} -->
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+      <mat-header-cell *matHeaderCellDef class="actions"> Actions</mat-header-cell>
+      <mat-cell  *matCellDef="let element" class="actions">
+
+        <button mat-raised-button id="edit-button" color="primary"
+                class="action-button"
+                (click)="swap(element)">
+          <mat-icon>swap</mat-icon>
+        </button>
+
+
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>

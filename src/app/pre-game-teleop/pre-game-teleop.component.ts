@@ -49,8 +49,14 @@ export class PreGameTeleopComponentComponent implements OnInit {
       }] },
     plugins: {
       datalabels: {
-        anchor: 'end',
-        align: 'end',
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 20,
+        },
       }
     }
   };
@@ -62,6 +68,19 @@ export class PreGameTeleopComponentComponent implements OnInit {
   pieChartPlugins = [];
   pieChartOptions: ChartOptions = {
     responsive: true,
+    plugins: {
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+
   };
   lineChartOptions = {
     responsive: true,
@@ -71,7 +90,20 @@ export class PreGameTeleopComponentComponent implements OnInit {
           min: 0,
         }
       }]
-    }
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 15,
+        },
+      }
+    },
+
   };
   lineChartLegend = true;
   lineChartPlugins = [];

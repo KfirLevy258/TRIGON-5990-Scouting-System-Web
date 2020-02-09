@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="data-box">
 
-  <div fxLayout="column" fxLayoutAlign="start center" fxFlex class="data-box">
+  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="45" class="data-box">
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
 
@@ -82,9 +82,88 @@
     </div>
 
     </div>
+<!--  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="10" ></div>-->
+  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="45">
 
-  <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-    <h2 style="color: red">Red Teams</h2>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
+        <label fxFlexAlign="center">Inner total AVG</label>
+        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.redInnerAVG| number:'1.2-2'}}</h2>
+      </div>
+
+      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
+        <label fxFlexAlign="center">Outer total AVG</label>
+        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.redOuterAVG| number:'1.2-2'}}</h2>
+      </div>
+
+      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
+        <label fxFlexAlign="center">Bottom total AVG</label>
+        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.redBottomAVG| number:'1.2-2'}}</h2>
+      </div>
+
+      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
+        <label fxFlexAlign="center">Game pieces AVG</label>
+        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.redTotalScore| number:'1.2-2'}}</h2>
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redAutoInnerAVGVector"
+                [labels]="redTeams"
+                [colors]="innerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redAutoOuterAVGVector"
+                [labels]="redTeams"
+                [colors]="outerLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redAutoBottomAVGVector"
+                [labels]="redTeams"
+                [colors]="bottomLineColor"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+
+      <div style="display: block" fxFlex>
+        <canvas baseChart
+                [datasets]="redAutoTotalScoreVector"
+                [labels]="redTeams"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend">
+        </canvas>
+      </div>
+
+    </div>
+
   </div >
 
 </div>

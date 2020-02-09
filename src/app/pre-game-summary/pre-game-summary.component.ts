@@ -46,11 +46,14 @@ export class PreGameSummaryComponent implements OnInit {
     scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
       datalabels: {
-        anchor: 'end',
-        align: 'end',
+        anchor: 'center',
+        align: 'center',
         formatter(val) {
           return Math.round(val * 100) / 100;
-        }
+        },
+        font: {
+          size: 20,
+        },
       }
     }
   };  barChartType: ChartType = 'bar';
@@ -62,6 +65,19 @@ export class PreGameSummaryComponent implements OnInit {
   pieChartPlugins = [];
   pieChartOptions: ChartOptions = {
     responsive: true,
+    plugins: {
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+
   };
   blueTotalGamePieces = 0;
   blueTotalShoots = 0;

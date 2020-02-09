@@ -15,6 +15,10 @@ export class PreGameTeleopComponentComponent implements OnInit {
   @Input() blue2: ProcessedGames;
   @Input() blue3: ProcessedGames;
   @Input() blueTeams: Array<string>;
+  @Input() red1: ProcessedGames;
+  @Input() red2: ProcessedGames;
+  @Input() red3: ProcessedGames;
+  @Input() redTeams: Array<string>
 
   outerLineColor: Color[] = [
     {
@@ -49,8 +53,14 @@ export class PreGameTeleopComponentComponent implements OnInit {
       }] },
     plugins: {
       datalabels: {
-        anchor: 'end',
-        align: 'end',
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 20,
+        },
       }
     }
   };
@@ -62,6 +72,19 @@ export class PreGameTeleopComponentComponent implements OnInit {
   pieChartPlugins = [];
   pieChartOptions: ChartOptions = {
     responsive: true,
+    plugins: {
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 20,
+        },
+      }
+    },
+
   };
   lineChartOptions = {
     responsive: true,
@@ -71,7 +94,20 @@ export class PreGameTeleopComponentComponent implements OnInit {
           min: 0,
         }
       }]
-    }
+    },
+    plugins: {
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        formatter(val) {
+          return Math.round(val * 100) / 100;
+        },
+        font: {
+          size: 15,
+        },
+      }
+    },
+
   };
   lineChartLegend = true;
   lineChartPlugins = [];
@@ -81,8 +117,8 @@ export class PreGameTeleopComponentComponent implements OnInit {
   blueOuterAVG = 0;
   blueBottomAVG = 0;
   blueTotalScore = 0;
-  games = 0;
-  gamesList: Array<string> = [];
+  blueGames = 0;
+  blueGamesList: Array<string> = [];
   blueInnerAVGBar: ChartDataSets[] = [];
   blueOuterAVGBar: ChartDataSets[] = [];
   blueBottomAVGBar: ChartDataSets[] = [];
@@ -92,6 +128,21 @@ export class PreGameTeleopComponentComponent implements OnInit {
   blueOuterVector: ChartDataSets[] = [];
   blueBottomVector: ChartDataSets[] = [];
 
+  redInnerAVG = 0;
+  redOuterAVG = 0;
+  redBottomAVG = 0;
+  redTotalScore = 0;
+  redGames = 0;
+  redGamesList: Array<string> = [];
+  redInnerAVGBar: ChartDataSets[] = [];
+  redOuterAVGBar: ChartDataSets[] = [];
+  redBottomAVGBar: ChartDataSets[] = [];
+  redScoreBar: ChartDataSets[] = [];
+  redTotalScorePie: ChartDataSets[] = [];
+  redInnerVector: ChartDataSets[] = [];
+  redOuterVector: ChartDataSets[] = [];
+  redBottomVector: ChartDataSets[] = [];
+
   constructor() { }
 
   ngOnInit() {
@@ -99,6 +150,10 @@ export class PreGameTeleopComponentComponent implements OnInit {
     this.blueOuterAVG = this.blue1.teleopAVGOuter + this.blue2.teleopAVGOuter + this.blue3.teleopAVGOuter;
     this.blueBottomAVG = this.blue1.teleopAVGBottom + this.blue2.teleopAVGBottom + this.blue3.teleopAVGBottom;
     this.blueTotalScore = this.blueInnerAVG + this.blueOuterAVG + this.blueBottomAVG;
+    this.redInnerAVG = this.red1.teleopAVGInner + this.red2.teleopAVGInner + this.red3.teleopAVGInner;
+    this.redOuterAVG = this.red1.teleopAVGOuter + this.red2.teleopAVGOuter + this.red3.teleopAVGOuter;
+    this.redBottomAVG = this.red1.teleopAVGBottom + this.red2.teleopAVGBottom + this.red3.teleopAVGBottom;
+    this.redTotalScore = this.redInnerAVG + this.redOuterAVG + this.redBottomAVG;
     this.blueInnerAVGBar.push({
       data: [
         this.blue1.teleopAVGInner,
@@ -154,18 +209,88 @@ export class PreGameTeleopComponentComponent implements OnInit {
       { data: this.blue2.teleopBottomScoreVector, label: this.blueTeams[1]},
       { data: this.blue3.teleopBottomScoreVector, label: this.blueTeams[2]}
     );
-    if (this.blue1.gamesPlayed > this.games) {
-      this.games = this.blue1.gamesPlayed;
+    if (this.blue1.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue1.gamesPlayed;
     }
-    if (this.blue2.gamesPlayed > this.games) {
-      this.games = this.blue2.gamesPlayed;
+    if (this.blue2.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue2.gamesPlayed;
     }
-    if (this.blue3.gamesPlayed > this.games) {
-      this.games = this.blue3.gamesPlayed;
+    if (this.blue3.gamesPlayed > this.blueGames) {
+      this.blueGames = this.blue3.gamesPlayed;
     }
     // tslint:disable-next-line:variable-name
-    for (let _i = 1; _i < (this.games + 1); _i++) {
-      this.gamesList.push(_i.toString());
+    for (let _i = 1; _i < (this.blueGames + 1); _i++) {
+      this.blueGamesList.push(_i.toString());
+    }
+
+
+    this.redInnerAVGBar.push({
+      data: [
+        this.red1.teleopAVGInner,
+        this.red2.teleopAVGInner,
+        this.red3.teleopAVGInner,
+      ],
+      label: 'Average Inner Score'
+    });
+    this.redOuterAVGBar.push({
+      data: [
+        this.red1.teleopAVGOuter,
+        this.red2.teleopAVGOuter,
+        this.red3.teleopAVGOuter,
+      ],
+      label: 'Average Outer Score'
+    });
+    this.redBottomAVGBar.push({
+      data: [
+        this.red1.teleopAVGBottom,
+        this.red2.teleopAVGBottom,
+        this.red3.teleopAVGBottom,
+      ],
+      label: 'Average Bottom Score'
+    });
+    this.redTotalScorePie.push({
+      data: [
+        this.red1.teleopAVGBottom + this.blue1.teleopAVGOuter + this.blue1.teleopAVGInner,
+        this.red2.teleopAVGBottom + this.blue2.teleopAVGOuter + this.blue2.teleopAVGInner,
+        this.red3.teleopAVGBottom + this.blue3.teleopAVGOuter + this.blue3.teleopAVGInner,
+      ],
+      label: 'Average Bottom Score'
+    });
+    this.redScoreBar.push({
+      data: [
+        this.red1.teleopAVGBottom + this.blue1.teleopAVGOuter + this.blue1.teleopAVGInner,
+        this.red2.teleopAVGBottom + this.blue2.teleopAVGOuter + this.blue2.teleopAVGInner,
+        this.red3.teleopAVGBottom + this.blue3.teleopAVGOuter + this.blue3.teleopAVGInner,
+      ],
+      label: 'Average Score'
+    });
+    this.redInnerVector.push(
+      { data: this.red1.teleopInnerScoreVector, label: this.redTeams[0]},
+      { data: this.red2.teleopInnerScoreVector, label: this.redTeams[1]},
+      { data: this.red3.teleopInnerScoreVector, label: this.redTeams[2]}
+    );
+    this.redOuterVector.push(
+      { data: this.red1.teleopOuterScoreVector, label: this.redTeams[0]},
+      { data: this.red2.teleopOuterScoreVector, label: this.redTeams[1]},
+      { data: this.red3.teleopOuterScoreVector, label: this.redTeams[2]}
+    );
+    this.redBottomVector.push(
+      { data: this.red1.teleopBottomScoreVector, label: this.redTeams[0]},
+      { data: this.red2.teleopBottomScoreVector, label: this.redTeams[1]},
+      { data: this.red3.teleopBottomScoreVector, label: this.redTeams[2]}
+    );
+    if (this.red1.gamesPlayed > this.redGames) {
+      this.redGames = this.red1.gamesPlayed;
+    }
+    if (this.red2.gamesPlayed > this.redGames) {
+      this.redGames = this.red2.gamesPlayed;
+    }
+    if (this.red3.gamesPlayed > this.redGames) {
+      this.redGames = this.red3.gamesPlayed;
+    }
+    // tslint:disable-next-line:variable-name
+    for (let _i = 1; _i < (this.redGames + 1); _i++) {
+      this.redGamesList.push(_i.toString());
     }
   }
 

@@ -1,3 +1,5 @@
+<!--<app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>-->
+
 <div fxLayout="column" fxLayoutAlign="start center" >
 
   <form [formGroup]="gameNumberForm">
@@ -18,7 +20,7 @@
 
         <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
           <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
-          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore | number:'1.2-2' }} pts</h2>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ blueScore | number:'1.2-2'}} pts</h2>
         </div>
 
         <h2 style="color: blue">Blue Alliance</h2>
@@ -38,7 +40,22 @@
     </div>
 
     <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-      <h2 style="color: red">Red Teams</h2>
+
+      <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill class="height-fix">
+
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center" style="font-size: 13px">Predicted score</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ redScore | number:'1.2-2'}} pts</h2>
+        </div>
+
+        <h2 style="color: red">Red Alliance</h2>
+
+        <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
+          <label fxFlexAlign="center" style="font-size: 13px">Win percent</label>
+          <h2 fxLayout="column" fxLayoutAlign="start center" style="font-size: 15px" fxFlexFill>{{ redWinPercent }}%</h2>
+        </div>
+      </div>
+
       <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">
         <h3> {{ redTeams[0] }} </h3>
         <h3> {{ redTeams[1] }} </h3>
@@ -52,21 +69,28 @@
   <div *ngIf="gameNumber && !isLoading" fxLayout="column" fxFlexFill>
 
   <mat-tab-group fxFlexFill>
-    <mat-tab label="Summary">
-      <app-pre-game-summary [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-summary>
-    </mat-tab>
 
     <mat-tab label="Autonomous">
-      <app-pre-game-auto [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-auto>
+      <app-pre-game-auto
+        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
+        [red1]="processedGamesRed1" [red2]="processedGamesRed2" [red3]="processedGamesRed3" [redTeams]="redTeams">
+      </app-pre-game-auto>
     </mat-tab>
 
     <mat-tab label="Teleop">
-      <app-pre-game-teleop [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-teleop>
+      <app-pre-game-teleop
+        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
+        [red1]="processedGamesRed1" [red2]="processedGamesRed2" [red3]="processedGamesRed3" [redTeams]="redTeams">
+      </app-pre-game-teleop>
     </mat-tab>
 
     <mat-tab label="End game">
-      <app-pre-game-end-game [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"></app-pre-game-end-game>
+      <app-pre-game-end-game
+        [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
+        [red1]="processedGamesRed1" [red2]="processedGamesRed2" [red3]="processedGamesRed3" [redTeams]="redTeams">
+      </app-pre-game-end-game>
     </mat-tab>
+
 
     <mat-tab label="Climb Planner">
       <app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>

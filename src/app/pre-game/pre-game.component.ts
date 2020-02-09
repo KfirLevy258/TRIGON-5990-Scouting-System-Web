@@ -81,13 +81,6 @@ export class PreGameComponent implements OnInit {
   redScore = 0;
   blueWinPercent = 0;
   redWinPercent = 0;
-  blueTeamsScores: ChartDataSets[] = [];
-  redTeamsScores: ChartDataSets[] = [];
-  blueAutoInnerAVGVector: ChartDataSets[] = [];
-  blueAutoOuterAVGVector: ChartDataSets[] = [];
-  blueAutoBottomAVGVector: ChartDataSets[] = [];
-  blueAutoInnerAVG = 0;
-  blueAutoOuterAVG = 0;
 
   constructor(private fb: FormBuilder,
               private http: HttpClient,
@@ -114,6 +107,7 @@ export class PreGameComponent implements OnInit {
     this.isLoading = true;
     this.getTeams();
   }
+
 
   getTeams() {
     const dialogConfig = defaultDialogConfig();
@@ -197,68 +191,6 @@ export class PreGameComponent implements OnInit {
         this.redScore = this.processedGamesRed1.predictedGameScore + this.processedGamesRed2.predictedGameScore + this.processedGamesRed3.predictedGameScore;
         this.blueWinPercent = Math.round((this.blueScore / (this.redScore + this.blueScore)) * 100);
         this.redWinPercent = Math.round((this.redScore / (this.blueScore + this.redScore)) * 100);
-        // tslint:disable-next-line:max-line-length
-        this.blueAutoInnerAVG = this.processedGamesBlue1.autoAVGInner + this.processedGamesBlue2.autoAVGInner + this.processedGamesBlue3.autoAVGInner;
-        // tslint:disable-next-line:max-line-length
-        this.blueAutoOuterAVG = this.processedGamesBlue1.autoAVGOuter + this.processedGamesBlue2.autoAVGOuter + this.processedGamesBlue3.autoAVGOuter;
-        this.blueAutoInnerAVGVector.push({
-          data: [
-            this.processedGamesBlue1.autoAVGInner,
-            this.processedGamesBlue2.autoAVGInner,
-            this.processedGamesBlue3.autoAVGInner,
-          ],
-          label: 'Average Inner Score'
-        });
-        this.blueAutoOuterAVGVector.push({
-          data: [
-            this.processedGamesBlue1.autoAVGOuter,
-            this.processedGamesBlue2.autoAVGOuter,
-            this.processedGamesBlue3.autoAVGOuter,
-          ],
-          label: 'Average Outer Score'
-        });
-        this.blueAutoBottomAVGVector.push({
-          data: [
-            this.processedGamesBlue1.autoAVGBottom,
-            this.processedGamesBlue2.autoAVGBottom,
-            this.processedGamesBlue3.autoAVGBottom,
-          ],
-          label: 'Average Bottom Score'
-        });
-        this.blueTeamsScores.push({
-          data: [
-            this.processedGamesBlue1.avgGameScore,
-            this.processedGamesBlue2.avgGameScore,
-            this.processedGamesBlue3.avgGameScore,
-          ],
-          label: 'Average Score'
-        });
-        this.blueTeamsScores.push({
-          data: [
-            this.processedGamesBlue1.predictedGameScore,
-            this.processedGamesBlue2.predictedGameScore,
-            this.processedGamesBlue3.predictedGameScore,
-          ],
-          label: 'Predicted Score'
-        });
-
-        this.redTeamsScores.push({
-          data: [
-            this.processedGamesRed1.avgGameScore,
-            this.processedGamesRed2.avgGameScore,
-            this.processedGamesRed3.avgGameScore,
-          ],
-          label: 'Average Score'
-        });
-        this.redTeamsScores.push({
-          data: [
-            this.processedGamesRed1.predictedGameScore,
-            this.processedGamesRed2.predictedGameScore,
-            this.processedGamesRed3.predictedGameScore,
-          ],
-          label: 'Predicted Score'
-        });
-
         this.isLoading = false;
       });
   }

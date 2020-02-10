@@ -47,6 +47,7 @@ import {PreGameTeleopComponentComponent} from './pre-game-teleop/pre-game-teleop
 import { PreGameEndGameComponent } from './pre-game-end-game/pre-game-end-game.component';
 import { DialogAlliancesComponent } from './dialog-alliances/dialog-alliances.component';
 import { PreGameClimbPlannerStateComponent } from './pre-game-climb-planner-state/pre-game-climb-planner-state.component';
+import { UpperHotZonesComponent } from './upper-hot-zones/upper-hot-zones.component';
 
 
 const routes: Routes = [
@@ -106,6 +107,7 @@ const routes: Routes = [
     PreGameEndGameComponent,
     DialogAlliancesComponent,
     PreGameClimbPlannerStateComponent,
+    UpperHotZonesComponent,
 
 
   ],

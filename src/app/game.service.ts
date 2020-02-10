@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map, take} from 'rxjs/operators';
-import {range} from "rxjs";
-import {log} from "util";
+import {map} from 'rxjs/operators';
 
 export class LineCoeffs {
   m: number;
@@ -121,7 +119,7 @@ export class ProcessedGames {
   teleopBottomScoreVector: Array<number> = [];
   teleopCyclesVector: Array<number> = [];
   climbLocations: Array<number> = [];
-  teleopDetailedScores: Array<[string, number, number]>;
+  teleopDetailedUpperShots: Array<TeleopUpperShot>;
 }
 @Injectable({
   providedIn: 'root'
@@ -210,7 +208,7 @@ export class GameService {
   processGames(games: Array<Game>) {
     const processedGames: ProcessedGames = new ProcessedGames();
     processedGames.gamesPlayed = games.length;
-    processedGames.teleopDetailedScores = [];
+    processedGames.teleopDetailedUpperShots = [];
     games.forEach(game => {
       game.autoTrenchCollect.forEach(collect => {
         if (collect) {
@@ -272,7 +270,16 @@ export class GameService {
       processedGames.teleopTotalShot += game.teleopUpperTotalShots + game.teleopBottomShots;
       processedGames.autoTotalShoot += game.autoUpperTotalShots + game.autoBottomShots;
       game.teleopUpperShots.forEach(shot => {
-        processedGames.teleopDetailedScores.push(['', shot.x, shot.y]);
+        if (game.color === 'red') {
+          const adaptedShot: TeleopUpperShot = {
+            ...shot
+          };
+          adaptedShot.x = 1 - adaptedShot.x;
+          adaptedShot.y = 1 - adaptedShot.y;
+          processedGames.teleopDetailedUpperShots.push(adaptedShot);
+        } else {
+          processedGames.teleopDetailedUpperShots.push(shot);
+        }
       });
     });
     processedGames.climbLocations.forEach(location => {
@@ -317,7 +324,7 @@ export class GameService {
   calcRegression(xVector: Array<number>, yVector: Array<number>): LineCoeffs {
     const result: LineCoeffs = new LineCoeffs();
 
-    let mx = 0; let my = 0;
+    let mx: number; let my: number;
     let sx = 0; let sy = 0;
     let n = 0;
     let  sx2 = 0;
@@ -344,7 +351,7 @@ export class GameService {
   calc1dRegression(yVector: Array<number>): LineCoeffs {
     const result: LineCoeffs = new LineCoeffs();
 
-    let mx = 0; let my = 0;
+    let mx: number; let my: number;
     let sx = 0; let sy = 0;
     let n = 0;
     let  sx2 = 0;

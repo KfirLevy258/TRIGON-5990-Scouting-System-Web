@@ -57,7 +57,7 @@
 
     <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
       <label fxFlexAlign="center">Climb success percent</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbSuccess }}%</h2>
+      <h2 fxLayout="column" fxLayoutAlign="start center">{{ processedGames.climbSuccess | number: '1.2-2'}}%</h2>
     </div>
 
   </div>

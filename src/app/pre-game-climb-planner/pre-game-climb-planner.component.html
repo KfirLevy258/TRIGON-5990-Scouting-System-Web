@@ -15,7 +15,7 @@
     </ng-container>
 
     <ng-container matColumnDef="weight">
-      <mat-header-cell *matHeaderCellDef class="weight"> Robot Weight </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef class="robotWeight"> Robot Weight </mat-header-cell>
       <mat-cell *matCellDef="let element" class="robotWeight"> {{element.robotClimbData.robotWeight}} </mat-cell>
     </ng-container>
 
@@ -32,10 +32,9 @@
     </ng-container>
 
     <ng-container matColumnDef="distance">
-      <mat-header-cell *matHeaderCellDef class="weight"> Distance fromCenter </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="distance">
-        <input matInput [value]="element.climbD" (change)="changeDistance(element, $event)">
-<!--        {{element.climbD }} -->
+      <mat-header-cell *matHeaderCellDef class="distance"> Distance from  Center [cm] </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index" class="distance">
+        <input matInput [value]="element.climbDistance * 100" (change)="changeDistance(rowIndex, $event)">
       </mat-cell>
     </ng-container>
 
@@ -47,8 +46,33 @@
                 (click)="swapDown(rowIndex)">
           <mat-icon>arrow_downward</mat-icon>
         </button>
+      </mat-cell>
+    </ng-container>
 
-
+    <ng-container matColumnDef="result">
+      <mat-header-cell *matHeaderCellDef class="result"> Plan Result </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index" class="result">
+        <div *ngIf="rowIndex === 0" fxLayout="row" fxLayoutAlign="start center">
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <span>{{ state1.success? 'Climb succeeded' : 'Climb failed' }}</span>
+            {{ state1.barAngle / 3.14 * 180 | number: '1.2-2'}}
+          </div>
+          <app-pre-game-climb-planner-state [swingState]="state1"></app-pre-game-climb-planner-state>
+        </div>
+        <div *ngIf="rowIndex === 1" fxLayout="row" fxLayoutAlign="start center">
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <span>{{ state2.success? 'Climb succeeded' : 'Climb failed' }}</span>
+            {{ state2.barAngle / 3.14 * 180 | number: '1.2-2'}}
+          </div>
+          <app-pre-game-climb-planner-state [swingState]="state2"></app-pre-game-climb-planner-state>
+        </div>
+        <div *ngIf="rowIndex === 2" fxLayout="row" fxLayoutAlign="start center">
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <span>{{ state3.success? 'Climb succeeded' : 'Climb failed' }}</span>
+            {{ state3.barAngle / 3.14 * 180 | number: '1.2-2'}}
+          </div>
+          <app-pre-game-climb-planner-state [swingState]="state3"></app-pre-game-climb-planner-state>
+        </div>
       </mat-cell>
     </ng-container>
 

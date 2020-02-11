@@ -45,7 +45,9 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
       this.fieldCx.clearRect(0, 0, this.field.nativeElement.width, this.field.nativeElement.height);
     }
 
-    this.threeTeams ?
+    console.log(this.teamNumber1, this.teamNumber2, this.teamNumber3);
+
+    const gamesQuery = this.threeTeams ?
       zip (
         this.gameService.getGames(this.tournament, this.teamNumber1),
         this.gameService.getGames(this.tournament, this.teamNumber2),
@@ -53,8 +55,10 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
       ) :
       zip(
         this.gameService.getGames(this.tournament, this.teamNumber1),
-      )
+      );
+    gamesQuery
       .subscribe(res => {
+        console.log(res);
         this.games1 = res[0];
         this.processedGames1 = this.gameService.processGames(res[0]);
         this.processedGames1.teleopDetailedUpperShots.forEach(shot => {

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {Observable, zip} from 'rxjs';
+import {zip} from 'rxjs';
 import {Game, GameService, ProcessedGames} from '../game.service';
 
 @Component({
@@ -58,7 +58,6 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
       );
     gamesQuery
       .subscribe(res => {
-        this.drawGameField();
         this.games1 = res[0];
         this.processedGames1 = this.gameService.processGames(res[0]);
         this.processedGames1.teleopDetailedUpperShots.forEach(shot => {
@@ -77,6 +76,8 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
             this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, 3);
           });
         }
+        this.drawGameField();
+
       });
   }
 
@@ -130,29 +131,59 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
   }
 
   drawGameField() {
-    const width = this.field.nativeElement.width;
-    const height = this.field.nativeElement.height;
-    this.fieldCx.lineWidth = 3;
+    this.fieldCx.lineWidth = 2;
     this.fieldCx.lineCap = 'round';
     this.fieldCx.strokeStyle = '#000';
 
     this.fieldCx.beginPath();
-    this.fieldCx.moveTo(0, 0);
-    this.fieldCx.lineTo(width, 0);
-    this.fieldCx.lineTo(width, height);
-    this.fieldCx.lineTo(0, height);
-    this.fieldCx.lineTo(0, 0);
+
+    this.fieldCx.moveTo(30, 0);
+    this.fieldCx.lineTo(620, 0);
+    this.fieldCx.lineTo(650,  75);
+    this.fieldCx.lineTo(620, 100);
+    this.fieldCx.lineTo(650, 125);
+    this.fieldCx.lineTo(650, 205);
+    this.fieldCx.lineTo(620, 230);
+    this.fieldCx.lineTo(650, 255);
+    this.fieldCx.lineTo(620, 330);
+    this.fieldCx.lineTo(30, 330);
+    this.fieldCx.lineTo(0, 255);
+    this.fieldCx.lineTo(30, 230);
+    this.fieldCx.lineTo(0, 205);
+    this.fieldCx.lineTo(0, 125);
+    this.fieldCx.lineTo(30, 100);
+    this.fieldCx.lineTo(0, 75);
+    this.fieldCx.lineTo(30, 0);
+
+    this.fieldCx.moveTo(130, 0);
+    this.fieldCx.lineTo(130, 330);
+
+    this.fieldCx.moveTo(520, 0);
+    this.fieldCx.lineTo(520, 330);
+
+    this.fieldCx.moveTo(220, 0);
+    this.fieldCx.lineTo(220, 55);
+    this.fieldCx.lineTo(430, 55);
+    this.fieldCx.lineTo(430, 0);
+
+    this.fieldCx.moveTo(220, 330);
+    this.fieldCx.lineTo(220, 275);
+    this.fieldCx.lineTo(430, 275);
+    this.fieldCx.lineTo(430, 330);
+
+    this.fieldCx.moveTo(370, 55);
+    this.fieldCx.lineTo(220, 125);
+    this.fieldCx.lineTo(280, 275);
+    this.fieldCx.lineTo(430, 205);
+    this.fieldCx.lineTo(370, 55);
     this.fieldCx.stroke();
 
-    const img = new Image();
-    img.src = '../../assets/TRIGONLogo.png';
-    setTimeout(() => {
-      this.fieldCx.drawImage(img, 10, 10, 600, 300);
-    }, 100);
+
 
   }
 
-  drawShot(cx: CanvasRenderingContext2D, canvas: ElementRef, relativeX: number, relativeY: number, scored: number, shot: number, robotSeq: number) {
+  drawShot(cx: CanvasRenderingContext2D, canvas: ElementRef, relativeX: number, relativeY: number,
+           scored: number, shot: number, robotSeq: number) {
     const width = canvas.nativeElement.width;
     const height = canvas.nativeElement.height;
     const x = relativeX * width;

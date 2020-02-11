@@ -45,6 +45,12 @@ export class TeamFullData implements OnInit {
           return {teamNumber, ... data} as Team;
         });
       }));
+    // this.teams
+    //   .subscribe(result => {
+    //     result.forEach((team: Team) => {
+    //       console.log(team.team_name);
+    //     });
+    //   });
   }
 
   teamSelect(team: Team) {

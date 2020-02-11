@@ -43,9 +43,9 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
     }
     if (this.fieldCx) {
       this.fieldCx.clearRect(0, 0, this.field.nativeElement.width, this.field.nativeElement.height);
+
     }
 
-    console.log(this.teamNumber1, this.teamNumber2, this.teamNumber3);
 
     const gamesQuery = this.threeTeams ?
       zip (
@@ -58,7 +58,7 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
       );
     gamesQuery
       .subscribe(res => {
-        console.log(res);
+        this.drawGameField();
         this.games1 = res[0];
         this.processedGames1 = this.gameService.processGames(res[0]);
         this.processedGames1.teleopDetailedUpperShots.forEach(shot => {
@@ -77,7 +77,6 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
             this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, 3);
           });
         }
-        this.drawGameField();
       });
   }
 
@@ -144,6 +143,12 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
     this.fieldCx.lineTo(0, height);
     this.fieldCx.lineTo(0, 0);
     this.fieldCx.stroke();
+
+    const img = new Image();
+    img.src = '../../assets/TRIGONLogo.png';
+    setTimeout(() => {
+      this.fieldCx.drawImage(img, 10, 10, 600, 300);
+    }, 100);
 
   }
 

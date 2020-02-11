@@ -22,7 +22,6 @@ export class PreGameClimbPlannerStateComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.swingState.up1, this.swingState.up2, this.swingState.up3);
     this.cx = this.canvas.nativeElement.getContext('2d');
 
     this.draw(this.swingState.barAngle, this.swingState.d1, this.swingState.d2, this.swingState.d3);

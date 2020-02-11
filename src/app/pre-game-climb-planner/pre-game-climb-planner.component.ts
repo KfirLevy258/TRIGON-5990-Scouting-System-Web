@@ -151,17 +151,14 @@ export class PreGameClimbPlannerComponent implements OnInit, OnChanges {
     switch (stage) {
       case 1: {
         nextState.up1 = nextState.success;
-        console.log('case 1');
         break;
       }
       case 2: {
         nextState.up2 = nextState.success;
-        console.log('case 2');
         break;
       }
       case 3: {
         nextState.up3 = nextState.success;
-        console.log('case 3');
         break;
       }
     }

@@ -96,8 +96,8 @@ export class TeamGameScoutingAuto implements OnInit, OnChanges {
         this.processedGames = this.gameService.processGames(res);
         this.gamesLabels = this.processedGames.gamesVector;
         this.autoBottomScoreData.push({ data: this.processedGames.autoBottomScoreVector, label: 'Bottom Score'});
-        // this.autoInnerScoreData.push({ data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'});
-        // this.autoOuterScoreData.push({ data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'});
+        // this.autoInnerScoreData.push({ data: this.processedGames1.autoInnerScoreVector, label: 'Inner Score'});
+        // this.autoOuterScoreData.push({ data: this.processedGames1.autoOuterScoreVector, label: 'Outer Score'});
         this.autoUpperScoreData.push(
           { data: this.processedGames.autoInnerScoreVector, label: 'Inner Score'},
           { data: this.processedGames.autoOuterScoreVector, label: 'Outer Score'},

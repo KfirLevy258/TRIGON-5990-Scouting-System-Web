@@ -91,9 +91,12 @@
       </app-pre-game-end-game>
     </mat-tab>
 
-
     <mat-tab label="Climb Planner">
       <app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>
+    </mat-tab>
+
+    <mat-tab label="Temp">
+      <app-upper-hot-zones [tournament]="tournament" [teamNumber1]="ourTeam[0]" [teamNumber2]="ourTeam[1]" [teamNumber3]="ourTeam[2]"></app-upper-hot-zones>
     </mat-tab>
   </mat-tab-group>
 

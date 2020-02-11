@@ -4,24 +4,27 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {Game, GameService, ProcessedGames} from '../game.service';
 
-
-
 @Component({
   selector: 'app-alliance-selection',
   templateUrl: './alliance-selection.component.html',
   styleUrls: ['./alliance-selection.component.scss']
 })
 export class AllianceSelectionComponent implements OnInit {
-
+  displayedColumns: string[] = ['team_number', 'score'];
   selectedTournament: string;
   teams: Observable<Team[]>;
-  processedTeamsGames: Array<{team_number: string, team_processed_games: ProcessedGames}> = [];
+  rankingList: Array<{team_number: string, score: number}> = [];
   auto3BallsWeight = 0.1;
   auto10BallsWeight = 0.65;
   autoCollectWeight = 0.25;
   autoBallsAmount = 10;
   teleopBallsWeight = 1;
   teleopBallsAmount = 30;
+  endGamesClimbSuccesses = 1;
+  autoWeight = 0.15;
+  teleopWeight = 0.6;
+  endGameWeight = 0.25;
+  isLoading = true;
 
 
   constructor(private db: AngularFirestore,
@@ -42,15 +45,27 @@ export class AllianceSelectionComponent implements OnInit {
       result.forEach((team: Team) => {
         this.gameService.getGames(this.selectedTournament, team.teamNumber)
             .subscribe(games => {
-              // this.processedTeamsGames.push({team_number: team.teamNumber, team_processed_games: this.gameService.processGames(games)});
-              this.getFirstPickTeamScore(this.gameService.processGames(games), team.teamNumber);
+              // tslint:disable-next-line:max-line-length
+              this.rankingList.push({team_number: team.teamNumber, score: this.getFirstPickTeamScore(this.gameService.processGames(games))});
             });
         }
       );
+      console.log(this.rankingList);
+      this.rankingList.sort((a, b) => {
+        if (a.score > b.score) {
+          return 1;
+        }
+        if (a.score < b.score) {
+          return -1;
+        }
+        return 0;
+      });
+      this.isLoading = false;
+      console.log(this.rankingList);
     });
   }
 
-  getFirstPickTeamScore(processedGames: ProcessedGames, teamNumber: string) {
+  getFirstPickTeamScore(processedGames: ProcessedGames) {
     let totalScore;
     let autoScore;
     let teleopScore;
@@ -74,10 +89,9 @@ export class AllianceSelectionComponent implements OnInit {
     teleopScore += ( this.teleopBallsWeight / this.teleopBallsAmount ) * (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
 
     // End Game
-    endGameScore += 3;
+    endGameScore += this.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
 
-
-    totalScore = autoScore + teleopScore + endGameScore;
+    totalScore = this.autoWeight * autoScore + this.teleopWeight * teleopScore + this.endGameWeight * endGameScore;
     return totalScore;
   }
 }

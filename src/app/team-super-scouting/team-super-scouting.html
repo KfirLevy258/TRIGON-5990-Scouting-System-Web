@@ -1,14 +1,19 @@
 
-  <h2 class="section-head">Basic Ability</h2>
+    <mat-table [dataSource]="messages$ | async" class="mat-elevation-z8 super-messages-data" fxFlexFill>
 
-  <div fxLayout="row" fxLayoutAlign="space-around" fxFlexFill>
+      <ng-container matColumnDef="match_number">
+        <mat-header-cell *matHeaderCellDef class="displayName"> Match number </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="displayName"> {{element['match_number']}};; </mat-cell>
+      </ng-container>
 
-    <div class="data-box" fxLayout="column" fxLayoutAlign="start start">
-      <label fxFlexAlign="center">power cells at startUp</label>
-      <h2 fxLayout="column" fxLayoutAlign="start center">{{ messages }}</h2>
-    </div>
+      <ng-container matColumnDef="message">
+        <mat-header-cell *matHeaderCellDef class="displayName"> Message </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="displayName"> {{element['message']}} </mat-cell>
+      </ng-container>
 
-  </div>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
 
 
 

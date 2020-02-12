@@ -2,9 +2,6 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
-import {createPerformWatchHost} from '@angular/compiler-cli/src/perform_watch';
-import {AutoUpperShot, Game, TeleopUpperShot} from '../game.service';
-
 @Component({
   selector: 'app-super-scouting-page',
   templateUrl: './team-super-scouting.html',
@@ -14,9 +11,11 @@ import {AutoUpperShot, Game, TeleopUpperShot} from '../game.service';
 export class TeamSuperScouting implements OnInit, OnChanges {
   @Input() tournament;
   @Input() teamNumber;
-  messages: Array<string>;
+  messages: Array<{match_number: string, message: string}> = [{match_number: '5', message: 'good'}];
   games$: Observable<SuperGame[]>;
   games: Array<SuperGame> = [];
+  displayedColumns: string[] = ['match_number', 'message'];
+  messages$: Observable<SuperGame[]>;
 
   constructor(private db: AngularFirestore) { }
 
@@ -25,8 +24,9 @@ export class TeamSuperScouting implements OnInit, OnChanges {
     this.games$.subscribe(res => {
         this.games = res;
         this.games.forEach(game => {
-          this.messages.push(game.textMessage);
-          console.log(this.messages);
+          if (game.textMessage != null) {
+            this.messages.push({match_number: game.gameNumber, message: game.textMessage});
+          }
         });
       });
   }
@@ -44,8 +44,12 @@ export class TeamSuperScouting implements OnInit, OnChanges {
           const gameNumber = snap.payload.doc.id;
           const superGame: SuperGame = new SuperGame();
           superGame.gameNumber = gameNumber;
-          superGame.textMessage = data['Super scouting'].message;
-          console.log(data['Super scouting'].message);
+          if (data['Super scouting']) {
+            superGame.textMessage = data['Super scouting'].message;
+          } else {
+            superGame.textMessage = null;
+          }
+          superGame.gameNumber = gameNumber;
           return superGame;
         });
       }));

@@ -317,8 +317,27 @@ export class GameService {
   }
 
   calcGameScore(game: Game) {
-    return game.teleopBottomScore + 2 * game.teleopOuterScore + 3 * game.teleopInnerScore +
+    // tslint:disable-next-line:prefer-const
+     const totalPowerCellPoints = game.teleopBottomScore + 2 * game.teleopOuterScore + 3 * game.teleopInnerScore +
       2 * game.autoBottomScore + 4 * game.autoOuterScore + 6 * game.autoInnerScore;
+     let trenchPoints;
+     trenchPoints = 0;
+     if (game.trenchRotate) {
+        trenchPoints += 10;
+     }
+     if (game.trenchStop) {
+       trenchPoints += 20;
+     }
+
+     let climbPoints;
+     climbPoints = 0;
+    // tslint:disable-next-line:triple-equals
+     if (game.climbStatus == 'טיפס בהצלחה') {
+       climbPoints += 25;
+     } else {
+       climbPoints += 5;
+     }
+     return totalPowerCellPoints + trenchPoints + climbPoints;
   }
 
   calcRegression(xVector: Array<number>, yVector: Array<number>): LineCoeffs {

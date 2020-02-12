@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 
 export class LineCoeffs {
   m: number;
@@ -128,6 +128,16 @@ export class GameService {
   games: Array<Game>;
 
   constructor(private db: AngularFirestore) { }
+
+  getGamesPromise(tournament: string, teamNumber: string): Promise<Game[]> {
+    return new Promise((resolve) => {
+      this.getGames(tournament, teamNumber)
+        .pipe(take(1))
+        .subscribe(res => {
+          resolve(res);
+        });
+    });
+  }
 
   getGames(tournament: string, teamNumber: string) {
     return this.db.collection('tournaments').doc(tournament).collection('teams').doc(teamNumber).collection('games').snapshotChanges()

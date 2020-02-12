@@ -4,6 +4,11 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {Game, GameService, ProcessedGames} from '../game.service';
 
+export class RankingItem {
+  // tslint:disable-next-line:variable-name
+  constructor(private team_number: string, public score: number) {
+  }
+}
 @Component({
   selector: 'app-alliance-selection',
   templateUrl: './alliance-selection.component.html',
@@ -13,7 +18,8 @@ export class AllianceSelectionComponent implements OnInit {
   displayedColumns: string[] = ['team_number', 'score'];
   selectedTournament: string;
   teams: Observable<Team[]>;
-  rankingList: Array<{team_number: string, score: number}> = [];
+  rankingList: Array<RankingItem> = [];
+  tempList: Array<RankingItem> = [];
   auto3BallsWeight = 0.1;
   auto10BallsWeight = 0.65;
   autoCollectWeight = 0.25;
@@ -42,14 +48,41 @@ export class AllianceSelectionComponent implements OnInit {
         });
       }));
     this.teams.subscribe(result => {
+      const  promises: Array<Promise<Game[]>> = [];
       result.forEach((team: Team) => {
-        this.gameService.getGames(this.selectedTournament, team.teamNumber)
-            .subscribe(games => {
-              // tslint:disable-next-line:max-line-length
-              this.rankingList.push({team_number: team.teamNumber, score: this.getFirstPickTeamScore(this.gameService.processGames(games))});
-            });
-        }
-      );
+        const teamRankingItem = new  RankingItem(team.teamNumber, 0);
+        this.tempList.push(teamRankingItem);
+        promises.push(this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber));
+        // this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber)
+        //   .then(res => {
+        //     console.log(res);
+        //     teamRankingItem.score = this.getFirstPickTeamScore(this.gameService.processGames(res));
+        //   });
+
+        // this.gameService.getGames(this.selectedTournament, team.teamNumber)
+        //     .subscribe(games => {
+        //       const score = this.getFirstPickTeamScore(this.gameService.processGames(games));
+        //       this.rankingList.push(new RankingItem(team.teamNumber, score));
+        //       // tslint:disable-next-line:max-line-length
+        //       // this.rankingList.push({team_number: team.teamNumber, score: this.getFirstPickTeamScore(this.gameService.processGames(games))});
+        //     });
+        });
+      Promise.all(promises)
+        .then(res => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < promises.length; i++) {
+            this.tempList[i].score =  this.getFirstPickTeamScore(this.gameService.processGames(res[i]));
+          }
+          this.rankingList = this.tempList.sort((a, b) => {
+            if (a.score < b.score) {
+              return 1;
+            }
+            if (a.score > b.score) {
+              return -1;
+            }
+            return 0;
+          });
+        });
       console.log(this.rankingList);
       this.rankingList.sort((a, b) => {
         if (a.score > b.score) {
@@ -64,6 +97,7 @@ export class AllianceSelectionComponent implements OnInit {
       console.log(this.rankingList);
     });
   }
+
 
   getFirstPickTeamScore(processedGames: ProcessedGames) {
     let totalScore;

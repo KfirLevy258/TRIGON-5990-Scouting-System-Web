@@ -5,8 +5,8 @@ import {Observable} from 'rxjs';
 import {Game, GameService, ProcessedGames} from '../game.service';
 
 export class RankingItem {
-  // tslint:disable-next-line:variable-name
-  constructor(private team_number: string, public score: number) {
+  // tslint:disable-next-line:variable-name max-line-length
+  constructor(private team_number: string, public score: {autoTotalScore: number, teleopTotalScore: number, endGameTotalScore: number, totalTotalScore: number}) {
   }
 }
 @Component({
@@ -15,7 +15,7 @@ export class RankingItem {
   styleUrls: ['./alliance-selection.component.scss']
 })
 export class AllianceSelectionComponent implements OnInit {
-  displayedColumns: string[] = ['team_number', 'score'];
+  displayedColumns: string[] = ['team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
   selectedTournament: string;
   teams: Observable<Team[]>;
   rankingList: Array<RankingItem> = [];
@@ -50,22 +50,10 @@ export class AllianceSelectionComponent implements OnInit {
     this.teams.subscribe(result => {
       const  promises: Array<Promise<Game[]>> = [];
       result.forEach((team: Team) => {
-        const teamRankingItem = new  RankingItem(team.teamNumber, 0);
+        // tslint:disable-next-line:max-line-length
+        const teamRankingItem = new  RankingItem(team.teamNumber, {autoTotalScore: 0, teleopTotalScore: 0, endGameTotalScore: 0, totalTotalScore: 0});
         this.tempList.push(teamRankingItem);
         promises.push(this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber));
-        // this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber)
-        //   .then(res => {
-        //     console.log(res);
-        //     teamRankingItem.score = this.getFirstPickTeamScore(this.gameService.processGames(res));
-        //   });
-
-        // this.gameService.getGames(this.selectedTournament, team.teamNumber)
-        //     .subscribe(games => {
-        //       const score = this.getFirstPickTeamScore(this.gameService.processGames(games));
-        //       this.rankingList.push(new RankingItem(team.teamNumber, score));
-        //       // tslint:disable-next-line:max-line-length
-        //       // this.rankingList.push({team_number: team.teamNumber, score: this.getFirstPickTeamScore(this.gameService.processGames(games))});
-        //     });
         });
       Promise.all(promises)
         .then(res => {
@@ -74,27 +62,25 @@ export class AllianceSelectionComponent implements OnInit {
             this.tempList[i].score =  this.getFirstPickTeamScore(this.gameService.processGames(res[i]));
           }
           this.rankingList = this.tempList.sort((a, b) => {
-            if (a.score < b.score) {
+            if (a.score.totalTotalScore < b.score.totalTotalScore) {
               return 1;
             }
-            if (a.score > b.score) {
+            if (a.score.totalTotalScore > b.score.totalTotalScore) {
               return -1;
             }
             return 0;
           });
         });
-      console.log(this.rankingList);
       this.rankingList.sort((a, b) => {
-        if (a.score > b.score) {
+        if (a.score.totalTotalScore > b.score.totalTotalScore) {
           return 1;
         }
-        if (a.score < b.score) {
+        if (a.score.totalTotalScore < b.score.totalTotalScore) {
           return -1;
         }
         return 0;
       });
       this.isLoading = false;
-      console.log(this.rankingList);
     });
   }
 
@@ -126,7 +112,7 @@ export class AllianceSelectionComponent implements OnInit {
     endGameScore += this.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
 
     totalScore = this.autoWeight * autoScore + this.teleopWeight * teleopScore + this.endGameWeight * endGameScore;
-    return totalScore;
+    return {autoTotalScore: autoScore, teleopTotalScore: teleopScore, endGameTotalScore: endGameScore, totalTotalScore: totalScore};
   }
 }
 

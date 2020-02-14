@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {map} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
@@ -15,7 +15,7 @@ export class RankingItem {
   styleUrls: ['./alliance-selection.component.scss']
 })
 export class AllianceSelectionComponent implements OnInit {
-  displayedColumns: string[] = ['team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
+  displayedColumns: string[] = ['select', 'team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
   selectedTournament: string;
   teams: Observable<Team[]>;
   rankingList: Array<RankingItem> = [];
@@ -34,7 +34,8 @@ export class AllianceSelectionComponent implements OnInit {
 
 
   constructor(private db: AngularFirestore,
-              private gameService: GameService) { }
+              private gameService: GameService,
+              private changeRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
@@ -113,6 +114,14 @@ export class AllianceSelectionComponent implements OnInit {
 
     totalScore = this.autoWeight * autoScore + this.teleopWeight * teleopScore + this.endGameWeight * endGameScore;
     return {autoTotalScore: autoScore, teleopTotalScore: teleopScore, endGameTotalScore: endGameScore, totalTotalScore: totalScore};
+  }
+
+  onTeamSelected(element: RankingItem) {
+    console.log(element);
+    console.log(this.rankingList.indexOf(element));
+    this.rankingList.splice(this.rankingList.indexOf(element), 1);
+    console.log(this.rankingList);
+    this.changeRef.detectChanges();
   }
 }
 

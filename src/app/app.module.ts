@@ -48,6 +48,7 @@ import { PreGameEndGameComponent } from './pre-game-end-game/pre-game-end-game.c
 import { DialogAlliancesComponent } from './dialog-alliances/dialog-alliances.component';
 import { PreGameClimbPlannerStateComponent } from './pre-game-climb-planner-state/pre-game-climb-planner-state.component';
 import { UpperHotZonesComponent } from './upper-hot-zones/upper-hot-zones.component';
+import {AdminGuard} from './admin.guard';
 
 
 const routes: Routes = [
@@ -59,22 +60,22 @@ const routes: Routes = [
   {
     path: 'pre-game',
     component: PreGameComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'alliance-selection',
     component: AllianceSelectionComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
     path: 'full_team_data',
     component: TeamFullData,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'users$-management',
+    path: 'users-management',
     component: UsersManagementComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
   },
   {path: 'login', component: LoginComponent},
   {path: 'test', component: TestComponent}

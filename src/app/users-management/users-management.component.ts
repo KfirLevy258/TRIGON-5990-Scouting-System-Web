@@ -44,7 +44,7 @@ export class UsersManagementComponent implements OnInit {
          return {uid, ... data} as User;
        });
      }));
-   this.users$.subscribe(res => console.log(res));
+   // this.users$.subscribe(res => console.log(res));
   }
 
   teamMemberChange(user) {

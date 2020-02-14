@@ -27,7 +27,7 @@
         <button mat-button [routerLink]="['pre-game']" [disabled]="!selectedTournament">Pre Game</button>
         <button mat-button [routerLink]="['alliance-selection']" [disabled]="!selectedTournament">Alliance Selection </button>
         <button mat-button [routerLink]="['full_team_data']" [disabled]="!selectedTournament">Full Team Data </button>
-        <button mat-button [routerLink]="['users$-management']">Users Management </button>
+        <button mat-button [routerLink]="['users-management']" [disabled]="!isAdmin">Users Management </button>
 
         <mat-form-field style="margin-left: 15px; margin-top: 20px">
           <mat-label class="tournament-select">Tournament Select</mat-label>

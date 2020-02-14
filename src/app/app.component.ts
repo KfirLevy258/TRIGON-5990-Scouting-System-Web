@@ -12,6 +12,8 @@ import {map, take} from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   authUser;
+  user;
+  isAdmin = false;
   userName;
   tournaments: Observable<any[]>;
   selectedTournament: string;
@@ -23,6 +25,11 @@ export class AppComponent implements OnInit {
     this.authService.authUser$
       .subscribe(authUser => {
         this.authUser = authUser;
+        this.db.collection('users').doc(authUser.uid).valueChanges()
+          .subscribe((user: any) => {
+            this.isAdmin = user.admin;
+            // this.user = user;
+          });
         this.loadTournaments();
       });
   }

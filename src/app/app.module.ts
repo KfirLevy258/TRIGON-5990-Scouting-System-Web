@@ -49,7 +49,7 @@ import { DialogAlliancesComponent } from './dialog-alliances/dialog-alliances.co
 import { PreGameClimbPlannerStateComponent } from './pre-game-climb-planner-state/pre-game-climb-planner-state.component';
 import { UpperHotZonesComponent } from './upper-hot-zones/upper-hot-zones.component';
 import {AdminGuard} from './admin.guard';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 const routes: Routes = [
@@ -113,39 +113,39 @@ const routes: Routes = [
 
 
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFirestoreModule,
-        AngularFireAuthModule,
-        AngularFireStorageModule,
-        AngularFireFunctionsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireFunctionsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
 
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatMenuModule,
-        MatProgressSpinnerModule,
-        MatSelectModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatTabsModule,
-        MatToolbarModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
 
-        RouterModule.forRoot(routes),
-        FlexModule,
-        ChartsModule,
-        FormsModule,
-        MatButtonToggleModule
-    ],
+    RouterModule.forRoot(routes),
+    FlexModule,
+    ChartsModule,
+    FormsModule,
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,

@@ -3,16 +3,18 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 export class ScoreParameters {
-  auto3BallsWeight: number;
-  auto10BallsWeight: number;
-  autoCollectWeight: number;
-  autoBallsAmount: number;
-  teleopBallsWeight: number;
-  teleopBallsAmount: number;
-  endGamesClimbSuccesses: number;
-  autoWeight: number;
-  teleopWeight: number;
-  endGameWeight: number;
+
+  constructor(public auto3BallsWeight: number,
+              public auto10BallsWeight: number,
+              public autoCollectWeight: number,
+              public autoBallsAmount: number,
+              public teleopBallsWeight: number,
+              public teleopBallsAmount: number,
+              public endGamesClimbSuccesses: number,
+              public autoWeight: number,
+              public teleopWeight: number,
+              public endGameWeight: number) {
+  }
 }
 
 @Component({
@@ -57,18 +59,18 @@ export class AllianceScoreParametersDialogComponent implements OnInit {
 
   ok() {
     const values = this.form.getRawValue();
-    const updatedScoreParameters = new ScoreParameters();
-    updatedScoreParameters.auto3BallsWeight = Number(values.auto3BallsWeight);
-    updatedScoreParameters.auto10BallsWeight = Number(values.auto10BallsWeight);
-    updatedScoreParameters.autoCollectWeight = Number(values.autoCollectWeight);
-    updatedScoreParameters.autoBallsAmount = Number(values.autoBallsAmount);
-    updatedScoreParameters.teleopBallsWeight = Number(values.teleopBallsWeight);
-    updatedScoreParameters.teleopBallsAmount = Number(values.teleopBallsAmount);
-    updatedScoreParameters.endGamesClimbSuccesses = Number(values.endGamesClimbSuccesses);
-    updatedScoreParameters.autoWeight = Number(values.autoWeight);
-    updatedScoreParameters.teleopWeight = Number(values.teleopWeight);
-    updatedScoreParameters.endGameWeight = Number(values.endGameWeight);
-
+    const updatedScoreParameters = new ScoreParameters(
+      Number(values.auto3BallsWeight),
+      Number(values.auto10BallsWeight),
+      Number(values.autoCollectWeight),
+      Number(values.autoBallsAmount),
+      Number(values.teleopBallsWeight),
+      Number(values.teleopBallsAmount),
+      Number(values.endGamesClimbSuccesses),
+      Number(values.autoWeight),
+      Number(values.teleopWeight),
+      Number(values.endGameWeight),
+    );
     this.dialogRef.close(updatedScoreParameters);
   }
 

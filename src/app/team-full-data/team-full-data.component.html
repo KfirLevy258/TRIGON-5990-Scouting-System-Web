@@ -33,6 +33,10 @@
           <app-team-game-scouting-teleop [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-teleop>
         </mat-tab>
 
+        <mat-tab label="Hot zones">
+          <app-upper-hot-zones [tournament]="selectedTournament" [teamNumber1]="selectedTeamNumber"></app-upper-hot-zones>
+        </mat-tab>
+
         <mat-tab label="End game">
           <app-team-game-scouting-end-game [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-end-game>
         </mat-tab>
@@ -45,9 +49,6 @@
           <app-super-scouting-page [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-super-scouting-page>
         </mat-tab>
 
-        <mat-tab label="Temp">
-          <app-upper-hot-zones [tournament]="selectedTournament" [teamNumber1]="selectedTeamNumber"></app-upper-hot-zones>
-        </mat-tab>
 
       </mat-tab-group>
     </div>

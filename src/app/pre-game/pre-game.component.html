@@ -84,6 +84,11 @@
       </app-pre-game-teleop>
     </mat-tab>
 
+    <mat-tab  *ngIf="ourTeam" label="Hot zones">
+      <app-upper-hot-zones [tournament]="tournament" [teamNumber1]="blueTeams[0]" [teamNumber2]="blueTeams[1]" [teamNumber3]="blueTeams[2]"></app-upper-hot-zones>
+      <app-upper-hot-zones [tournament]="tournament" [teamNumber1]="redTeams[0]" [teamNumber2]="redTeams[1]" [teamNumber3]="redTeams[2]"></app-upper-hot-zones>
+    </mat-tab>
+
     <mat-tab label="End game">
       <app-pre-game-end-game
         [tournament]="tournament" [blue1]="processedGamesBlue1" [blue2]="processedGamesBlue2" [blue3]="processedGamesBlue3" [blueTeams]="blueTeams"
@@ -95,9 +100,6 @@
       <app-pre-game-climb-planner [ourTeam]="ourTeam"></app-pre-game-climb-planner>
     </mat-tab>
 
-    <mat-tab  *ngIf="ourTeam" label="Temp">
-      <app-upper-hot-zones [tournament]="tournament" [teamNumber1]="ourTeam[0]" [teamNumber2]="ourTeam[1]" [teamNumber3]="ourTeam[2]"></app-upper-hot-zones>
-    </mat-tab>
   </mat-tab-group>
 
 </div>

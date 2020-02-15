@@ -1,0 +1,88 @@
+<div fxLayout="column" fxLayoutAlign="center center" >
+  <h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+  <mat-dialog-content>
+
+    <form [formGroup]="form">
+
+
+        <div fxLayout="column" style="margin-left: 20px; margin-right: 20px">
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="auto3BallsWeight"
+                   formControlName="auto3BallsWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="auto10BallsWeight"
+                   formControlName="auto10BallsWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="autoCollectWeight"
+                   formControlName="autoCollectWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="autoBallsAmount"
+                   formControlName="autoBallsAmount">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="teleopBallsWeight"
+                   formControlName="teleopBallsWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="teleopBallsAmount"
+                   formControlName="teleopBallsAmount">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="endGamesClimbSuccesses"
+                   formControlName="endGamesClimbSuccesses">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="autoWeight"
+                   formControlName="autoWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="teleopWeight"
+                   formControlName="teleopWeight">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput
+                   placeholder="endGameWeight"
+                   formControlName="endGameWeight">
+          </mat-form-field>
+        </div>
+
+
+    </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+
+    <button mat-raised-button (click)="cancel()">
+      Cancel
+    </button>
+
+    <button mat-raised-button color="warn"
+            (click)="ok()">
+      Ok
+    </button>
+  </mat-dialog-actions>
+</div>

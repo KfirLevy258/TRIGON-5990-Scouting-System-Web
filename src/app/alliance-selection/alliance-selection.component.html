@@ -7,7 +7,9 @@
       <div fxLayout="row" fxFlex>
         <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">First Pick</h2>
         <div fxFlex="10">
-          <button mat-fab color="warn" (click)="openDialog()">Settings</button>
+          <button mat-fab color="warn" (click)="openDialog()">
+            <mat-icon>settings</mat-icon>
+          </button>
         </div>
       </div>
 
@@ -22,28 +24,28 @@
 
         <ng-container matColumnDef="team_number">
           <th mat-header-cell *matHeaderCellDef> Team number </th>
-          <td mat-cell *matCellDef="let element"> {{element['team_number']}} </td>
+          <td mat-cell *matCellDef="let element"> {{element['teamNumber']}} </td>
         </ng-container>
 
         <ng-container matColumnDef="auto_score">
           <th mat-header-cell *matHeaderCellDef> Auto </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['autoTotalScore'] | number: '1.2-2' }} </td>
+          <td mat-cell *matCellDef="let element"> {{element['score']['autoScore'] | number: '1.2-2' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="teleop_score">
           <th mat-header-cell *matHeaderCellDef> Teleop </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['teleopTotalScore'] | number: '1.2-2' }} </td>
+          <td mat-cell *matCellDef="let element"> {{element['score']['teleopScore'] | number: '1.2-2' }} </td>
         </ng-container>
 
 
         <ng-container matColumnDef="end_game_score">
-          <th mat-header-cell *matHeaderCellDef> Teleop </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['endGameTotalScore'] | number: '1.2-2' }} </td>
+          <th mat-header-cell *matHeaderCellDef> End Game </th>
+          <td mat-cell *matCellDef="let element"> {{element['score']['endGameScore'] | number: '1.2-2' }} </td>
         </ng-container>
 
         <ng-container matColumnDef="score">
           <th mat-header-cell *matHeaderCellDef> Total </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['totalTotalScore'] | number: '1.2-2' }} </td>
+          <td mat-cell *matCellDef="let element"> {{element['score']['totalScore'] | number: '1.2-2' }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

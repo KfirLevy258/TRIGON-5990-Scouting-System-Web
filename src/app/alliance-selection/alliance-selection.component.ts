@@ -151,9 +151,10 @@ export class AllianceSelectionComponent implements OnInit {
       .afterClosed()
       .pipe(take(1))
       .subscribe(res => {
-        this.scoreParameters = res;
-        this.calcRankingList();
-        console.log(res);
+        if (res) {
+          this.scoreParameters = res;
+          this.calcRankingList();
+        }
       });
   }
 }

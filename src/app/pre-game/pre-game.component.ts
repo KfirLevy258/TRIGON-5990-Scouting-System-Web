@@ -97,9 +97,9 @@ export class PreGameComponent implements OnInit {
     this.homeTeam = localStorage.getItem('homeTeam');
 
     // ToDo - Remove
-    this.gameNumber = '42';
-    this.isLoading = true;
-    this.getTeams();
+    // this.gameNumber = '42';
+    // this.isLoading = true;
+    // this.getTeams();
   }
 
   gameSelected() {
@@ -130,6 +130,7 @@ export class PreGameComponent implements OnInit {
             this.redTeams[i] = (this.redTeams[i].substring(3, 10));
             this.blueTeams[i] = (this.blueTeams[i].substring(3, 10));
             if (this.redTeams[i] === this.homeTeam) { this.ourTeam = this.redTeams; }
+            console.log(this.ourTeam);
             if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
           this.getGames();

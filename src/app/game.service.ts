@@ -328,7 +328,7 @@ export class GameService {
 
   calcGameScore(game: Game) {
     // tslint:disable-next-line:prefer-const
-     const totalPowerCellPoints = game.teleopBottomScore + 2 * game.teleopOuterScore + 3 * game.teleopInnerScore +
+     let totalPowerCellPoints = game.teleopBottomScore + 2 * game.teleopOuterScore + 3 * game.teleopInnerScore +
       2 * game.autoBottomScore + 4 * game.autoOuterScore + 6 * game.autoInnerScore;
      let trenchPoints;
      trenchPoints = 0;
@@ -346,6 +346,11 @@ export class GameService {
        climbPoints += 25;
      } else {
        climbPoints += 5;
+     }
+
+    // tslint:disable-next-line:triple-equals
+     if ((game.autoBottomShots + game.autoUpperTotalShots) != 0) {
+       totalPowerCellPoints += 5;
      }
      return totalPowerCellPoints + trenchPoints + climbPoints;
   }

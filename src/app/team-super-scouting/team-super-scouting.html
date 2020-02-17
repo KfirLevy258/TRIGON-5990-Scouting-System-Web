@@ -1,19 +1,19 @@
 
-    <mat-table [dataSource]="messages$ | async" class="mat-elevation-z8 super-messages-data" fxFlexFill>
+    <table mat-table [dataSource]="games" class="mat-elevation-z8 super-messages-data" fxFlexFill>
 
       <ng-container matColumnDef="match_number">
-        <mat-header-cell *matHeaderCellDef class="displayName"> Match number </mat-header-cell>
-        <mat-cell *matCellDef="let element" class="displayName"> {{element['match_number']}};; </mat-cell>
+        <mat-header-cell *matHeaderCellDef class="match-number"> Match number </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="match-number"> {{element['gameNumber']}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="message">
-        <mat-header-cell *matHeaderCellDef class="displayName"> Message </mat-header-cell>
-        <mat-cell *matCellDef="let element" class="displayName"> {{element['message']}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef class="message"> Message </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="message"> {{element['textMessage']}} </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
+    </table>
 
 
 

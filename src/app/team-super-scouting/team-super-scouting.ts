@@ -15,7 +15,6 @@ export class TeamSuperScouting implements OnInit, OnChanges {
   games$: Observable<SuperGame[]>;
   games: Array<SuperGame> = [];
   displayedColumns: string[] = ['match_number', 'message'];
-  messages$: Observable<SuperGame[]>;
 
   constructor(private db: AngularFirestore) { }
 
@@ -50,6 +49,7 @@ export class TeamSuperScouting implements OnInit, OnChanges {
             superGame.textMessage = null;
           }
           superGame.gameNumber = gameNumber;
+          console.log(superGame);
           return superGame;
         });
       }));
@@ -59,4 +59,8 @@ export class TeamSuperScouting implements OnInit, OnChanges {
 export class SuperGame {
   gameNumber: string;
   textMessage: string;
+  // constructor(gameNumber: string, textMessage: string) {
+  //   this.gameNumber = gameNumber;
+  //   this.textMessage = textMessage;
+  // }
 }

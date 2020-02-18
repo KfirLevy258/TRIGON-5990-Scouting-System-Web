@@ -13,12 +13,12 @@
         </div>
       </div>
 
-      <table mat-table [dataSource]="rankingList" class="mat-elevation-z8">
+      <table mat-table [dataSource]="firstRankingList" class="mat-elevation-z8">
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef> Select </th>
           <td mat-cell *matCellDef="let element">
-<!--            <mat-checkbox [checked]="element['teamMember']" (change)="teamMemberChange(element)"></mat-checkbox>-->
+            <mat-checkbox></mat-checkbox>
           </td>
         </ng-container>
 
@@ -56,7 +56,54 @@
 
     <div fxLayout="column" fxFlex="50">
 
-      <h2 fxFlexAlign="center">Second Pick</h2>
+      <div fxLayout="row" fxFlex>
+        <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">Second Pick</h2>
+        <div fxFlex="10">
+          <button mat-fab color="warn" (click)="openDialog()">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <table mat-table [dataSource]="firstRankingList" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef> Select </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="team_number">
+          <th mat-header-cell *matHeaderCellDef> Team number </th>
+          <td mat-cell *matCellDef="let element"> {{element['teamNumber']}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="auto_score">
+          <th mat-header-cell *matHeaderCellDef> Auto </th>
+          <td mat-cell *matCellDef="let element"> {{element['score']['autoScore'] | number: '1.2-2' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="teleop_score">
+          <th mat-header-cell *matHeaderCellDef> Teleop </th>
+          <td mat-cell *matCellDef="let element"> {{element['score']['teleopScore'] | number: '1.2-2' }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="end_game_score">
+          <th mat-header-cell *matHeaderCellDef> End Game </th>
+          <td mat-cell *matCellDef="let element"> {{element['score']['endGameScore'] | number: '1.2-2' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="score">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let element"> {{element['score']['totalScore'] | number: '1.2-2' }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
 
     </div>
   </div>

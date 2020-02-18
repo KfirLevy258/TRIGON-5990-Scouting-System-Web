@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
-export class ScoreParameters {
+export class FirstScoreParameters {
 
   constructor(public auto3BallsWeight: number,
               public auto10BallsWeight: number,
@@ -17,6 +17,21 @@ export class ScoreParameters {
   }
 }
 
+export class SecondScoreParameters {
+
+  constructor(public auto3BallsWeight: number,
+              public auto10BallsWeight: number,
+              public autoCollectWeight: number,
+              public autoBallsAmount: number,
+              public teleopBallsWeight: number,
+              public teleopBallsAmount: number,
+              public teleopRouletteWeight: number,
+              public endGamesClimbSuccesses: number,
+              public autoWeight: number,
+              public teleopWeight: number,
+              public endGameWeight: number) {
+  }
+}
 @Component({
   selector: 'app-alliance-score-parameters',
   templateUrl: './alliance-score-parameters-dialog.component.html',
@@ -26,7 +41,7 @@ export class AllianceScoreParametersDialogComponent implements OnInit {
 
   dialogTitle: string;
   form: FormGroup;
-  scoreParameters: ScoreParameters;
+  scoreParameters: FirstScoreParameters;
 
   constructor(private dialogRef: MatDialogRef<AllianceScoreParametersDialogComponent>,
               private fb: FormBuilder,
@@ -59,7 +74,7 @@ export class AllianceScoreParametersDialogComponent implements OnInit {
 
   ok() {
     const values = this.form.getRawValue();
-    const updatedScoreParameters = new ScoreParameters(
+    const updatedScoreParameters = new FirstScoreParameters(
       Number(values.auto3BallsWeight),
       Number(values.auto10BallsWeight),
       Number(values.autoCollectWeight),

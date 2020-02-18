@@ -8,7 +8,7 @@ import {take} from 'rxjs/operators';
 import {Game, GameService, ProcessedGames} from '../game.service';
 import {zip} from 'rxjs';
 import {Color} from 'ng2-charts';
-import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {ChartOptions, ChartType} from 'chart.js';
 import {DialogAlliancesComponent} from '../dialog-alliances/dialog-alliances.component';
 
 @Component({
@@ -41,6 +41,7 @@ export class PreGameComponent implements OnInit {
   tournament: string;
   blueTeams: Array<string> = [];
   redTeams: Array<string> = [];
+  allTeams: Array<string> = [];
   homeTeam: string;
   ourTeam: Array<string>;         // teams including Home Team
   isLoading = false;
@@ -130,9 +131,9 @@ export class PreGameComponent implements OnInit {
             this.redTeams[i] = (this.redTeams[i].substring(3, 10));
             this.blueTeams[i] = (this.blueTeams[i].substring(3, 10));
             if (this.redTeams[i] === this.homeTeam) { this.ourTeam = this.redTeams; }
-            console.log(this.ourTeam);
             if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
+          this.allTeams = [...this.blueTeams, ...this.redTeams];
           this.getGames();
         }
       }, (err) => {
@@ -157,8 +158,8 @@ export class PreGameComponent implements OnInit {
       .subscribe(res => {
         this.blueTeams = res.blueTeams;
         this.redTeams = res.redTeams;
+        this.allTeams = [...this.blueTeams, ...this.redTeams];
         this.gameNumber = '0';
-        console.log(this.redTeams);
       });
   }
 

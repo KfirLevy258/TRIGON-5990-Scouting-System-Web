@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map} from 'rxjs/operators';
-import {Route, Router} from '@angular/router';
 
 class Team {
   teamNumber: string;
@@ -29,6 +28,7 @@ export class TeamFullData implements OnInit {
   selectedTeamNumber;
   selectedTeamName: string;
   selectedTeam;
+  selectedTeamArray: Array<string>;
   teams: Observable<Team[]>;
 
 
@@ -54,10 +54,10 @@ export class TeamFullData implements OnInit {
   }
 
   teamSelect(team: Team) {
-    console.log(team);
     this.selectedTeamNumber = team.teamNumber;
     this.selectedTeamName = team.team_name;
     this.selectedTeam = team;
+    this.selectedTeamArray = [team.teamNumber];
     localStorage.setItem('teamNumber', team.teamNumber);
     localStorage.setItem('teamName', team.team_name);
   }

@@ -9,23 +9,19 @@ import {Game, GameService, ProcessedGames} from '../game.service';
 })
 export class UpperHotZonesComponent implements OnInit, OnChanges {
 
+  // display hot zones for: 1 team; 3 teams (blue alliance); 6 teams (blue alliance & red alliance)
   @Input() tournament;
-  @Input() teamNumber1;
-  @Input() teamNumber2;
-  @Input() teamNumber3;
+  @Input() teamNumbers: Array<string>;
+
 
   @ViewChild('legend', {static: true}) legend: ElementRef;
   private legendCx: CanvasRenderingContext2D;
   @ViewChild('field', {static: true}) field: ElementRef;
   private fieldCx: CanvasRenderingContext2D;
 
-  games1: Array<Game> = [];
-  games2: Array<Game> = [];
-  games3: Array<Game> = [];
-  processedGames1: ProcessedGames;
-  processedGames2: ProcessedGames;
-  processedGames3: ProcessedGames;
-  threeTeams: boolean;
+  games: Array<Array<Game>> = [];
+  processedGames: Array<ProcessedGames>;
+  team2Display: number;
 
   constructor(private gameService: GameService) { }
 
@@ -36,7 +32,10 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.threeTeams = this.teamNumber3 !== undefined;
+    this.team2Display = this.teamNumbers.length;
+    this.games = [];
+    this.processedGames = [];
+    // this.threeTeams = this.teamNumber3 !== undefined;
     if (this.legendCx) {
       this.legendCx.clearRect(0, 0, this.legend.nativeElement.width, this.legend.nativeElement.height);
       this.drawLegend();
@@ -46,34 +45,44 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
 
     }
 
-
-    const gamesQuery = this.threeTeams ?
-      zip (
-        this.gameService.getGames(this.tournament, this.teamNumber1),
-        this.gameService.getGames(this.tournament, this.teamNumber2),
-        this.gameService.getGames(this.tournament, this.teamNumber3),
-      ) :
-      zip(
-        this.gameService.getGames(this.tournament, this.teamNumber1),
-      );
+    let gamesQuery;
+    switch (this.team2Display) {
+      case 1:
+        gamesQuery = zip(
+          this.gameService.getGames(this.tournament, this.teamNumbers[0]),
+        );
+        break;
+      case 3:
+        gamesQuery = zip(
+          this.gameService.getGames(this.tournament, this.teamNumbers[0]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[1]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[2]),
+        );
+        break;
+      case 6:
+        gamesQuery = zip(
+          this.gameService.getGames(this.tournament, this.teamNumbers[0]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[1]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[2]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[3]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[4]),
+          this.gameService.getGames(this.tournament, this.teamNumbers[5]),
+        );
+        break;
+    }
     gamesQuery
       .subscribe(res => {
-        this.games1 = res[0];
-        this.processedGames1 = this.gameService.processGames(res[0]);
-        this.processedGames1.teleopDetailedUpperShots.forEach(shot => {
-          this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, 1);
-        });
 
-        if (this.threeTeams) {
-          this.games2 = res[1];
-          this.processedGames2 = this.gameService.processGames(res[1]);
-          this.processedGames2.teleopDetailedUpperShots.forEach(shot => {
-            this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, 2);
-          });
-          this.games3 = res[2];
-          this.processedGames3 = this.gameService.processGames(res[2]);
-          this.processedGames3.teleopDetailedUpperShots.forEach(shot => {
-            this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, 3);
+        // tslint:disable-next-line:forin
+        for (const i in res) {
+          this.games.push(res[i]);
+          this.processedGames.push(this.gameService.processGames(res[i]));
+          this.processedGames[i].teleopDetailedUpperShots.forEach(shot => {
+            if (Number(i) < 3) {
+              this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, Number(i));
+            } else {
+              this.drawShot(this.fieldCx, this.field, 1 - shot.x, 1 - shot.y, shot.innerScore + shot.outerScore, shot.shots, Number(i));
+            }
           });
         }
         this.drawGameField();
@@ -97,35 +106,35 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
     this.legendCx.fillText('2', 140, 115);
     this.legendCx.fillText('1', 140, 140);
 
-    this.drawShot(this.legendCx, this.legend, 0.4, 0.2, 5, 5, 1);
-    this.drawShot(this.legendCx, this.legend, 0.4, 0.325, 4, 5, 1);
-    this.drawShot(this.legendCx, this.legend, 0.4, 0.45, 3, 5, 1);
-    this.drawShot(this.legendCx, this.legend, 0.4, 0.565, 2, 5, 1);
-    this.drawShot(this.legendCx, this.legend, 0.4, 0.69, 1, 5, 1);
+    this.drawShot(this.legendCx, this.legend, 0.4, 0.2, 5, 5, 0);
+    this.drawShot(this.legendCx, this.legend, 0.4, 0.325, 4, 5, 0);
+    this.drawShot(this.legendCx, this.legend, 0.4, 0.45, 3, 5, 0);
+    this.drawShot(this.legendCx, this.legend, 0.4, 0.565, 2, 5, 0);
+    this.drawShot(this.legendCx, this.legend, 0.4, 0.69, 1, 5, 0);
 
-    if (this.threeTeams) {
-      this.legendCx.fillText(this.teamNumber1, 80, 20);
-      this.legendCx.fillText(this.teamNumber2, 50, 20);
-      this.legendCx.fillText(this.teamNumber3, 110, 20);
+    if (this.team2Display === 3) {
+      this.legendCx.fillText(this.teamNumbers[0], 80, 20);
+      this.legendCx.fillText(this.teamNumbers[1], 50, 20);
+      this.legendCx.fillText(this.teamNumbers[2], 110, 20);
 
-      this.drawShot(this.legendCx, this.legend, 0.3, 0.2, 5, 5, 2);
-      this.drawShot(this.legendCx, this.legend, 0.3, 0.325, 4, 5, 2);
-      this.drawShot(this.legendCx, this.legend, 0.3, 0.45, 3, 5, 2);
-      this.drawShot(this.legendCx, this.legend, 0.3, 0.565, 2, 5, 2);
-      this.drawShot(this.legendCx, this.legend, 0.3, 0.69, 1, 5, 2);
+      this.drawShot(this.legendCx, this.legend, 0.3, 0.2, 5, 5, 1);
+      this.drawShot(this.legendCx, this.legend, 0.3, 0.325, 4, 5, 1);
+      this.drawShot(this.legendCx, this.legend, 0.3, 0.45, 3, 5, 1);
+      this.drawShot(this.legendCx, this.legend, 0.3, 0.565, 2, 5, 1);
+      this.drawShot(this.legendCx, this.legend, 0.3, 0.69, 1, 5, 1);
 
-      this.drawShot(this.legendCx, this.legend, 0.5, 0.2, 5, 5, 3);
-      this.drawShot(this.legendCx, this.legend, 0.5, 0.325, 4, 5, 3);
-      this.drawShot(this.legendCx, this.legend, 0.5, 0.45, 3, 5, 3);
-      this.drawShot(this.legendCx, this.legend, 0.5, 0.565, 2, 5, 3);
-      this.drawShot(this.legendCx, this.legend, 0.5, 0.69, 1, 5, 3);
+      this.drawShot(this.legendCx, this.legend, 0.5, 0.2, 5, 5, 2);
+      this.drawShot(this.legendCx, this.legend, 0.5, 0.325, 4, 5, 2);
+      this.drawShot(this.legendCx, this.legend, 0.5, 0.45, 3, 5, 2);
+      this.drawShot(this.legendCx, this.legend, 0.5, 0.565, 2, 5, 2);
+      this.drawShot(this.legendCx, this.legend, 0.5, 0.69, 1, 5, 2);
     }
 
-    this.drawShot(this.legendCx, this.legend, 0.8, 0.2, 5, 5, 1);
-    this.drawShot(this.legendCx, this.legend, 0.8, 0.325, 4, 4, 1);
-    this.drawShot(this.legendCx, this.legend, 0.8, 0.45, 3, 3, 1);
-    this.drawShot(this.legendCx, this.legend, 0.8, 0.565, 2, 2, 1);
-    this.drawShot(this.legendCx, this.legend, 0.8, 0.69, 1, 1, 1);
+    this.drawShot(this.legendCx, this.legend, 0.8, 0.2, 5, 5, 0);
+    this.drawShot(this.legendCx, this.legend, 0.8, 0.325, 4, 4, 0);
+    this.drawShot(this.legendCx, this.legend, 0.8, 0.45, 3, 3, 0);
+    this.drawShot(this.legendCx, this.legend, 0.8, 0.565, 2, 2, 0);
+    this.drawShot(this.legendCx, this.legend, 0.8, 0.69, 1, 1, 0);
 
     this.legendCx.fillStyle = 'black';
   }
@@ -192,21 +201,21 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
 
     cx.beginPath();
     cx.arc(x, y, 2 * shot, 0, 2 * Math.PI, false);
-    if (robotSeq === 1) {
+    if ((this.team2Display !== 6 && robotSeq === 0) || (this.team2Display === 6 && robotSeq > 2)) {
       if (scorePct > 0.8 && scorePct <= 1.0) { cx.fillStyle = '#f00000'; }
       if (scorePct > 0.6 && scorePct <= 0.8) { cx.fillStyle = '#c00000'; }
       if (scorePct > 0.4 && scorePct <= 0.6) { cx.fillStyle = '#a00000'; }
       if (scorePct > 0.2 && scorePct <= 0.4) { cx.fillStyle = '#800000'; }
       if (scorePct > 0 && scorePct <= 0.2) { cx.fillStyle = '#600000'; }
     }
-    if (robotSeq === 2) {
+    if (this.team2Display === 3 && robotSeq === 1) {
       if (scorePct > 0.8 && scorePct <= 1.0) { cx.fillStyle = '#00f000'; }
       if (scorePct > 0.6 && scorePct <= 0.8) { cx.fillStyle = '#00c000'; }
       if (scorePct > 0.4 && scorePct <= 0.6) { cx.fillStyle = '#00a000'; }
       if (scorePct > 0.2 && scorePct <= 0.4) { cx.fillStyle = '#008000'; }
       if (scorePct > 0 && scorePct <= 0.2) { cx.fillStyle = '#006000'; }
     }
-    if (robotSeq === 3) {
+    if ((this.team2Display === 3 && robotSeq === 2) || (this.team2Display === 6 && robotSeq < 3)) {
       if (scorePct > 0.8 && scorePct <= 1.0) { cx.fillStyle = '#0000f0'; }
       if (scorePct > 0.6 && scorePct <= 0.8) { cx.fillStyle = '#0000c0'; }
       if (scorePct > 0.4 && scorePct <= 0.6) { cx.fillStyle = '#0000a0'; }

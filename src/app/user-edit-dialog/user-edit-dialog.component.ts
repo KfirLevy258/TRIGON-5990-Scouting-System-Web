@@ -59,6 +59,7 @@ export class UserEditDialogComponent {
       teamMember: [''],
       teamLeader: [''],
       admin: [''],
+      activeScouter: [''],
       email: ['', Validators.email],
       password: ['', Validators.minLength(6)],
       // controls used to pass data to validator

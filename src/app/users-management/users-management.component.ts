@@ -17,6 +17,7 @@ export class User {
   teamLeader: boolean;
   admin: boolean;
   photoURL: string;
+  activeScouter: boolean;
 }
 
 @Component({
@@ -27,7 +28,7 @@ export class User {
 export class UsersManagementComponent implements OnInit {
 
   users$: Observable<User[]>;
-  displayedColumns: string[] = ['photo', 'name', 'email', 'teamMember', 'teamLeader', 'admin', 'Actions'];
+  displayedColumns: string[] = ['photo', 'name', 'email', 'teamMember', 'teamLeader', 'admin', 'activeScouter', 'Actions'];
   isLoading: boolean;
 
   constructor(private db: AngularFirestore,
@@ -70,6 +71,15 @@ export class UsersManagementComponent implements OnInit {
     updatedUser.admin = !updatedUser.admin;
     this.updateUser(updatedUser);
   }
+
+  activeScouterChange(user) {
+    const updatedUser = {
+      ...user
+    } as User;
+    updatedUser.activeScouter = !updatedUser.activeScouter;
+    this.updateUser(updatedUser);
+  }
+
   updateUser(updatedUser: User) {
     this.db.collection('users').doc(updatedUser.uid).update(updatedUser)
       .catch(err => console.log(err));

@@ -21,7 +21,7 @@
 
     <ng-container matColumnDef="photo">
       <mat-header-cell *matHeaderCellDef class="icon"> profile photo </mat-header-cell>
-      <mat-cell *matCellDef="let element" (click)="test(element)" class="icon">
+      <mat-cell *matCellDef="let element" class="icon">
         <img *ngIf="element['photoURL']"
              class="user-img" [src]="element['photoURL']" alt="">
         <img *ngIf="!element['photoURL']"

@@ -35,7 +35,6 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
     this.team2Display = this.teamNumbers.length;
     this.games = [];
     this.processedGames = [];
-    // this.threeTeams = this.teamNumber3 !== undefined;
     if (this.legendCx) {
       this.legendCx.clearRect(0, 0, this.legend.nativeElement.width, this.legend.nativeElement.height);
       this.drawLegend();

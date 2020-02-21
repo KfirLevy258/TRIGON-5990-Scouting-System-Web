@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {map, take} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Game, GameService, ProcessedGames} from '../game.service';
+import {Game, GameService, ProcessedGames, Team} from '../game.service';
 import {MatDialog} from '@angular/material';
 import {defaultDialogConfig} from '../default-dialog-config';
 import {
@@ -9,12 +9,12 @@ import {
   FirstScoreParameters, SecondScoreParameters
 } from '../alliance-score-dialog-parameters/alliance-score-parameters-dialog.component';
 
-class Team {
-
-  constructor(public teamNumber: string, public  teamName: string) {
-  }
-
-}
+// class Team {
+//
+//   constructor(public teamNumber: string, public  teamName: string) {
+//   }
+//
+// }
 
 class Score {
   autoScore: number;
@@ -84,14 +84,7 @@ export class AllianceSelectionComponent implements OnInit {
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
 
-    this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').snapshotChanges()
-      .pipe(map(arr => {
-        return  arr.map(snap => {
-          const data = snap.payload.doc.data();
-          const teamNumber = snap.payload.doc.id;
-          return {teamNumber, ... data} as Team;
-        });
-      }))
+    this.gameService.getTeams$(this.selectedTournament)
     .subscribe(result => {
       this.teams = result;
       // this.biggerScore();
@@ -99,24 +92,6 @@ export class AllianceSelectionComponent implements OnInit {
       this.isLoading = false;
     });
   }
-
-  // biggerScore() {
-  //   this.teams.forEach((team: Team) => {
-  //     // tslint:disable-next-line:max-line-length
-  //     this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').doc(team.teamNumber).collection('games').snapshotChanges()
-  //       .pipe(map(arr => {
-  //         return  arr.map(snap => {
-  //           const data = snap.payload.doc.data();
-  //           return ;
-  //         });
-  //       }))
-  //       .subscribe(result => {
-  //         console.log(this.gameService.processGames(result));
-  //       });
-  //     // this.gameService.processGames(this.selectedTournament, team.teamNumber);
-  //   });
-  // }
-
   calcFirstRankingList() {
     const tempList: Array<RankingItem> = [];
 

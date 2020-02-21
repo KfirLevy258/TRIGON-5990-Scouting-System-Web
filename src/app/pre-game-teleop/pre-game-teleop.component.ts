@@ -18,7 +18,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   @Input() red1: ProcessedGames;
   @Input() red2: ProcessedGames;
   @Input() red3: ProcessedGames;
-  @Input() redTeams: Array<string>
+  @Input() redTeams: Array<string>;
 
   outerLineColor: Color[] = [
     {
@@ -111,7 +111,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   };
   lineChartLegend = true;
   lineChartPlugins = [];
-  lineChartType = 'line';
+  lineChartType: ChartType = 'line';
 
   blueInnerAVG = 0;
   blueOuterAVG = 0;

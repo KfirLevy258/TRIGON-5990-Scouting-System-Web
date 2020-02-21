@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Game, GameService, ProcessedGames} from '../game.service';
-import {ChartDataSets} from 'chart.js';
+import {ChartDataSets, ChartType} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
 @Component({
@@ -60,7 +60,7 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
   ];
   lineChartLegend = true;
   lineChartPlugins = [];
-  lineChartType = 'line';
+  lineChartType: ChartType = 'line';
 
   teleopOuterScoreData: ChartDataSets[] = [];
   teleopInnerScoreData: ChartDataSets[] = [];

@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ProcessedGames} from '../game.service';
-import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
-import {Color} from "ng2-charts";
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import {Color} from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import {validate} from "codelyzer/walkerFactory/walkerFn";
-import {formatNumber} from "@angular/common";
+
 
 @Component({
   selector: 'app-pre-game-auto',

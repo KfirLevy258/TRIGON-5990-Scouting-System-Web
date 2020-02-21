@@ -1,6 +1,21 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+
+
+export class Team {
+  teamNumber: string;
+  // tslint:disable-next-line:variable-name
+  team_name: string;
+  // tslint:disable-next-line:variable-name
+  pit_scouting_saved: boolean;
+
+  constructor(iTeamNumber: string, iTeamName: string) {
+    this.teamNumber =  iTeamNumber;
+    this.team_name = iTeamName;
+  }
+}
 
 export class LineCoeffs {
   m: number;
@@ -128,6 +143,17 @@ export class GameService {
   games: Array<Game>;
 
   constructor(private db: AngularFirestore) { }
+
+  getTeams$(tournament: string): Observable<Team[]> {
+    return this.db.collection('tournaments').doc(tournament).collection('teams').snapshotChanges()
+      .pipe(map(arr => {
+        return  arr.map(snap => {
+          const data = snap.payload.doc.data();
+          const teamNumber = snap.payload.doc.id;
+          return {teamNumber, ... data} as Team;
+        });
+      }));
+  }
 
   getGamesPromise(tournament: string, teamNumber: string): Promise<Game[]> {
     return new Promise((resolve) => {

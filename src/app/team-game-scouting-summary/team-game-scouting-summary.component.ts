@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Game, GameService, ProcessedGames} from '../game.service';
-import {Observable} from 'rxjs';
+import {Game, ProcessedGames} from '../game.service';
 import {ChartDataSets} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
@@ -13,12 +12,11 @@ export class TeamGameScoutingSummaryComponent implements OnInit, OnChanges {
   @Input() tournament;
   @Input() teamNumber;
 
-  games$: Observable<Game[]>;
-  games: Array<Game> = [];
-  processedGames: ProcessedGames;
+  @Input() games: Array<Game> = [];
+  @Input() processedGames: ProcessedGames;
 
 
-  constructor(private gameService: GameService) { }
+  constructor() { }
 
   gamesScoreData: ChartDataSets[] = [];
   gamesLabels: Label[] = [];
@@ -67,16 +65,11 @@ export class TeamGameScoutingSummaryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.games$ = this.gameService.getGames(this.tournament, this.teamNumber);
-    this.games$
-      .subscribe(res => {
-        this.gamesScoreData = [];
-
-        this.games = res;
-        this.processedGames = this.gameService.processGames(res);
-        this.gamesLabels = this.processedGames.gamesVector;
-        this.gamesScoreData.push({ data: this.processedGames.gamesScoresVector, label: 'Games Scores' });
-      });
+    this.gamesScoreData = [];
+    if (this.processedGames) {
+      this.gamesLabels = this.processedGames.gamesVector;
+      this.gamesScoreData.push({ data: this.processedGames.gamesScoresVector, label: 'Games Scores' });
+    }
   }
 
 }

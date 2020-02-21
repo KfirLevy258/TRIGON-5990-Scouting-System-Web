@@ -60,7 +60,8 @@ export class AppComponent implements OnInit {
       .subscribe(tour => {
         localStorage.setItem('event_key', tour.data().event_key);
       });
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('')
+      .catch(err => console.log(err));
   }
 
   logout() {
@@ -74,6 +75,7 @@ export class AppComponent implements OnInit {
 
   homeTeamChange(event) {
     localStorage.setItem('homeTeam', event.target.value);
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('')
+      .catch(err => console.log(err));
   }
 }

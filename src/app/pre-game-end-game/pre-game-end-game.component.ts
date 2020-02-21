@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ProcessedGames} from "../game.service";
-import {Color} from "ng2-charts";
-import {ChartDataSets, ChartOptions, ChartType} from "chart.js";
+import {ProcessedGames} from '../game.service';
+import {Color} from 'ng2-charts';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 
 @Component({
   selector: 'app-pre-game-end-game',
@@ -17,7 +17,7 @@ export class PreGameEndGameComponent implements OnInit {
   @Input() red1: ProcessedGames;
   @Input() red2: ProcessedGames;
   @Input() red3: ProcessedGames;
-  @Input() redTeams: Array<string>
+  @Input() redTeams: Array<string>;
 
   outerLineColor: Color[] = [
     {

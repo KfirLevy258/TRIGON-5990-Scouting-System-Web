@@ -119,6 +119,7 @@ export class PreGameComponent implements OnInit {
     };
 
     let headers: HttpHeaders = new HttpHeaders();
+    // noinspection SpellCheckingInspection
     headers = headers.append('X-TBA-Auth-Key', 'ptM95D6SCcHO95D97GLFStGb4cWyxtBKNOI9FX5QmBirDnjebphZAEpPcwXNr4vH');
     this.http.get('https://www.thebluealliance.com/api/v3/match/' + this.eventKey + '_qm' + this.gameNumber, {headers})
       .subscribe((matchData: any) => {

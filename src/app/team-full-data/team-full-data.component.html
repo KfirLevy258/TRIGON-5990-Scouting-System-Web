@@ -14,7 +14,6 @@
         </mat-select>
       </mat-form-field>
 
-
     </div>
     <div *ngIf="selectedTeamNumber" fxFlexFill style="float: left">
 <!--      <h1> {{ selectedTeamNumber }} - {{ selectedTeamName }}</h1>-->
@@ -22,7 +21,9 @@
       <mat-tab-group>
 
         <mat-tab label="Games Summary">
-          <app-team-game-scouting-summary [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-summary>
+          <app-team-game-scouting-summary [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"
+                                          [games]="games" [processedGames]="processedGames"
+          ></app-team-game-scouting-summary>
         </mat-tab>
 
         <mat-tab label="Autonomous">
@@ -38,7 +39,9 @@
         </mat-tab>
 
         <mat-tab label="End game">
-          <app-team-game-scouting-end-game [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-end-game>
+          <app-team-game-scouting-end-game [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"
+                                           [games]="games" [processedGames]="processedGames"
+          ></app-team-game-scouting-end-game>
         </mat-tab>
 
         <mat-tab label="Pit Scouting">

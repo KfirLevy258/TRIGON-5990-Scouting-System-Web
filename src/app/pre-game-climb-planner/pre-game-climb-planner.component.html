@@ -55,7 +55,7 @@
         <div *ngIf="rowIndex === 0" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="column" fxLayoutAlign="center center">
             <span>{{ state1.success? 'Climb succeeded' : 'Climb failed' }}</span>
-            <span [className]="state1.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unleveled'" >
+            <span [className]="state1.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unLeveled'" >
               {{ state1.barAngle / 3.14 * 180 | number: '1.2-2'}}
             </span>
           </div>
@@ -64,7 +64,7 @@
         <div *ngIf="rowIndex === 1" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="column" fxLayoutAlign="center center">
             <span>{{ state2.success? 'Climb succeeded' : 'Climb failed' }}</span>
-            <span [className]="state2.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unleveled'" >
+            <span [className]="state2.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unLeveled'" >
               {{ state2.barAngle / 3.14 * 180 | number: '1.2-2'}}
             </span>
           </div>
@@ -73,7 +73,7 @@
         <div *ngIf="rowIndex === 2" fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="column" fxLayoutAlign="center center">
             <span>{{ state3.success? 'Climb succeeded' : 'Climb failed' }}</span>
-            <span [className]="state3.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unleveled'" >
+            <span [className]="state3.barAngle / 3.14 * 180 < 8 ? 'bar-leveled' : 'bar-unLeveled'" >
               {{ state3.barAngle / 3.14 * 180 | number: '1.2-2'}}
             </span>
           </div>

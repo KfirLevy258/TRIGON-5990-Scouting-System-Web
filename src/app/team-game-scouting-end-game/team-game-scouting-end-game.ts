@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Game, GameService, ProcessedGames} from '../game.service';
-import {ChartDataSets} from 'chart.js';
+import {Game, ProcessedGames} from '../game.service';
+import {ChartDataSets, ChartType} from 'chart.js';
 import {Color, Label} from 'ng2-charts';
 
 @Component({
@@ -16,12 +15,11 @@ export class TeamGameScoutingEndGame implements OnInit, OnChanges {
   @Input() tournament;
   @Input() teamNumber;
 
-  games$: Observable<Game[]>;
-  games: Array<Game> = [];
-  processedGames: ProcessedGames;
+  @Input() games: Array<Game> = [];
+  @Input() processedGames: ProcessedGames;
 
 
-  constructor(private gameService: GameService) { }
+  constructor() { }
 
   climbLocations: ChartDataSets[] = [];
   gamesLabels: Label[] = [];
@@ -62,7 +60,7 @@ export class TeamGameScoutingEndGame implements OnInit, OnChanges {
   ];
   lineChartLegend = true;
   lineChartPlugins = [];
-  lineChartType = 'line';
+  lineChartType: ChartType = 'line';
 
   teleopCyclesData: ChartDataSets[] = [];
 
@@ -72,17 +70,11 @@ export class TeamGameScoutingEndGame implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.games$ = this.gameService.getGames(this.tournament, this.teamNumber);
-    this.games$
-      .subscribe(res => {
-        this.climbLocations = [];
-        this.teleopCyclesData = [];
-
-        this.games = res;
-        this.processedGames = this.gameService.processGames(res);
-        this.gamesLabels = this.processedGames.gamesVector;
-        this.climbLocations.push({ data: this.processedGames.climbLocations, label: 'Games Scores' });
-      });
+    this.climbLocations = [];
+    if (this.processedGames) {
+      this.gamesLabels = this.processedGames.gamesVector;
+      this.climbLocations.push({ data: this.processedGames.climbLocations, label: 'Games Scores' });
+    }
   }
 
 }

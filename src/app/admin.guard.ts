@@ -17,14 +17,12 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('Admin Guard');
     return this.authService.authUser$
       .pipe(
         concatMap(authUser => {
           return this.db.collection('users').doc(authUser.uid).get()
             .pipe(
               map(user => {
-                console.log(user.data());
                 return user.data().admin;
               }),
               tap(ok => {

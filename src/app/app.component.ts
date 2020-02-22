@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
           this.authUser = authUser;
           this.db.collection('users').doc(authUser.uid).valueChanges()
             .subscribe((user: any) => {
-              console.log('user changed', user);
               this.isAdmin = user.admin;
               // this.user = user;
             });

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {take} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Game, GameService, ProcessedGames, Team} from '../game.service';
-import {MatDialog} from '@angular/material';
+import {MatCheckboxChange, MatDialog} from '@angular/material';
 import {defaultDialogConfig} from '../default-dialog-config';
 import {
   Alliance1stScoreParametersDialogComponent
@@ -10,13 +10,7 @@ import {
 import {FirstScoreParameters, SecondScoreParameters} from '../alliance-score-parameters';
 import {Alliance2ndScoreParametersDialogComponent
 } from '../alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
-
-// class Team {
-//
-//   constructor(public teamNumber: string, public  teamName: string) {
-//   }
-//
-// }
+import * as cloneDeep from 'lodash/cloneDeep';
 
 class Score {
   autoScore: number;
@@ -34,7 +28,7 @@ class Score {
 
 
 export class RankingItem {
-  constructor(private teamNumber: string, public score: Score) {
+  constructor(public selected: boolean, public teamNumber: string, public score: Score) {
   }
 }
 @Component({
@@ -43,7 +37,7 @@ export class RankingItem {
   styleUrls: ['./alliance-selection.component.scss']
 })
 export class AllianceSelectionComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
+  displayedColumns: string[] = ['select', 'Actions', 'team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
   selectedTournament: string;
   teams: Array<Team> = [];
   firstRankingList: Array<RankingItem> = [];
@@ -100,9 +94,9 @@ export class AllianceSelectionComponent implements OnInit {
 
     const  promises: Array<Promise<Game[]>> = [];
     this.teams.forEach((team: Team) => {
-      const team1stRankingItem = new  RankingItem(team.teamNumber, new Score());
+      const team1stRankingItem = new  RankingItem(false, team.teamNumber, new Score());
       temp1stList.push(team1stRankingItem);
-      const team2ndRankingItem = new  RankingItem(team.teamNumber, new Score());
+      const team2ndRankingItem = new  RankingItem(false, team.teamNumber, new Score());
       temp2ndList.push(team2ndRankingItem);
       promises.push(this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber));
     });
@@ -218,6 +212,48 @@ export class AllianceSelectionComponent implements OnInit {
           this.calcRankingLists();
         }
       });
+  }
+
+  select(event: MatCheckboxChange, element: RankingItem, picListNumber: number) {
+    const teamNumber = element.teamNumber;
+    const checked = event.checked;
+
+    const index1st = this.firstRankingList.findIndex(x => x.teamNumber === teamNumber);
+    const index2nd = this.secondRankingList.findIndex(x => x.teamNumber === teamNumber);
+    this.firstRankingList[index1st].selected = checked;
+    this.secondRankingList[index2nd].selected = checked;
+  }
+
+  swapDown(picListNumber: number, index: number) {
+    if (index < this.firstRankingList.length - 1) {
+      if (picListNumber === 1) {
+        const temp: RankingItem = this.firstRankingList[index + 1];
+        this.firstRankingList[index + 1] = this.firstRankingList[index];
+        this.firstRankingList[index] = temp;
+        this.firstRankingList = cloneDeep(this.firstRankingList);
+      } else {
+        const temp: RankingItem = this.secondRankingList[index + 1];
+        this.secondRankingList[index + 1] = this.secondRankingList[index];
+        this.secondRankingList[index] = temp;
+        this.secondRankingList = cloneDeep(this.secondRankingList);
+      }
+    }
+  }
+
+  swapUp(picListNumber: number, index: number) {
+    if (index > 0) {
+      if (picListNumber === 1) {
+        const temp: RankingItem = this.firstRankingList[index - 1];
+        this.firstRankingList[index - 1] = this.firstRankingList[index];
+        this.firstRankingList[index] = temp;
+        this.firstRankingList = cloneDeep(this.firstRankingList);
+      } else {
+        const temp: RankingItem = this.secondRankingList[index - 1];
+        this.secondRankingList[index - 1] = this.secondRankingList[index];
+        this.secondRankingList[index] = temp;
+        this.secondRankingList = cloneDeep(this.secondRankingList);
+      }
+    }
   }
 
 }

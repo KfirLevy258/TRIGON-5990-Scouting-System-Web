@@ -1,49 +1,21 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {FirstScoreParameters} from '../alliance-score-parameters';
 
-export class FirstScoreParameters {
 
-  constructor(public auto3BallsWeight: number,
-              public auto10BallsWeight: number,
-              public autoCollectWeight: number,
-              public autoBallsAmount: number,
-              public teleopBallsWeight: number,
-              public teleopBallsAmount: number,
-              public endGamesClimbSuccesses: number,
-              public autoWeight: number,
-              public teleopWeight: number,
-              public endGameWeight: number) {
-  }
-}
-
-export class SecondScoreParameters {
-
-  constructor(public auto3BallsWeight: number,
-              public auto10BallsWeight: number,
-              public autoCollectWeight: number,
-              public autoBallsAmount: number,
-              public teleopBallsWeight: number,
-              public teleopBallsAmount: number,
-              public teleopRouletteWeight: number,
-              public endGamesClimbSuccesses: number,
-              public autoWeight: number,
-              public teleopWeight: number,
-              public endGameWeight: number) {
-  }
-}
 @Component({
   selector: 'app-alliance-score-parameters',
-  templateUrl: './alliance-score-parameters-dialog.component.html',
-  styleUrls: ['./alliance-score-parameters-dialog.component.scss']
+  templateUrl: './alliance1st-score-parameters-dialog.component.html',
+  styleUrls: ['./alliance1st-score-parameters-dialog.component.scss']
 })
-export class AllianceScoreParametersDialogComponent implements OnInit {
+export class Alliance1stScoreParametersDialogComponent implements OnInit {
 
   dialogTitle: string;
   form: FormGroup;
   scoreParameters: FirstScoreParameters;
 
-  constructor(private dialogRef: MatDialogRef<AllianceScoreParametersDialogComponent>,
+  constructor(private dialogRef: MatDialogRef<Alliance1stScoreParametersDialogComponent>,
               private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) data) {
 

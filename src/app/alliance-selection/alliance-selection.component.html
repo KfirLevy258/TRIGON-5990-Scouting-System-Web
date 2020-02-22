@@ -7,7 +7,7 @@
       <div fxLayout="row" fxFlex>
         <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">First Pick</h2>
         <div fxFlex="10">
-          <button mat-fab color="warn" (click)="openDialog()">
+          <button mat-fab color="warn" (click)="open1stScoreDialog()">
             <mat-icon>settings</mat-icon>
           </button>
         </div>
@@ -59,13 +59,13 @@
       <div fxLayout="row" fxFlex>
         <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">Second Pick</h2>
         <div fxFlex="10">
-          <button mat-fab color="warn" (click)="openDialog()">
+          <button mat-fab color="warn" (click)="open2ndScoreDialog()">
             <mat-icon>settings</mat-icon>
           </button>
         </div>
       </div>
 
-      <table mat-table [dataSource]="firstRankingList" class="mat-elevation-z8">
+      <table mat-table [dataSource]="secondRankingList" class="mat-elevation-z8">
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef> Select </th>

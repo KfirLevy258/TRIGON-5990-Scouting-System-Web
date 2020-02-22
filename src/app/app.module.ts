@@ -50,7 +50,10 @@ import { PreGameClimbPlannerStateComponent } from './pre-game-climb-planner-stat
 import { UpperHotZonesComponent } from './upper-hot-zones/upper-hot-zones.component';
 import {AdminGuard} from './admin.guard';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { AllianceScoreParametersDialogComponent } from './alliance-score-dialog-parameters/alliance-score-parameters-dialog.component';
+import { Alliance1stScoreParametersDialogComponent
+} from './alliance1st-score-dialog-parameters/alliance1st-score-parameters-dialog.component';
+import { Alliance2ndScoreParametersDialogComponent
+} from './alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
 
 
 const routes: Routes = [
@@ -111,7 +114,8 @@ const routes: Routes = [
     DialogAlliancesComponent,
     PreGameClimbPlannerStateComponent,
     UpperHotZonesComponent,
-    AllianceScoreParametersDialogComponent,
+    Alliance1stScoreParametersDialogComponent,
+    Alliance2ndScoreParametersDialogComponent,
 
 
   ],
@@ -164,7 +168,8 @@ const routes: Routes = [
     DialogVerifyComponent,
     DialogAlertComponent,
     DialogAlliancesComponent,
-    AllianceScoreParametersDialogComponent
+    Alliance1stScoreParametersDialogComponent,
+    Alliance2ndScoreParametersDialogComponent
   ],
   bootstrap: [AppComponent]
 })

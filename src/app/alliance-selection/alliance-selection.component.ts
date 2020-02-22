@@ -5,9 +5,11 @@ import {Game, GameService, ProcessedGames, Team} from '../game.service';
 import {MatDialog} from '@angular/material';
 import {defaultDialogConfig} from '../default-dialog-config';
 import {
-  AllianceScoreParametersDialogComponent,
-  FirstScoreParameters, SecondScoreParameters
-} from '../alliance-score-dialog-parameters/alliance-score-parameters-dialog.component';
+  Alliance1stScoreParametersDialogComponent
+} from '../alliance1st-score-dialog-parameters/alliance1st-score-parameters-dialog.component';
+import {FirstScoreParameters, SecondScoreParameters} from '../alliance-score-parameters';
+import {Alliance2ndScoreParametersDialogComponent
+} from '../alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
 
 // class Team {
 //
@@ -88,30 +90,35 @@ export class AllianceSelectionComponent implements OnInit {
     .subscribe(result => {
       this.teams = result;
       // this.biggerScore();
-      this.calcFirstRankingList();
+      this.calcRankingLists();
       this.isLoading = false;
     });
   }
-  calcFirstRankingList() {
-    const tempList: Array<RankingItem> = [];
+  calcRankingLists() {
+    const temp1stList: Array<RankingItem> = [];
+    const temp2ndList: Array<RankingItem> = [];
 
     const  promises: Array<Promise<Game[]>> = [];
     this.teams.forEach((team: Team) => {
-      const teamRankingItem = new  RankingItem(team.teamNumber, new Score());
-      tempList.push(teamRankingItem);
+      const team1stRankingItem = new  RankingItem(team.teamNumber, new Score());
+      temp1stList.push(team1stRankingItem);
+      const team2ndRankingItem = new  RankingItem(team.teamNumber, new Score());
+      temp2ndList.push(team2ndRankingItem);
       promises.push(this.gameService.getGamesPromise(this.selectedTournament, team.teamNumber));
     });
     Promise.all(promises)
       .then(res => {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
-          tempList[i].score =  this.calcFirstPickTeamScore(this.gameService.processGames(res[i]));
+          temp1stList[i].score =  this.calc1stPickTeamScore(this.gameService.processGames(res[i]));
+          temp2ndList[i].score =  this.calc2ndPickTeamScore(this.gameService.processGames(res[i]));
         }
-        this.firstRankingList = tempList.sort(scoreSort);
+        this.firstRankingList = temp1stList.sort(scoreSort);
+        this.secondRankingList = temp2ndList.sort(scoreSort);
       });
   }
 
-  calcFirstPickTeamScore(processedGames: ProcessedGames): Score {
+  calc1stPickTeamScore(processedGames: ProcessedGames): Score {
     const resultScore = new Score();
 
     // Auto
@@ -139,6 +146,34 @@ export class AllianceSelectionComponent implements OnInit {
     return resultScore;
   }
 
+  calc2ndPickTeamScore(processedGames: ProcessedGames): Score {
+    const resultScore = new Score();
+
+    // Auto
+    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) <= 3 ) {
+      resultScore.autoScore += (this.secondScoreParameters.auto3BallsWeight / 3.0) *
+        (processedGames.autoAVGOuter + processedGames.autoAVGInner);
+    }
+    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) > 3) {
+      resultScore.autoScore += this.secondScoreParameters.auto3BallsWeight;
+      resultScore.autoScore += (this.secondScoreParameters.auto10BallsWeight / this.secondScoreParameters.autoBallsAmount) *
+        ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
+    }
+    resultScore.autoScore += (this.secondScoreParameters.autoCollectWeight / this.secondScoreParameters.autoBallsAmount ) *
+      processedGames.autoAVGTotalCollect;
+
+    // Teleop
+    resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.secondScoreParameters.teleopBallsAmount ) *
+      (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
+
+    // End Game
+    resultScore.endGameScore += this.secondScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+
+    resultScore.totalScore = this.secondScoreParameters.autoWeight * resultScore.autoScore + this.secondScoreParameters.teleopWeight *
+      resultScore.teleopScore + this.secondScoreParameters.endGameWeight * resultScore.endGameScore;
+    return resultScore;
+  }
+
   onTeamSelected(element: RankingItem) {
     console.log(element);
     console.log(this.firstRankingList.indexOf(element));
@@ -147,24 +182,44 @@ export class AllianceSelectionComponent implements OnInit {
     this.changeRef.detectChanges();
   }
 
-  openDialog() {
+  open1stScoreDialog() {
     const dialogConfig = defaultDialogConfig();
 
     dialogConfig.data = {
-      dialogTitle: 'Teams Score Parameters',
+      dialogTitle: 'Teams 1st Score Pick Parameters',
       scoreParameters: this.firstScoreParameters
     };
 
-    this.dialog.open(AllianceScoreParametersDialogComponent, dialogConfig)
+    this.dialog.open(Alliance1stScoreParametersDialogComponent, dialogConfig)
       .afterClosed()
       .pipe(take(1))
       .subscribe(res => {
         if (res) {
           this.firstScoreParameters = res;
-          this.calcFirstRankingList();
+          this.calcRankingLists();
         }
       });
   }
+
+  open2ndScoreDialog() {
+    const dialogConfig = defaultDialogConfig();
+
+    dialogConfig.data = {
+      dialogTitle: 'Teams 1st Score Pick Parameters',
+      scoreParameters: this.secondScoreParameters
+    };
+
+    this.dialog.open(Alliance2ndScoreParametersDialogComponent, dialogConfig)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(res => {
+        if (res) {
+          this.secondScoreParameters = res;
+          this.calcRankingLists();
+        }
+      });
+  }
+
 }
 
 const scoreSort = (a: RankingItem, b: RankingItem) => {

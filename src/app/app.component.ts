@@ -24,13 +24,17 @@ export class AppComponent implements OnInit {
               private db: AngularFirestore) {
     this.authService.authUser$
       .subscribe(authUser => {
-        this.authUser = authUser;
-        this.db.collection('users').doc(authUser.uid).valueChanges()
-          .subscribe((user: any) => {
-            this.isAdmin = user.admin;
-            // this.user = user;
-          });
-        this.loadTournaments();
+        if (authUser) {
+          console.log('auth user changed');
+          this.authUser = authUser;
+          this.db.collection('users').doc(authUser.uid).valueChanges()
+            .subscribe((user: any) => {
+              console.log('user changed', user);
+              this.isAdmin = user.admin;
+              // this.user = user;
+            });
+          this.loadTournaments();
+        }
       });
   }
 

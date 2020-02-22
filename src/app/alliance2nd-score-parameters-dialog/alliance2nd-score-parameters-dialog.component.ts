@@ -28,6 +28,7 @@ export class Alliance2ndScoreParametersDialogComponent implements OnInit {
       autoBallsAmount: [this.scoreParameters.autoBallsAmount, [Validators.required]],
       teleopBallsWeight: [this.scoreParameters.teleopBallsWeight, [Validators.required]],
       teleopBallsAmount: [this.scoreParameters.teleopBallsAmount, [Validators.required]],
+      teleopRouletteWeight: [this.scoreParameters.teleopRouletteWeight, [Validators.required]],
       endGamesClimbSuccesses: [this.scoreParameters.endGamesClimbSuccesses, [Validators.required]],
       autoWeight: [this.scoreParameters.autoWeight, [Validators.required]],
       teleopWeight: [this.scoreParameters.teleopWeight, [Validators.required]],

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {take} from 'rxjs/operators';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Game, GameService, ProcessedGames, Team} from '../game.service';
@@ -67,15 +67,17 @@ export class AllianceSelectionComponent implements OnInit {
     teleopWeight: 0.3,
     endGameWeight: 0.4,
   };
-  biggerBallScore = 0;
+
+  autoBallsTotal = 0;
+  teleopBallsTotal = 0;
+  teleopTrenchRevsTotal = 0;
 
   isLoading = true;
 
 
   constructor(private db: AngularFirestore,
               private gameService: GameService,
-              private dialog: MatDialog,
-              private changeRef: ChangeDetectorRef) { }
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
@@ -102,10 +104,23 @@ export class AllianceSelectionComponent implements OnInit {
     });
     Promise.all(promises)
       .then(res => {
+        this.autoBallsTotal = 0;
+        this.teleopBallsTotal = 0;
+        this.teleopTrenchRevsTotal = 0;
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
-          temp1stList[i].score =  this.calc1stPickTeamScore(this.gameService.processGames(res[i]));
-          temp2ndList[i].score =  this.calc2ndPickTeamScore(this.gameService.processGames(res[i]));
+          const processedGames = this.gameService.processGames(res[i]);
+          if (processedGames.autoTotalShoot > this.autoBallsTotal) {
+            this.autoBallsTotal = processedGames.autoTotalShoot;
+          }
+          if (processedGames.teleopTotalShot > this.teleopBallsTotal) {
+            this.teleopBallsTotal = processedGames.teleopTotalShot;
+          }
+          if (processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop > this.teleopTrenchRevsTotal) {
+            this.teleopTrenchRevsTotal = processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop;
+          }
+          temp1stList[i].score =  this.calc1stPickTeamScore(processedGames);
+          temp2ndList[i].score =  this.calc2ndPickTeamScore(processedGames);
         }
         this.firstRankingList = temp1stList.sort(scoreSort);
         this.secondRankingList = temp2ndList.sort(scoreSort);
@@ -122,14 +137,14 @@ export class AllianceSelectionComponent implements OnInit {
     }
     if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) > 3) {
       resultScore.autoScore += this.firstScoreParameters.auto3BallsWeight;
-      resultScore.autoScore += (this.firstScoreParameters.auto10BallsWeight / this.firstScoreParameters.autoBallsAmount) *
+      resultScore.autoScore += (this.firstScoreParameters.auto10BallsWeight / this.autoBallsTotal) *
         ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
     }
-    resultScore.autoScore += (this.firstScoreParameters.autoCollectWeight / this.firstScoreParameters.autoBallsAmount ) *
+    resultScore.autoScore += (this.firstScoreParameters.autoCollectWeight / this.autoBallsTotal ) *
       processedGames.autoAVGTotalCollect;
 
     // Teleop
-    resultScore.teleopScore += ( this.firstScoreParameters.teleopBallsWeight / this.firstScoreParameters.teleopBallsAmount ) *
+    resultScore.teleopScore += ( this.firstScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
       (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
 
     // End Game
@@ -150,14 +165,14 @@ export class AllianceSelectionComponent implements OnInit {
     }
     if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) > 3) {
       resultScore.autoScore += this.secondScoreParameters.auto3BallsWeight;
-      resultScore.autoScore += (this.secondScoreParameters.auto10BallsWeight / this.secondScoreParameters.autoBallsAmount) *
+      resultScore.autoScore += (this.secondScoreParameters.auto10BallsWeight / this.autoBallsTotal) *
         ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
     }
-    resultScore.autoScore += (this.secondScoreParameters.autoCollectWeight / this.secondScoreParameters.autoBallsAmount ) *
+    resultScore.autoScore += (this.secondScoreParameters.autoCollectWeight / this.autoBallsTotal ) *
       processedGames.autoAVGTotalCollect;
 
     // Teleop
-    resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.secondScoreParameters.teleopBallsAmount ) *
+    resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
       (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
 
     // End Game
@@ -166,14 +181,6 @@ export class AllianceSelectionComponent implements OnInit {
     resultScore.totalScore = this.secondScoreParameters.autoWeight * resultScore.autoScore + this.secondScoreParameters.teleopWeight *
       resultScore.teleopScore + this.secondScoreParameters.endGameWeight * resultScore.endGameScore;
     return resultScore;
-  }
-
-  onTeamSelected(element: RankingItem) {
-    console.log(element);
-    console.log(this.firstRankingList.indexOf(element));
-    this.firstRankingList.splice(this.firstRankingList.indexOf(element), 1);
-    console.log(this.firstRankingList);
-    this.changeRef.detectChanges();
   }
 
   open1stScoreDialog() {
@@ -215,6 +222,7 @@ export class AllianceSelectionComponent implements OnInit {
   }
 
   select(event: MatCheckboxChange, element: RankingItem, picListNumber: number) {
+    console.log(picListNumber);
     const teamNumber = element.teamNumber;
     const checked = event.checked;
 

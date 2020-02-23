@@ -174,7 +174,8 @@ export class AllianceSelectionComponent implements OnInit {
     // Teleop
     resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
       (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
-
+    resultScore.teleopScore += ( this.secondScoreParameters.teleopRouletteWeight ) *
+      ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
     // End Game
     resultScore.endGameScore += this.secondScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
 

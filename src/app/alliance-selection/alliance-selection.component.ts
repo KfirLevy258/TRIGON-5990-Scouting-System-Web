@@ -151,11 +151,16 @@ export class AllianceSelectionComponent implements OnInit {
       processedGames.autoAVGTotalCollect;
 
     // Teleop
-    resultScore.teleopScore += ( this.firstScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
-      (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
-
+    if (this.teleopBallsTotal && (processedGames.teleopAVGInner || processedGames.teleopAVGOuter)) {
+      resultScore.teleopScore += ( this.firstScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
+        (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
+    } else {
+      resultScore.teleopScore = 0;
+    }
     // End Game
-    resultScore.endGameScore += this.firstScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    if (processedGames.climbSuccess){
+      resultScore.endGameScore += this.firstScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    }
 
     resultScore.totalScore = this.firstScoreParameters.autoWeight * resultScore.autoScore + this.firstScoreParameters.teleopWeight *
       resultScore.teleopScore + this.firstScoreParameters.endGameWeight * resultScore.endGameScore;
@@ -175,17 +180,26 @@ export class AllianceSelectionComponent implements OnInit {
       resultScore.autoScore += (this.secondScoreParameters.auto10BallsWeight / (this.autoBallsTotal - 3)) *
         ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
     }
-    resultScore.autoScore += (this.secondScoreParameters.autoCollectWeight / this.autoBallsTotal ) *
-      processedGames.autoAVGTotalCollect;
 
-    // Teleop
-    resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
-      (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
-    resultScore.teleopScore += ( this.secondScoreParameters.teleopRouletteWeight / this.teleopTrenchRevsTotal) *
-      ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
-    console.log(this.teleopTrenchRevsTotal);
+    if (this.secondScoreParameters.autoCollectWeight && processedGames.autoAVGTotalCollect) {
+      resultScore.autoScore += (this.secondScoreParameters.autoCollectWeight / this.autoBallsTotal ) *
+        processedGames.autoAVGTotalCollect;
+    } else {
+      resultScore.autoScore = 0;
+    }
+    if (this.teleopBallsTotal && (processedGames.teleopAVGInner || processedGames.teleopAVGOuter)) {
+      resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
+        (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
+    }
+    if (this.teleopTrenchRevsTotal && (processedGames.teleopAVGInner || processedGames.teleopAVGOuter)){
+      resultScore.teleopScore += ( this.secondScoreParameters.teleopRouletteWeight / this.teleopTrenchRevsTotal) *
+        ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
+    }
+
     // End Game
-    resultScore.endGameScore += this.secondScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    if (processedGames.climbSuccess){
+      resultScore.endGameScore += this.secondScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    }
 
     resultScore.totalScore = this.secondScoreParameters.autoWeight * resultScore.autoScore + this.secondScoreParameters.teleopWeight *
       resultScore.teleopScore + this.secondScoreParameters.endGameWeight * resultScore.endGameScore;

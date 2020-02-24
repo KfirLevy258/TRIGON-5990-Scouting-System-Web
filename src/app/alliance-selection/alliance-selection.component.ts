@@ -121,9 +121,14 @@ export class AllianceSelectionComponent implements OnInit {
             // tslint:disable-next-line:max-line-length
             this.teleopTrenchRevsTotal = ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
           }
+
+        }
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < promises.length; i++) {
+          const processedGames = this.gameService.processGames(res[i]);
           temp1stList[i].score =  this.calc1stPickTeamScore(processedGames);
           temp2ndList[i].score =  this.calc2ndPickTeamScore(processedGames);
-        }
+          }
         this.firstRankingList = temp1stList.sort(scoreSort);
         this.secondRankingList = temp2ndList.sort(scoreSort);
       });

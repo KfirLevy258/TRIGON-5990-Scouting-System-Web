@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {log} from 'util';
 
 
 export class Team {
@@ -37,49 +38,50 @@ export class TeleopUpperShot {
 }
 
 export class Game {
-  gameNumber: string;
-  color: string;
-  gameWon: boolean;
+  gameNumber = '';
+  color = '';
+  gameWon = false;
 
   // preGame
-  startingPosition: string;
+  startingPosition = '';
 
   // Auto
-  autoPowerCellsOnAutoEnd: number;
-  autoBottomScore: number;
-  autoBottomShots: number;
+  autoPowerCellsOnAutoEnd = 0;
+  autoBottomScore = 0;
+  autoBottomShots = 0;
   autoTrenchCollect: Array<boolean> = [];
   autoClimbCollect: Array<boolean> = [];
 
-  climbBallCollected1: boolean;
-  climbBallCollected2: boolean;
-  climbBallCollected3: boolean;
-  climbBallCollected4: boolean;
-  climbBallCollected5: boolean;
-  autoInnerScore: number;
-  autoOuterScore: number;
-  trenchBallCollected1: boolean;
-  trenchBallCollected2: boolean;
-  trenchBallCollected3: boolean;
-  trenchBallCollected4: boolean;
-  trenchBallCollected5: boolean;
-  autoUpperTotalShots: number;
+  climbBallCollected1 = false;
+  climbBallCollected2 = false;
+  climbBallCollected3 = false;
+  climbBallCollected4 = false;
+  climbBallCollected5 = false;
+  autoInnerScore = 0;
+  autoOuterScore = 0;
+  trenchBallCollected1 = false;
+  trenchBallCollected2 = false;
+  trenchBallCollected3 = false;
+  trenchBallCollected4 = false;
+  trenchBallCollected5 = false;
+  autoUpperTotalShots = 0;
   autoUpperShots: Array<AutoUpperShot> = [];
 
   // Teleop
-  teleopBottomScore: number;
-  teleopBottomShots: number;
-  teleopInnerScore: number;
-  teleopOuterScore: number;
-  teleopUpperTotalShots: number;
-  trenchRotate: boolean;
-  trenchStop: boolean;
+  teleopBottomScore = 0;
+  teleopBottomShots = 0;
+  teleopInnerScore = 0;
+  teleopOuterScore = 0;
+  teleopUpperTotalShots = 0;
+  trenchRotate = false;
+  trenchStop = false;
   teleopUpperShots: Array<TeleopUpperShot> = [];
 
   // End Game
-  climbLocation: string;
-  climbStatus: string;
-  climbFailureReason: string;
+  climbLocation = '';
+  climbStatus = '';
+  climbFailureReason = '';
+
 }
 
 export class ProcessedGames {
@@ -173,70 +175,74 @@ export class GameService {
           const gameNumber = snap.payload.doc.id;
           const game: Game = new Game();
           game.gameNumber = gameNumber;
-          game.color = data['Game scouting'].allianceColor;
-          game.startingPosition = data['Game scouting'].PreGame.startingPosition;
-          game.gameWon = data['Game scouting'].gameWon;
+          if (data['Game scouting']) {
+            game.color = data['Game scouting'].allianceColor;
+            game.startingPosition = data['Game scouting'].PreGame.startingPosition;
+            game.gameWon = data['Game scouting'].gameWon;
 
-          // Auto
-          game.autoPowerCellsOnAutoEnd = data['Game scouting'].Auto.autoPowerCellsOnRobotEndOfAuto;
-          game.autoBottomScore = data['Game scouting'].Auto.bottomScore;
-          game.autoBottomShots = data['Game scouting'].Auto.bottomShoot;
-          game.climbBallCollected1 = data['Game scouting'].Auto.climb1BallCollected;
-          game.climbBallCollected2 = data['Game scouting'].Auto.climb2BallCollected;
-          game.climbBallCollected3 = data['Game scouting'].Auto.climb3BallCollected;
-          game.climbBallCollected4 = data['Game scouting'].Auto.climb4BallCollected;
-          game.climbBallCollected5 = data['Game scouting'].Auto.climb5BallCollected;
-          game.autoClimbCollect.push(game.climbBallCollected1);
-          game.autoClimbCollect.push(game.climbBallCollected2);
-          game.autoClimbCollect.push(game.climbBallCollected3);
-          game.autoClimbCollect.push(game.climbBallCollected4);
-          game.autoClimbCollect.push(game.climbBallCollected5);
-          game.autoInnerScore = data['Game scouting'].Auto.innerScore;
-          game.autoOuterScore = data['Game scouting'].Auto.outerScore;
-          game.trenchBallCollected1 = data['Game scouting'].Auto.trench1BallCollected;
-          game.trenchBallCollected2 = data['Game scouting'].Auto.trench2BallCollected;
-          game.trenchBallCollected3 = data['Game scouting'].Auto.trench3BallCollected;
-          game.trenchBallCollected4 = data['Game scouting'].Auto.trench4BallCollected;
-          game.trenchBallCollected5 = data['Game scouting'].Auto.trench5BallCollected;
-          game.autoTrenchCollect.push(game.trenchBallCollected1);
-          game.autoTrenchCollect.push(game.trenchBallCollected2);
-          game.autoTrenchCollect.push(game.trenchBallCollected3);
-          game.autoTrenchCollect.push(game.trenchBallCollected4);
-          game.autoTrenchCollect.push(game.trenchBallCollected5);
-          game.autoUpperTotalShots = data['Game scouting'].Auto.upperShoot;
-          const shots = data['Game scouting'].Auto.upperData;
-          shots.forEach(shot => {
-            const s = new AutoUpperShot();
-            s.innerScore = shot.innerScore;
-            s.outerScore = shot.outerScore;
-            s.shots = shot.shoot;
-            game.autoUpperShots.push(s);
-          });
+            // Auto
+            game.autoPowerCellsOnAutoEnd = data['Game scouting'].Auto.autoPowerCellsOnRobotEndOfAuto;
+            game.autoBottomScore = data['Game scouting'].Auto.bottomScore;
+            game.autoBottomShots = data['Game scouting'].Auto.bottomShoot;
+            game.climbBallCollected1 = data['Game scouting'].Auto.climb1BallCollected;
+            game.climbBallCollected2 = data['Game scouting'].Auto.climb2BallCollected;
+            game.climbBallCollected3 = data['Game scouting'].Auto.climb3BallCollected;
+            game.climbBallCollected4 = data['Game scouting'].Auto.climb4BallCollected;
+            game.climbBallCollected5 = data['Game scouting'].Auto.climb5BallCollected;
+            game.autoClimbCollect.push(game.climbBallCollected1);
+            game.autoClimbCollect.push(game.climbBallCollected2);
+            game.autoClimbCollect.push(game.climbBallCollected3);
+            game.autoClimbCollect.push(game.climbBallCollected4);
+            game.autoClimbCollect.push(game.climbBallCollected5);
+            game.autoInnerScore = data['Game scouting'].Auto.innerScore;
+            game.autoOuterScore = data['Game scouting'].Auto.outerScore;
+            game.trenchBallCollected1 = data['Game scouting'].Auto.trench1BallCollected;
+            game.trenchBallCollected2 = data['Game scouting'].Auto.trench2BallCollected;
+            game.trenchBallCollected3 = data['Game scouting'].Auto.trench3BallCollected;
+            game.trenchBallCollected4 = data['Game scouting'].Auto.trench4BallCollected;
+            game.trenchBallCollected5 = data['Game scouting'].Auto.trench5BallCollected;
+            game.autoTrenchCollect.push(game.trenchBallCollected1);
+            game.autoTrenchCollect.push(game.trenchBallCollected2);
+            game.autoTrenchCollect.push(game.trenchBallCollected3);
+            game.autoTrenchCollect.push(game.trenchBallCollected4);
+            game.autoTrenchCollect.push(game.trenchBallCollected5);
+            game.autoUpperTotalShots = data['Game scouting'].Auto.upperShoot;
+            const shots = data['Game scouting'].Auto.upperData;
+            shots.forEach(shot => {
+              const s = new AutoUpperShot();
+              s.innerScore = shot.innerScore;
+              s.outerScore = shot.outerScore;
+              s.shots = shot.shoot;
+              game.autoUpperShots.push(s);
+            });
 
-          // Teleop
-          game.teleopBottomScore = data['Game scouting'].Teleop.Sum.bottomScore;
-          game.teleopBottomShots = data['Game scouting'].Teleop.Sum.bottomShoot;
-          game.teleopInnerScore = data['Game scouting'].Teleop.Sum.innerScore;
-          game.teleopOuterScore = data['Game scouting'].Teleop.Sum.outerScore;
-          game.trenchRotate = data['Game scouting'].Teleop.Sum.trenchRotate;
-          game.trenchStop = data['Game scouting'].Teleop.Sum.trenchStop;
-          game.teleopUpperTotalShots = data['Game scouting'].Teleop.Sum.upperShoot;
-          const teleopShots = data['Game scouting'].Teleop.upperData;
-          teleopShots.forEach(shot => {
-            const s = new TeleopUpperShot();
-            s.innerScore = shot.innerScore;
-            s.outerScore = shot.outerScore;
-            s.shots = shot.shoot;
-            s.x = shot.x;
-            s.y = shot.y;
-            game.teleopUpperShots.push(s);
-          });
+            // Teleop
+            game.teleopBottomScore = data['Game scouting'].Teleop.Sum.bottomScore;
+            game.teleopBottomShots = data['Game scouting'].Teleop.Sum.bottomShoot;
+            game.teleopInnerScore = data['Game scouting'].Teleop.Sum.innerScore;
+            game.teleopOuterScore = data['Game scouting'].Teleop.Sum.outerScore;
+            game.trenchRotate = data['Game scouting'].Teleop.Sum.trenchRotate;
+            game.trenchStop = data['Game scouting'].Teleop.Sum.trenchStop;
+            game.teleopUpperTotalShots = data['Game scouting'].Teleop.Sum.upperShoot;
+            const teleopShots = data['Game scouting'].Teleop.upperData;
+            teleopShots.forEach(shot => {
+              const s = new TeleopUpperShot();
+              s.innerScore = shot.innerScore;
+              s.outerScore = shot.outerScore;
+              s.shots = shot.shoot;
+              s.x = shot.x;
+              s.y = shot.y;
+              game.teleopUpperShots.push(s);
+            });
 
-          // End Game
-          game.climbLocation = data['Game scouting'].EndGame.climbLocation;
-          game.climbStatus = data['Game scouting'].EndGame.climbStatus;
-          game.climbFailureReason = data['Game scouting'].EndGame.whyDidntClimb;
-          return game;
+            // End Game
+            game.climbLocation = data['Game scouting'].EndGame.climbLocation;
+            game.climbStatus = data['Game scouting'].EndGame.climbStatus;
+            game.climbFailureReason = data['Game scouting'].EndGame.whyDidntClimb;
+            return game;
+          } else {
+            return game;
+          }
         });
       }));
   }

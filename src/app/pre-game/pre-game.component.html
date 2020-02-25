@@ -3,12 +3,26 @@
 <div fxLayout="column" fxLayoutAlign="start center" >
 
   <form [formGroup]="gameNumberForm">
-    <mat-form-field>
-      <input matInput formControlName="gameNumber" placeholder="game Number" >
-    </mat-form-field>
+    <div fxLayout="column">
+      <div fxLayout="row">
+        <mat-form-field>
+          <input matInput formControlName="gameNumber" placeholder="game Number" >
+        </mat-form-field>
 
-    <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>
-    <button mat-raised-button (click)="manualTeamsSelect()" style="margin-left: 20px">Manual Teams Select</button>
+
+        <mat-radio-group aria-label="event type "  value="1"  (change)="eventTypeSelected($event)">
+          <mat-radio-button value="1">qualifying match</mat-radio-button>
+          <mat-radio-button value="2">Quarter Final</mat-radio-button>
+          <mat-radio-button value="3">Semi Final</mat-radio-button>
+          <mat-radio-button value="4">Final</mat-radio-button>
+        </mat-radio-group>
+
+        <button mat-raised-button (click)="gameSelected()" style="margin-left: 20px">Select</button>
+
+      </div>
+      <button mat-raised-button (click)="manualTeamsSelect()" style="margin-top: 20px">Manual Teams Select</button>
+    </div>
+
 
   </form>
 

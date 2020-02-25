@@ -38,6 +38,7 @@ export class PreGameComponent implements OnInit {
   gameNumberForm: FormGroup;
   gameNumber: string;
   eventKey: string;
+  eventCode = '_qm';
   tournament: string;
   blueTeams: Array<string> = [];
   redTeams: Array<string> = [];
@@ -121,7 +122,7 @@ export class PreGameComponent implements OnInit {
     let headers: HttpHeaders = new HttpHeaders();
     // noinspection SpellCheckingInspection
     headers = headers.append('X-TBA-Auth-Key', 'ptM95D6SCcHO95D97GLFStGb4cWyxtBKNOI9FX5QmBirDnjebphZAEpPcwXNr4vH');
-    this.http.get('https://www.thebluealliance.com/api/v3/match/' + this.eventKey + '_qm' + this.gameNumber, {headers})
+    this.http.get('https://www.thebluealliance.com/api/v3/match/' + this.eventKey + this.eventCode + this.gameNumber, {headers})
       .subscribe((matchData: any) => {
         if (matchData) {
           this.blueTeams = matchData.alliances.blue.team_keys;
@@ -144,6 +145,19 @@ export class PreGameComponent implements OnInit {
           .pipe(take(1))
           .subscribe();
       });
+  }
+
+  eventTypeSelected(event) {
+    switch (event.value) {
+      case '1':
+        this.eventCode = '_qm'; break;
+      case '2':
+        this.eventCode = '_qf'; break;
+      case '3':
+        this.eventCode = '_sf'; break;
+      case '4':
+        this.eventCode = '_f1'; break;
+    }
   }
 
   manualTeamsSelect() {

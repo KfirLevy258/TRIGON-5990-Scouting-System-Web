@@ -74,7 +74,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'full_team_data',
+    path: 'full_team_data/:teamNumber',
     component: TeamFullData,
     canActivate: [AuthGuard, AdminGuard],
   },

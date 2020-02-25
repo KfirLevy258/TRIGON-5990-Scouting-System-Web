@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Game, GameService, ProcessedGames, Team} from '../game.service';
+import {ActivatedRoute} from '@angular/router';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-page',
@@ -22,6 +24,7 @@ export class TeamFullData implements OnInit {
   processedGames: ProcessedGames;
 
   constructor(private db: AngularFirestore,
+              private route: ActivatedRoute,
               private gameService: GameService) { }
 
   ngOnInit() {
@@ -29,6 +32,20 @@ export class TeamFullData implements OnInit {
 
     this.teams = this.gameService.getTeams$(this.selectedTournament);
 
+    this.route.params
+      .pipe(take(1))
+      .subscribe(params => {
+        if (params.teamNumber !== '0') {
+          this.db.collection('tournaments').doc(this.selectedTournament).collection('teams').doc(params.teamNumber).get()
+            .pipe(take(1))
+            .subscribe(teamData => {
+              const team = new Team(params.teamNumber, teamData.data().team_name);
+              console.log(teamData.data());
+              this.teamSelect(team);
+            });
+
+        }
+      });
   }
 
   teamSelect(team: Team) {

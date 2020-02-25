@@ -42,9 +42,23 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: blue">
-        <h3> {{ blueTeams[0] }} </h3>
-        <h3> {{ blueTeams[1] }} </h3>
-        <h3> {{ blueTeams[2] }} </h3>
+        <h3>
+          <a [routerLink]="['/full_team_data', blueTeams[0]]">
+            {{ blueTeams[0] }}
+          </a>
+        </h3>
+
+        <h3>
+          <a [routerLink]="['/full_team_data', blueTeams[1]]">
+            {{ blueTeams[1] }}
+          </a>
+        </h3>
+
+        <h3>
+          <a [routerLink]="['/full_team_data', blueTeams[2]]">
+            {{ blueTeams[2] }}
+          </a>
+        </h3>
       </div>
 
     </div>
@@ -67,9 +81,23 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="space-around" style="width:400px; color: red">
-        <h3> {{ redTeams[0] }} </h3>
-        <h3> {{ redTeams[1] }} </h3>
-        <h3> {{ redTeams[2] }} </h3>
+        <h3>
+          <a [routerLink]="['/full_team_data', redTeams[0]]">
+            {{ redTeams[0] }}
+          </a>
+        </h3>
+
+        <h3>
+          <a [routerLink]="['/full_team_data', redTeams[1]]">
+            {{ redTeams[1] }}
+          </a>
+        </h3>
+
+        <h3>
+          <a [routerLink]="['/full_team_data', redTeams[2]]">
+            {{ redTeams[2] }}
+          </a>
+        </h3>
       </div>
 
     </div >

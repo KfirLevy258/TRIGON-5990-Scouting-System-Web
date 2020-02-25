@@ -156,15 +156,20 @@ export class PreGameComponent implements OnInit {
       dialogTitle: 'Manual Teams Select',
     };
 
-    this.dialog.open(DialogAlliancesComponent, dialogConfig)
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe(res => {
-        this.blueTeams = res.blueTeams;
-        this.redTeams = res.redTeams;
-        this.allTeams = [...this.blueTeams, ...this.redTeams];
-        this.gameNumber = '0';
-      });
+    this.blueTeams = ['1580', '1937', '1943'];
+    this.redTeams = ['2230', '3034', '3083'];
+    this.allTeams = [...this.blueTeams, ...this.redTeams];
+    this.gameNumber = '0';
+    console.log(this.blueTeams);
+    // this.dialog.open(DialogAlliancesComponent, dialogConfig)
+    //   .afterClosed()
+    //   .pipe(take(1))
+    //   .subscribe(res => {
+    //     this.blueTeams = res.blueTeams;
+    //     this.redTeams = res.redTeams;
+    //     this.allTeams = [...this.blueTeams, ...this.redTeams];
+    //     this.gameNumber = '0';
+    //   });
   }
 
   getGames() {

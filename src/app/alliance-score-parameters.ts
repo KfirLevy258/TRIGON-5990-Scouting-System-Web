@@ -1,11 +1,9 @@
 export class FirstScoreParameters {
 
-  constructor(public auto3BallsWeight: number,
-              public auto10BallsWeight: number,
+  constructor(public autoBallsWeight: number,
               public autoCollectWeight: number,
               public autoBallsAmount: number,
               public teleopBallsWeight: number,
-              public teleopBallsAmount: number,
               public endGamesClimbSuccesses: number,
               public autoWeight: number,
               public teleopWeight: number,
@@ -15,12 +13,10 @@ export class FirstScoreParameters {
 
 export class SecondScoreParameters {
 
-  constructor(public auto3BallsWeight: number,
-              public auto10BallsWeight: number,
+  constructor(public autoBallsWeight: number,
               public autoCollectWeight: number,
               public autoBallsAmount: number,
               public teleopBallsWeight: number,
-              public teleopBallsAmount: number,
               public teleopRouletteWeight: number,
               public endGamesClimbSuccesses: number,
               public autoWeight: number,

@@ -12,6 +12,7 @@ import {Alliance2ndScoreParametersDialogComponent
 } from '../alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
 import * as cloneDeep from 'lodash/cloneDeep';
 
+
 class Score {
   autoScore: number;
   teleopScore: number;
@@ -42,12 +43,10 @@ export class AllianceSelectionComponent implements OnInit {
   teams: Array<Team> = [];
   firstRankingList: Array<RankingItem> = [];
   firstScoreParameters: FirstScoreParameters = {
-    auto3BallsWeight: 0.1,
-    auto10BallsWeight: 0.65,
+    autoBallsWeight: 0.75,
     autoCollectWeight: 0.25,
     autoBallsAmount: 10,
     teleopBallsWeight: 1,
-    teleopBallsAmount: 30,
     endGamesClimbSuccesses: 1,
     autoWeight: 0.15,
     teleopWeight: 0.6,
@@ -55,13 +54,11 @@ export class AllianceSelectionComponent implements OnInit {
   };
   secondRankingList: Array<RankingItem> = [];
   secondScoreParameters: SecondScoreParameters = {
-    auto3BallsWeight: 0.1,
-    auto10BallsWeight: 0.65,
+    autoBallsWeight: 0.75,
     autoCollectWeight: 0.25,
     autoBallsAmount: 10,
     teleopRouletteWeight: 0.6,
     teleopBallsWeight: 0.4,
-    teleopBallsAmount: 30,
     endGamesClimbSuccesses: 1,
     autoWeight: 0.3,
     teleopWeight: 0.3,
@@ -71,6 +68,8 @@ export class AllianceSelectionComponent implements OnInit {
   autoBallsTotal = 0;
   teleopBallsTotal = 0;
   teleopTrenchRevsTotal = 0;
+  bestClimb = 0;
+
 
   isLoading = true;
 
@@ -107,6 +106,8 @@ export class AllianceSelectionComponent implements OnInit {
         this.autoBallsTotal = 0;
         this.teleopBallsTotal = 0;
         this.teleopTrenchRevsTotal = 0;
+        this.bestClimb = 0;
+
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
           const processedGames = this.gameService.processGames(res[i]);
@@ -122,6 +123,9 @@ export class AllianceSelectionComponent implements OnInit {
             this.teleopTrenchRevsTotal = ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
           }
 
+          if (processedGames.climbSuccessfully > this.bestClimb) {
+            this.bestClimb = processedGames.climbSuccessfully;
+          }
         }
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
@@ -138,14 +142,9 @@ export class AllianceSelectionComponent implements OnInit {
     const resultScore = new Score();
 
     // Auto
-    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) <= 3 ) {
-      resultScore.autoScore += (this.firstScoreParameters.auto3BallsWeight / 3.0) *
-        (processedGames.autoAVGOuter + processedGames.autoAVGInner);
-    }
-    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) > 3) {
-      resultScore.autoScore += this.firstScoreParameters.auto3BallsWeight;
-      resultScore.autoScore += (this.firstScoreParameters.auto10BallsWeight / (this.autoBallsTotal - 3)) *
-        ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
+    if ((processedGames.autoAVGOuter || processedGames.autoAVGInner) && this.autoBallsTotal) {
+      resultScore.autoScore += (this.firstScoreParameters.autoBallsWeight / this.autoBallsTotal) *
+        ((processedGames.autoAVGOuter + processedGames.autoAVGInner));
     }
     resultScore.autoScore += (this.firstScoreParameters.autoCollectWeight / (this.autoBallsTotal) ) *
       processedGames.autoAVGTotalCollect;
@@ -158,8 +157,8 @@ export class AllianceSelectionComponent implements OnInit {
       resultScore.teleopScore = 0;
     }
     // End Game
-    if (processedGames.climbSuccess){
-      resultScore.endGameScore += this.firstScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    if (processedGames.climbSuccessfully) {
+      resultScore.endGameScore += (this.firstScoreParameters.endGamesClimbSuccesses * processedGames.climbSuccessfully ) / this.bestClimb;
     }
 
     resultScore.totalScore = this.firstScoreParameters.autoWeight * resultScore.autoScore + this.firstScoreParameters.teleopWeight *
@@ -171,14 +170,9 @@ export class AllianceSelectionComponent implements OnInit {
     const resultScore = new Score();
 
     // Auto
-    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) <= 3 ) {
-      resultScore.autoScore += (this.secondScoreParameters.auto3BallsWeight / 3.0) *
-        (processedGames.autoAVGOuter + processedGames.autoAVGInner);
-    }
-    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner) > 3) {
-      resultScore.autoScore += this.secondScoreParameters.auto3BallsWeight;
-      resultScore.autoScore += (this.secondScoreParameters.auto10BallsWeight / (this.autoBallsTotal - 3)) *
-        ((processedGames.autoAVGOuter + processedGames.autoAVGInner) - 3);
+    if ((processedGames.autoAVGOuter + processedGames.autoAVGInner)) {
+      resultScore.autoScore += (this.secondScoreParameters.autoBallsWeight / (this.autoBallsTotal)) *
+        ((processedGames.autoAVGOuter + processedGames.autoAVGInner));
     }
 
     if (this.secondScoreParameters.autoCollectWeight && processedGames.autoAVGTotalCollect) {
@@ -191,14 +185,14 @@ export class AllianceSelectionComponent implements OnInit {
       resultScore.teleopScore += ( this.secondScoreParameters.teleopBallsWeight / this.teleopBallsTotal ) *
         (processedGames.teleopAVGInner + processedGames.teleopAVGOuter);
     }
-    if (this.teleopTrenchRevsTotal && (processedGames.teleopAVGInner || processedGames.teleopAVGOuter)){
+    if (this.teleopTrenchRevsTotal && (processedGames.teleopAVGInner || processedGames.teleopAVGOuter)) {
       resultScore.teleopScore += ( this.secondScoreParameters.teleopRouletteWeight / this.teleopTrenchRevsTotal) *
         ((processedGames.teleopTrenchRotate + processedGames.teleopTrenchStop) / processedGames.gamesPlayed);
     }
 
     // End Game
-    if (processedGames.climbSuccess){
-      resultScore.endGameScore += this.secondScoreParameters.endGamesClimbSuccesses * (processedGames.climbSuccess / 100);
+    if (processedGames.climbSuccessfully) {
+      resultScore.endGameScore += (this.firstScoreParameters.endGamesClimbSuccesses * processedGames.climbSuccessfully ) / this.bestClimb;
     }
 
     resultScore.totalScore = this.secondScoreParameters.autoWeight * resultScore.autoScore + this.secondScoreParameters.teleopWeight *

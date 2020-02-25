@@ -22,12 +22,10 @@ export class Alliance2ndScoreParametersDialogComponent implements OnInit {
     this.scoreParameters = data.scoreParameters;
 
     this.form = fb.group({
-      auto3BallsWeight: [this.scoreParameters.auto3BallsWeight, [Validators.required]],
-      auto10BallsWeight: [this.scoreParameters.auto10BallsWeight, [Validators.required]],
+      autoBallsWeight: [this.scoreParameters.autoBallsWeight, [Validators.required]],
       autoCollectWeight: [this.scoreParameters.autoCollectWeight, [Validators.required]],
       autoBallsAmount: [this.scoreParameters.autoBallsAmount, [Validators.required]],
       teleopBallsWeight: [this.scoreParameters.teleopBallsWeight, [Validators.required]],
-      teleopBallsAmount: [this.scoreParameters.teleopBallsAmount, [Validators.required]],
       teleopRouletteWeight: [this.scoreParameters.teleopRouletteWeight, [Validators.required]],
       endGamesClimbSuccesses: [this.scoreParameters.endGamesClimbSuccesses, [Validators.required]],
       autoWeight: [this.scoreParameters.autoWeight, [Validators.required]],
@@ -47,12 +45,10 @@ export class Alliance2ndScoreParametersDialogComponent implements OnInit {
   ok() {
     const values = this.form.getRawValue();
     const updatedScoreParameters = new SecondScoreParameters(
-      Number(values.auto3BallsWeight),
-      Number(values.auto10BallsWeight),
+      Number(values.autoBallsWeight),
       Number(values.autoCollectWeight),
       Number(values.autoBallsAmount),
       Number(values.teleopBallsWeight),
-      Number(values.teleopBallsAmount),
       Number(values.teleopRouletteWeight),
       Number(values.endGamesClimbSuccesses),
       Number(values.autoWeight),

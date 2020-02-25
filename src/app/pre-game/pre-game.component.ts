@@ -89,7 +89,8 @@ export class PreGameComponent implements OnInit {
               private dialog: MatDialog,
               private gameService: GameService) {
     this.gameNumberForm = fb.group({
-      gameNumber: ['', [Validators.required]]
+      gameNumber: ['', [Validators.required]],
+      eventCode: ['_qm', Validators.required]
     });
   }
 
@@ -106,6 +107,7 @@ export class PreGameComponent implements OnInit {
 
   gameSelected() {
     this.gameNumber = this.gameNumberForm.getRawValue().gameNumber;
+    this.eventCode = this.gameNumberForm.getRawValue().eventCode;
     this.isLoading = true;
     this.getTeams();
   }
@@ -145,19 +147,6 @@ export class PreGameComponent implements OnInit {
           .pipe(take(1))
           .subscribe();
       });
-  }
-
-  eventTypeSelected(event) {
-    switch (event.value) {
-      case '1':
-        this.eventCode = '_qm'; break;
-      case '2':
-        this.eventCode = '_qf'; break;
-      case '3':
-        this.eventCode = '_sf'; break;
-      case '4':
-        this.eventCode = '_f1'; break;
-    }
   }
 
   manualTeamsSelect() {

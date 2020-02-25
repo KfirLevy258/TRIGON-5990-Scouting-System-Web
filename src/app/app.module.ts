@@ -54,6 +54,7 @@ import { Alliance1stScoreParametersDialogComponent
 } from './alliance1st-score-dialog-parameters/alliance1st-score-parameters-dialog.component';
 import { Alliance2ndScoreParametersDialogComponent
 } from './alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
+import { BackupComponent } from './backup/backup.component';
 
 
 const routes: Routes = [
@@ -83,7 +84,8 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   {path: 'login', component: LoginComponent},
-  {path: 'test', component: TestComponent}
+  {path: 'test', component: TestComponent},
+  {path: 'backup', component: BackupComponent}
 
 ];
 
@@ -116,6 +118,7 @@ const routes: Routes = [
     UpperHotZonesComponent,
     Alliance1stScoreParametersDialogComponent,
     Alliance2ndScoreParametersDialogComponent,
+    BackupComponent,
 
 
   ],

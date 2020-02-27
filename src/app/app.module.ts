@@ -55,6 +55,7 @@ import { Alliance1stScoreParametersDialogComponent
 import { Alliance2ndScoreParametersDialogComponent
 } from './alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
 import { BackupComponent } from './backup/backup.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 const routes: Routes = [
@@ -155,6 +156,7 @@ const routes: Routes = [
     FlexModule,
     ChartsModule,
     FormsModule,
+    DragDropModule,
   ],
   providers: [
     {

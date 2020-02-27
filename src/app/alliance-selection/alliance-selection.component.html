@@ -4,148 +4,155 @@
   <div fxLayout="row" fxFlexFill>
 
     <div fxLayout="column" fxFlex="50">
+
       <div fxLayout="row" fxFlex>
-        <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">First Pick</h2>
-        <div fxFlex="10">
+        <h2 fxFlexAlign="center" fxFlex="80" style="text-align: center">First Pick</h2>
+        <div fxFlex="20">
           <button mat-fab color="warn" (click)="open1stScoreDialog()">
             <mat-icon>settings</mat-icon>
           </button>
         </div>
       </div>
 
-      <table mat-table [dataSource]="firstRankingList" class="mat-elevation-z8">
+      <div class="wrapper" fxLayout="column" fxLayoutAlign="start center">
 
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef> Select </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox [checked]="element['selected']" (change)="select($event, element, 1)"></mat-checkbox>
-          </td>
-        </ng-container>
+        <div class="rank-list header" fxLayout="row" fxLayoutAlign="center">
+          <span class="rank-item">Select</span>
+          <span class="rank-item">Re-order</span>
+          <span class="rank-item">Team Number</span>
+          <span class="rank-item">auto</span>
+          <span class="rank-item">teleop</span>
+          <span class="rank-item">end game</span>
+          <span class="rank-item">Total</span>
+        </div>
 
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef> Actions</th>
-          <td mat-cell  *matCellDef="let element; let rowIndex = index">
+        <div cdkDropList class="rank-list" (cdkDropListDropped)="dropItem(firstRankingList, $event)">
+          <div cdkDrag class="rank-block" *ngFor="let rank of firstRankingList">
 
-            <button mat-raised-button color="primary"
-                    [disabled]="rowIndex === 0"
-                    class="action-button"
-                    (click)="swapUp(1, rowIndex)">
-              <mat-icon>arrow_upward</mat-icon>
-            </button>
+            <ng-container class="rank-item">
+              <span class="rank-item">
+                <mat-checkbox [checked]="rank['selected']" (change)="select($event, rank)"></mat-checkbox>
+              </span>
+            </ng-container>
 
-            <button mat-raised-button color="primary"
-                    [disabled]="rowIndex === firstRankingList.length - 1"
-                    class="action-button"
-                    (click)="swapDown(1, rowIndex)">
-              <mat-icon>arrow_downward</mat-icon>
-            </button>
+            <ng-container>
+              <button mat-raised-button color="primary"
+                      [disabled]="rank['selected']"
+                      (click)="reArrange(firstRankingList, rank)">
+                <mat-icon>show_chart</mat-icon>
+              </button>
+            </ng-container>
 
-          </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+                {{ rank.teamNumber }}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="team_number">
-          <th mat-header-cell *matHeaderCellDef> Team number </th>
-          <td mat-cell  *matCellDef="let element"> {{element['teamNumber']}} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.autoScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="auto_score">
-          <th mat-header-cell *matHeaderCellDef> Auto </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['autoScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.teleopScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="teleop_score">
-          <th mat-header-cell *matHeaderCellDef> Teleop </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['teleopScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.endGameScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
+            <ng-container class="rank-item">
+              <span class="rank-item">
+              {{ rank.score.totalScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="end_game_score">
-          <th mat-header-cell *matHeaderCellDef> End Game </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['endGameScore'] | number: '1.2-2' }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="score">
-          <th mat-header-cell *matHeaderCellDef> Total </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['totalScore'] | number: '1.2-2' }} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; index as i"
-            [ngClass]="{'selected': firstRankingList[i].selected}"></tr>
-      </table>
-
+          </div>
+        </div>
+      </div>
     </div>
 
     <div fxLayout="column" fxFlex="50">
 
       <div fxLayout="row" fxFlex>
-        <h2 fxFlexAlign="center" fxFlex="90" style="text-align: center">Second Pick</h2>
-        <div fxFlex="10">
+        <h2 fxFlexAlign="center" fxFlex="80" style="text-align: center">Second Pick</h2>
+        <div fxFlex="20">
           <button mat-fab color="warn" (click)="open2ndScoreDialog()">
             <mat-icon>settings</mat-icon>
           </button>
         </div>
       </div>
 
-      <table mat-table [dataSource]="secondRankingList" class="mat-elevation-z8">
+      <div class="wrapper" fxLayout="column" fxLayoutAlign="start center">
 
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef> Select </th>
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox [checked]="element['selected']" (change)="select($event, element, 2)"></mat-checkbox>
-          </td>
-        </ng-container>
+        <div class="rank-list header" fxLayout="row" fxLayoutAlign="center">
+          <span class="rank-item">Select</span>
+          <span class="rank-item">Re-order</span>
+          <span class="rank-item">Team Number</span>
+          <span class="rank-item">auto</span>
+          <span class="rank-item">teleop</span>
+          <span class="rank-item">end game</span>
+          <span class="rank-item">Total</span>
+        </div>
 
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef> Actions</th>
-          <td mat-cell  *matCellDef="let element; let rowIndex = index">
+        <div cdkDropList class="rank-list" (cdkDropListDropped)="dropItem(secondRankingList, $event)">
+          <div cdkDrag class="rank-block" *ngFor="let rank of secondRankingList">
 
-            <button mat-raised-button color="primary"
-                    [disabled]="rowIndex === 0"
-                    class="action-button"
-                    (click)="swapUp(2, rowIndex)">
-              <mat-icon>arrow_upward</mat-icon>
-            </button>
+            <ng-container class="rank-item">
+              <span class="rank-item">
+                <mat-checkbox [checked]="rank['selected']" (change)="select($event, rank)"></mat-checkbox>
+              </span>
+            </ng-container>
 
-            <button mat-raised-button color="primary"
-                    [disabled]="rowIndex === firstRankingList.length - 1"
-                    class="action-button"
-                    (click)="swapDown(2, rowIndex)">
-              <mat-icon>arrow_downward</mat-icon>
-            </button>
+            <ng-container>
+              <button mat-raised-button color="primary"
+                      [disabled]="rank['selected']"
+                      (click)="reArrange(secondRankingList, rank)">
+                <mat-icon>show_chart</mat-icon>
+              </button>
+            </ng-container>
 
-          </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+                {{ rank.teamNumber }}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="team_number">
-          <th mat-header-cell *matHeaderCellDef> Team number </th>
-          <td mat-cell *matCellDef="let element"> {{element['teamNumber']}} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.autoScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="auto_score">
-          <th mat-header-cell *matHeaderCellDef> Auto </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['autoScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.teleopScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="teleop_score">
-          <th mat-header-cell *matHeaderCellDef> Teleop </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['teleopScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+            <ng-container>
+              <span class="rank-item">
+              {{ rank.score.endGameScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
+            <ng-container class="rank-item">
+              <span class="rank-item">
+              {{ rank.score.totalScore | number: '1.2-2'}}
+              </span>
+            </ng-container>
 
-        <ng-container matColumnDef="end_game_score">
-          <th mat-header-cell *matHeaderCellDef> End Game </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['endGameScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+          </div>
+        </div>
 
-        <ng-container matColumnDef="score">
-          <th mat-header-cell *matHeaderCellDef> Total </th>
-          <td mat-cell *matCellDef="let element"> {{element['score']['totalScore'] | number: '1.2-2' }} </td>
-        </ng-container>
+      </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; index as i"
-            [ngClass]="{'selected': secondRankingList[i].selected}"></tr>      </table>
 
 
     </div>

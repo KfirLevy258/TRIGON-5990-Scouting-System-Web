@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {take} from 'rxjs/operators';
 
 
 @Component({
@@ -10,8 +9,7 @@ import {take} from 'rxjs/operators';
 })
 export class TestComponent implements OnInit {
 
-  @ViewChild('source', {static: false}) sourceRef;
-  @ViewChild('dest', {static: false}) destRef;
+
 
   constructor(private db: AngularFirestore) {
   }
@@ -19,6 +17,5 @@ export class TestComponent implements OnInit {
   ngOnInit() {
 
   }
-
 
 }

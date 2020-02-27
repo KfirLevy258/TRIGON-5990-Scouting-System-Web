@@ -10,7 +10,7 @@ import {
 import {FirstScoreParameters, SecondScoreParameters} from '../alliance-score-parameters';
 import {Alliance2ndScoreParametersDialogComponent
 } from '../alliance2nd-score-parameters-dialog/alliance2nd-score-parameters-dialog.component';
-import * as cloneDeep from 'lodash/cloneDeep';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 
 class Score {
@@ -38,7 +38,7 @@ export class RankingItem {
   styleUrls: ['./alliance-selection.component.scss']
 })
 export class AllianceSelectionComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'Actions', 'team_number', 'auto_score', 'teleop_score', 'end_game_score', 'score'];
+
   selectedTournament: string;
   teams: Array<Team> = [];
   firstRankingList: Array<RankingItem> = [];
@@ -238,8 +238,7 @@ export class AllianceSelectionComponent implements OnInit {
       });
   }
 
-  select(event: MatCheckboxChange, element: RankingItem, picListNumber: number) {
-    console.log(picListNumber);
+  select(event: MatCheckboxChange, element: RankingItem) {
     const teamNumber = element.teamNumber;
     const checked = event.checked;
 
@@ -247,38 +246,86 @@ export class AllianceSelectionComponent implements OnInit {
     const index2nd = this.secondRankingList.findIndex(x => x.teamNumber === teamNumber);
     this.firstRankingList[index1st].selected = checked;
     this.secondRankingList[index2nd].selected = checked;
-  }
 
-  swapDown(picListNumber: number, index: number) {
-    if (index < this.firstRankingList.length - 1) {
-      if (picListNumber === 1) {
-        const temp: RankingItem = this.firstRankingList[index + 1];
-        this.firstRankingList[index + 1] = this.firstRankingList[index];
-        this.firstRankingList[index] = temp;
-        this.firstRankingList = cloneDeep(this.firstRankingList);
-      } else {
-        const temp: RankingItem = this.secondRankingList[index + 1];
-        this.secondRankingList[index + 1] = this.secondRankingList[index];
-        this.secondRankingList[index] = temp;
-        this.secondRankingList = cloneDeep(this.secondRankingList);
-      }
+    if (checked) {
+      this.bubbleDown(this.firstRankingList, index1st);
+      this.bubbleDown(this.secondRankingList, index2nd);
+    } else {
+      this.bubbleUp(this.firstRankingList, index1st);
+      this.bubbleUp(this.secondRankingList, index2nd);
     }
   }
 
-  swapUp(picListNumber: number, index: number) {
+  bubbleDown(list: Array<RankingItem>, startIndex: number) {
+    let currentIndex = startIndex;
+    while (currentIndex < list.length - 1) {
+      if (list[currentIndex + 1].selected) {
+        break;
+      }
+      this.swapDown(list, currentIndex);
+      currentIndex += 1;
+    }
+  }
+
+  bubbleUp(list: Array<RankingItem>, startIndex: number) {
+    let currentIndex = startIndex;
+    while (currentIndex > 0) {
+      if (!list[currentIndex - 1].selected) {
+        break;
+      }
+      this.swapUp(list, currentIndex);
+      currentIndex -= 1;
+    }
+  }
+
+  swapDown(list: Array<RankingItem>,  index: number) {
+    if (index < list.length - 1) {
+      const temp: RankingItem = list[index + 1];
+      list[index + 1] = list[index];
+      list[index] = temp;
+    }
+  }
+
+  swapUp(list: Array<RankingItem>, index: number) {
     if (index > 0) {
-      if (picListNumber === 1) {
-        const temp: RankingItem = this.firstRankingList[index - 1];
-        this.firstRankingList[index - 1] = this.firstRankingList[index];
-        this.firstRankingList[index] = temp;
-        this.firstRankingList = cloneDeep(this.firstRankingList);
-      } else {
-        const temp: RankingItem = this.secondRankingList[index - 1];
-        this.secondRankingList[index - 1] = this.secondRankingList[index];
-        this.secondRankingList[index] = temp;
-        this.secondRankingList = cloneDeep(this.secondRankingList);
-      }
+      const temp: RankingItem = list[index - 1];
+      list[index - 1] = list[index];
+      list[index] = temp;
     }
+  }
+
+  reArrange(list: Array<RankingItem>, rank: RankingItem) {
+    const index = list.findIndex((d) => d.teamNumber === rank.teamNumber);
+
+    if (index > 0 && list[index].score.totalScore > list[index - 1].score.totalScore) {
+      this.reArrangeUp(list, index);
+      return;
+    }
+    if (index < list.length - 1  && list[index].score.totalScore < list[index + 1].score.totalScore) {
+      this.reArrangeDown(list, index);
+      return;
+    }
+  }
+
+  reArrangeUp(list: Array<RankingItem>, index: number) {
+    let currentIndex = index;
+    while (currentIndex > 0 && list[currentIndex].score.totalScore > list[currentIndex - 1].score.totalScore) {
+      this.swapUp(list, currentIndex);
+      currentIndex -= 1;
+    }
+  }
+
+  reArrangeDown(list: Array<RankingItem>, index: number) {
+    let currentIndex = index;
+    while (currentIndex  < list.length - 1  && list[currentIndex].score.totalScore < list[currentIndex + 1].score.totalScore) {
+      this.swapDown(list, currentIndex);
+      currentIndex += 1;
+    }
+  }
+
+  dropItem(list: Array<RankingItem>, event: CdkDragDrop<string[]>) {
+    // const prevIndex = this.firstRankingList.findIndex((d) => d === event.item.data);
+    moveItemInArray(list, event.previousIndex, event.currentIndex);
   }
 
 }

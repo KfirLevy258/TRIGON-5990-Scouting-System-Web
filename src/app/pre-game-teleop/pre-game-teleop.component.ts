@@ -19,6 +19,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   @Input() red2: ProcessedGames;
   @Input() red3: ProcessedGames;
   @Input() redTeams: Array<string>;
+  @Input() isPreGame: boolean;
 
   outerLineColor: Color[] = [
     {
@@ -127,6 +128,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   blueInnerVector: ChartDataSets[] = [];
   blueOuterVector: ChartDataSets[] = [];
   blueBottomVector: ChartDataSets[] = [];
+  blueUpperVector: ChartDataSets[] = [];
 
   redInnerAVG = 0;
   redOuterAVG = 0;
@@ -142,6 +144,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   redInnerVector: ChartDataSets[] = [];
   redOuterVector: ChartDataSets[] = [];
   redBottomVector: ChartDataSets[] = [];
+  redUpperVector: ChartDataSets[] = [];
 
   constructor() { }
 
@@ -160,8 +163,16 @@ export class PreGameTeleopComponentComponent implements OnInit {
         this.blue2.teleopAVGInner,
         this.blue3.teleopAVGInner,
       ],
-      label: 'Average Inner Score'
-    });
+      label: 'Inner'
+    },
+      {
+        data: [
+          this.blue1.teleopAVGOuter,
+          this.blue2.teleopAVGOuter,
+          this.blue3.teleopAVGOuter,
+        ],
+        label: 'Outer'
+      });
     this.blueOuterAVGBar.push({
       data: [
         this.blue1.teleopAVGOuter,
@@ -204,6 +215,11 @@ export class PreGameTeleopComponentComponent implements OnInit {
       { data: this.blue2.teleopOuterScoreVector, label: this.blueTeams[1]},
       { data: this.blue3.teleopOuterScoreVector, label: this.blueTeams[2]}
     );
+    this.blueUpperVector.push(
+      { data: this.blue1.upperScoreVector, label: this.blueTeams[0]},
+      { data: this.blue2.upperScoreVector, label: this.blueTeams[1]},
+      { data: this.blue3.upperScoreVector, label: this.blueTeams[2]}
+    )
     this.blueBottomVector.push(
       { data: this.blue1.teleopBottomScoreVector, label: this.blueTeams[0]},
       { data: this.blue2.teleopBottomScoreVector, label: this.blueTeams[1]},
@@ -230,8 +246,17 @@ export class PreGameTeleopComponentComponent implements OnInit {
         this.red2.teleopAVGInner,
         this.red3.teleopAVGInner,
       ],
-      label: 'Average Inner Score'
-    });
+      label: 'Inner'
+    },
+      {
+        data: [
+          this.red1.teleopAVGOuter,
+          this.red2.teleopAVGOuter,
+          this.red3.teleopAVGOuter,
+        ],
+        label: 'Outer'
+      }
+    );
     this.redOuterAVGBar.push({
       data: [
         this.red1.teleopAVGOuter,
@@ -274,6 +299,11 @@ export class PreGameTeleopComponentComponent implements OnInit {
       { data: this.red2.teleopOuterScoreVector, label: this.redTeams[1]},
       { data: this.red3.teleopOuterScoreVector, label: this.redTeams[2]}
     );
+    this.redUpperVector.push(
+      { data: this.red1.upperScoreVector, label: this.redTeams[0]},
+      { data: this.red2.upperScoreVector, label: this.redTeams[1]},
+      { data: this.red3.upperScoreVector, label: this.redTeams[2]}
+    )
     this.redBottomVector.push(
       { data: this.red1.teleopBottomScoreVector, label: this.redTeams[0]},
       { data: this.red2.teleopBottomScoreVector, label: this.redTeams[1]},

@@ -136,6 +136,8 @@ export class ProcessedGames {
   teleopBottomScoreVector: Array<number> = [];
   teleopCyclesVector: Array<number> = [];
   climbLocations: Array<number> = [];
+  upperScoreVector: Array<number> = [];
+
   teleopDetailedUpperShots: Array<TeleopUpperShot>;
 }
 @Injectable({
@@ -291,6 +293,7 @@ export class GameService {
       processedGames.autoInnerScoreVector.push(game.autoInnerScore);
       processedGames.teleopInnerScoreVector.push(game.teleopInnerScore);
       processedGames.teleopOuterScoreVector.push(game.teleopOuterScore);
+      processedGames.upperScoreVector.push(game.teleopOuterScore + game.teleopInnerScore);
       processedGames.teleopCyclesVector.push(game.teleopUpperShots.length);
       processedGames.teleopBottomScoreVector.push(game.teleopBottomScore);
       processedGames.autoOuterScoreVector.push(game.autoOuterScore);

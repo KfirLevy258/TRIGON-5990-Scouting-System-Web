@@ -2,7 +2,159 @@
 
   <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50" class="data-box">
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
+
+<!--      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>-->
+<!--        <label fxFlexAlign="center">Inner total AVG</label>-->
+<!--        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.blueInnerAVG| number:'1.2-2'}}</h2>-->
+<!--      </div>-->
+
+<!--      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>-->
+<!--        <label fxFlexAlign="center">Outer total AVG</label>-->
+<!--        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.blueOuterAVG| number:'1.2-2'}}</h2>-->
+<!--      </div>-->
+
+<!--      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>-->
+<!--        <label fxFlexAlign="center">Bottom total AVG</label>-->
+<!--        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.blueBottomAVG| number:'1.2-2'}}</h2>-->
+<!--      </div>-->
+
+<!--      <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>-->
+<!--        <label fxFlexAlign="center">Game pieces AVG</label>-->
+<!--        <h2 fxLayout="column" fxLayoutAlign="start center" fxFlexAlign="center">{{ this.blueTotalScore| number:'1.2-2'}}</h2>-->
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
+
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="blueInnerAVGBar"-->
+<!--                [labels]="blueTeams"-->
+<!--                [colors]="innerLineColor"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
+
+<!--      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+<!--        <label fxFlexAlign="center">Inner</label>-->
+<!--        <div style="display: block" fxFlex>-->
+<!--          <canvas baseChart-->
+<!--                  [datasets]="blueInnerVector"-->
+<!--                  [labels]="blueGamesList"-->
+<!--                  [colors]="lineChartColors"-->
+<!--                  [options]="lineChartOptions"-->
+<!--                  [plugins]="lineChartPlugins"-->
+<!--                  [legend]="lineChartLegend"-->
+<!--                  [chartType]="lineChartType">-->
+<!--          </canvas>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+<!--    </div>-->
+
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
+
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="blueOuterAVGBar"-->
+<!--                [labels]="blueTeams"-->
+<!--                [colors]="outerLineColor"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
+
+<!--      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+<!--        <label fxFlexAlign="center">Outer</label>-->
+<!--        <div style="display: block" fxFlex>-->
+<!--          <canvas baseChart-->
+<!--                  [datasets]="blueOuterVector"-->
+<!--                  [labels]="blueGamesList"-->
+<!--                  [colors]="lineChartColors"-->
+<!--                  [options]="lineChartOptions"-->
+<!--                  [plugins]="lineChartPlugins"-->
+<!--                  [legend]="lineChartLegend"-->
+<!--                  [chartType]="lineChartType">-->
+<!--          </canvas>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
+
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="blueBottomAVGBar"-->
+<!--                [labels]="blueTeams"-->
+<!--                [colors]="bottomLineColor"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
+
+<!--      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+<!--        <label fxFlexAlign="center">Bottom</label>-->
+<!--        <div style="display: block" fxFlex>-->
+<!--          <canvas baseChart-->
+<!--                  [datasets]="blueBottomVector"-->
+<!--                  [labels]="blueGamesList"-->
+<!--                  [colors]="lineChartColors"-->
+<!--                  [options]="lineChartOptions"-->
+<!--                  [plugins]="lineChartPlugins"-->
+<!--                  [legend]="lineChartLegend"-->
+<!--                  [chartType]="lineChartType">-->
+<!--          </canvas>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </div>-->
+
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
+
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="blueScoreBar"-->
+<!--                [labels]="blueTeams"-->
+<!--                [colors]="lineChartColors"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
+
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="blueTotalScorePie"-->
+<!--                [labels]="blueTeams"-->
+<!--                [chartType]="pieChartType"-->
+<!--                [options]="pieChartOptions"-->
+<!--                [plugins]="pieChartPlugins"-->
+<!--                [legend]="pieChartLegend">-->
+<!--        </canvas>-->
+<!--      </div>-->
+
+<!--    </div>-->
+
+
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
+
+    <div fxLayout="row" fxLayoutAlign="start center" style="min-height: 175px; height: 175px; width: 40vw">
 
       <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
         <label fxFlexAlign="center">Inner total AVG</label>
@@ -28,7 +180,7 @@
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
 
-      <div style="display: block" fxFlex>
+      <div style="display: block" fxFlexFill>
         <canvas baseChart
                 [datasets]="blueInnerAVGBar"
                 [labels]="blueTeams"
@@ -40,11 +192,15 @@
         </canvas>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-        <label fxFlexAlign="center">Inner</label>
-        <div style="display: block" fxFlex>
+    </div>
+
+    <div *ngIf="isPreGame==true" fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div fxLayout="column" fxLayoutAlign="start center" fxFlexFill>
+        <!--        <label fxFlexAlign="center">Inner</label>-->
+        <div style="display: block" fxFlexFill>
           <canvas baseChart
-                  [datasets]="blueInnerVector"
+                  [datasets]="blueUpperVector"
                   [labels]="blueGamesList"
                   [colors]="lineChartColors"
                   [options]="lineChartOptions"
@@ -56,41 +212,38 @@
       </div>
 
 
-    </div>
+      <!--      <div style="display: block" fxFlex>-->
+      <!--        <canvas baseChart-->
+      <!--                [datasets]="redOuterAVGBar"-->
+      <!--                [labels]="redTeams"-->
+      <!--                [colors]="outerLineColor"-->
+      <!--                [options]="barChartOptions"-->
+      <!--                [plugins]="barChartPlugins"-->
+      <!--                [legend]="barChartLegend"-->
+      <!--                [chartType]="barChartType">-->
+      <!--        </canvas>-->
+      <!--      </div>-->
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+      <!--      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+      <!--        <label fxFlexAlign="center">Outer</label>-->
+      <!--        <div style="display: block" fxFlex>-->
+      <!--          <canvas baseChart-->
+      <!--                  [datasets]="redOuterVector"-->
+      <!--                  [labels]="redGamesList"-->
+      <!--                  [colors]="lineChartColors"-->
+      <!--                  [options]="lineChartOptions"-->
+      <!--                  [plugins]="lineChartPlugins"-->
+      <!--                  [legend]="lineChartLegend"-->
+      <!--                  [chartType]="lineChartType">-->
+      <!--          </canvas>-->
+      <!--        </div>-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="blueOuterAVGBar"
-                [labels]="blueTeams"
-                [colors]="outerLineColor"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-        </canvas>
-      </div>
-
-      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-        <label fxFlexAlign="center">Outer</label>
-        <div style="display: block" fxFlex>
-          <canvas baseChart
-                  [datasets]="blueOuterVector"
-                  [labels]="blueGamesList"
-                  [colors]="lineChartColors"
-                  [options]="lineChartOptions"
-                  [plugins]="lineChartPlugins"
-                  [legend]="lineChartLegend"
-                  [chartType]="lineChartType">
-          </canvas>
-        </div>
-
-      </div>
+      <!--      </div>-->
 
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+    <div fxLayout="row" fxLayoutAlign="start center" style="min-height: 175px; height: 175px; width: 40vw">
+
 
       <div style="display: block" fxFlex>
         <canvas baseChart
@@ -122,39 +275,38 @@
 
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+    <!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="blueScoreBar"
-                [labels]="blueTeams"
-                [colors]="lineChartColors"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-        </canvas>
-      </div>
+    <!--      <div style="display: block" fxFlex>-->
+    <!--        <canvas baseChart-->
+    <!--                [datasets]="redScoreBar"-->
+    <!--                [labels]="redTeams"-->
+    <!--                [colors]="lineChartColors"-->
+    <!--                [options]="barChartOptions"-->
+    <!--                [plugins]="barChartPlugins"-->
+    <!--                [legend]="barChartLegend"-->
+    <!--                [chartType]="barChartType">-->
+    <!--        </canvas>-->
+    <!--      </div>-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="blueTotalScorePie"
-                [labels]="blueTeams"
-                [chartType]="pieChartType"
-                [options]="pieChartOptions"
-                [plugins]="pieChartPlugins"
-                [legend]="pieChartLegend">
-        </canvas>
-      </div>
+    <!--      <div style="display: block" fxFlex>-->
+    <!--        <canvas baseChart-->
+    <!--                [datasets]="redTotalScorePie"-->
+    <!--                [labels]="redTeams"-->
+    <!--                [chartType]="pieChartType"-->
+    <!--                [options]="pieChartOptions"-->
+    <!--                [plugins]="pieChartPlugins"-->
+    <!--                [legend]="pieChartLegend">-->
+    <!--        </canvas>-->
+    <!--      </div>-->
 
-    </div>
+    <!--    </div>-->
 
-
-  </div>
+  </div >
 
   <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+    <div fxLayout="row" fxLayoutAlign="start center" style="min-height: 175px; height: 175px; width: 40vw">
 
       <div class="data-box" fxLayout="column" fxLayoutAlign="center start" fxFlex>
         <label fxFlexAlign="center">Inner total AVG</label>
@@ -180,7 +332,7 @@
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
 
-      <div style="display: block" fxFlex>
+      <div style="display: block" fxFlexFill>
         <canvas baseChart
                 [datasets]="redInnerAVGBar"
                 [labels]="redTeams"
@@ -192,11 +344,15 @@
         </canvas>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-        <label fxFlexAlign="center">Inner</label>
-        <div style="display: block" fxFlex>
+    </div>
+
+    <div *ngIf="isPreGame==true" fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+
+      <div fxLayout="column" fxLayoutAlign="start center" fxFlexFill>
+<!--        <label fxFlexAlign="center">Inner</label>-->
+        <div style="display: block" fxFlexFill>
           <canvas baseChart
-                  [datasets]="redInnerVector"
+                  [datasets]="redUpperVector"
                   [labels]="redGamesList"
                   [colors]="lineChartColors"
                   [options]="lineChartOptions"
@@ -207,41 +363,39 @@
         </div>
       </div>
 
-    </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+      <!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="redOuterAVGBar"-->
+<!--                [labels]="redTeams"-->
+<!--                [colors]="outerLineColor"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="redOuterAVGBar"
-                [labels]="redTeams"
-                [colors]="outerLineColor"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-        </canvas>
-      </div>
+<!--      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>-->
+<!--        <label fxFlexAlign="center">Outer</label>-->
+<!--        <div style="display: block" fxFlex>-->
+<!--          <canvas baseChart-->
+<!--                  [datasets]="redOuterVector"-->
+<!--                  [labels]="redGamesList"-->
+<!--                  [colors]="lineChartColors"-->
+<!--                  [options]="lineChartOptions"-->
+<!--                  [plugins]="lineChartPlugins"-->
+<!--                  [legend]="lineChartLegend"-->
+<!--                  [chartType]="lineChartType">-->
+<!--          </canvas>-->
+<!--        </div>-->
 
-      <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-        <label fxFlexAlign="center">Outer</label>
-        <div style="display: block" fxFlex>
-          <canvas baseChart
-                  [datasets]="redOuterVector"
-                  [labels]="redGamesList"
-                  [colors]="lineChartColors"
-                  [options]="lineChartOptions"
-                  [plugins]="lineChartPlugins"
-                  [legend]="lineChartLegend"
-                  [chartType]="lineChartType">
-          </canvas>
-        </div>
-
-      </div>
+<!--      </div>-->
 
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+    <div fxLayout="row" fxLayoutAlign="start center" style="min-height: 175px; height: 175px; width: 40vw">
+
 
       <div style="display: block" fxFlex>
         <canvas baseChart
@@ -273,32 +427,32 @@
 
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">
+<!--    <div fxLayout="row" fxLayoutAlign="start center" fxFlexFill class="height-fix">-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="redScoreBar"
-                [labels]="redTeams"
-                [colors]="lineChartColors"
-                [options]="barChartOptions"
-                [plugins]="barChartPlugins"
-                [legend]="barChartLegend"
-                [chartType]="barChartType">
-        </canvas>
-      </div>
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="redScoreBar"-->
+<!--                [labels]="redTeams"-->
+<!--                [colors]="lineChartColors"-->
+<!--                [options]="barChartOptions"-->
+<!--                [plugins]="barChartPlugins"-->
+<!--                [legend]="barChartLegend"-->
+<!--                [chartType]="barChartType">-->
+<!--        </canvas>-->
+<!--      </div>-->
 
-      <div style="display: block" fxFlex>
-        <canvas baseChart
-                [datasets]="redTotalScorePie"
-                [labels]="redTeams"
-                [chartType]="pieChartType"
-                [options]="pieChartOptions"
-                [plugins]="pieChartPlugins"
-                [legend]="pieChartLegend">
-        </canvas>
-      </div>
+<!--      <div style="display: block" fxFlex>-->
+<!--        <canvas baseChart-->
+<!--                [datasets]="redTotalScorePie"-->
+<!--                [labels]="redTeams"-->
+<!--                [chartType]="pieChartType"-->
+<!--                [options]="pieChartOptions"-->
+<!--                [plugins]="pieChartPlugins"-->
+<!--                [legend]="pieChartLegend">-->
+<!--        </canvas>-->
+<!--      </div>-->
 
-    </div>
+<!--    </div>-->
 
   </div >
 

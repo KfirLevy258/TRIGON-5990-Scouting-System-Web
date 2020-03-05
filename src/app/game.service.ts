@@ -41,6 +41,7 @@ export class Game {
   gameNumber = '';
   color = '';
   gameWon = false;
+  climbRP =false;
 
   // preGame
   startingPosition = '';
@@ -65,6 +66,7 @@ export class Game {
   trenchBallCollected4 = false;
   trenchBallCollected5 = false;
   autoUpperTotalShots = 0;
+  autoLine = false;
   autoUpperShots: Array<AutoUpperShot> = [];
 
   // Teleop
@@ -75,6 +77,7 @@ export class Game {
   teleopUpperTotalShots = 0;
   trenchRotate = false;
   trenchStop = false;
+  teleopFouls = 0;
   teleopUpperShots: Array<TeleopUpperShot> = [];
 
   // End Game
@@ -134,6 +137,8 @@ export class ProcessedGames {
   teleopInnerScoreVector: Array<number> = [];
   teleopOuterScoreVector: Array<number> = [];
   teleopBottomScoreVector: Array<number> = [];
+  teleopFoulsVector: Array<number> = [];
+
   teleopCyclesVector: Array<number> = [];
   climbLocations: Array<number> = [];
   upperScoreVector: Array<number> = [];
@@ -203,6 +208,9 @@ export class GameService {
             game.trenchBallCollected3 = data['Game scouting'].Auto.trench3BallCollected;
             game.trenchBallCollected4 = data['Game scouting'].Auto.trench4BallCollected;
             game.trenchBallCollected5 = data['Game scouting'].Auto.trench5BallCollected;
+            game.climbRP = data['Game scouting'].climbRP;
+
+            game.autoLine = data['Game scouting'].Auto.autoLine;
             game.autoTrenchCollect.push(game.trenchBallCollected1);
             game.autoTrenchCollect.push(game.trenchBallCollected2);
             game.autoTrenchCollect.push(game.trenchBallCollected3);
@@ -220,6 +228,7 @@ export class GameService {
 
             // Teleop
             game.teleopBottomScore = data['Game scouting'].Teleop.Sum.bottomScore;
+            game.teleopFouls = data['Game scouting'].Teleop.Sum.fouls;
             game.teleopBottomShots = data['Game scouting'].Teleop.Sum.bottomShoot;
             game.teleopInnerScore = data['Game scouting'].Teleop.Sum.innerScore;
             game.teleopOuterScore = data['Game scouting'].Teleop.Sum.outerScore;
@@ -306,6 +315,7 @@ export class GameService {
       processedGames.autoAVGOuter += + game.autoOuterScore;
       processedGames.teleopAVGOuter += game.teleopOuterScore;
       processedGames.teleopAVGInner += game.teleopInnerScore;
+      processedGames.teleopFoulsVector.push(game.teleopFouls);
       processedGames.teleopAVGBottom += game.teleopBottomScore;
       processedGames.autoAVGBottom += game.autoBottomScore;
       processedGames.teleopCyclesAVG += game.teleopUpperShots.length;
@@ -358,6 +368,7 @@ export class GameService {
     processedGames.autoAVGTotalCollect = processedGames.autoAVGTrenchCollect + processedGames.autoAVGClimbCollect;
     processedGames.climbSuccess = (processedGames.climbSuccessfully / processedGames.climbAttempts) * 100;
     processedGames.totalSuccessPercent = Math.round((processedGames.totalGamePieces / processedGames.totalShoots) * 100);
+    console.log(processedGames.teleopFoulsVector);
     return processedGames;
   }
 
@@ -367,25 +378,27 @@ export class GameService {
       2 * game.autoBottomScore + 4 * game.autoOuterScore + 6 * game.autoInnerScore;
      let trenchPoints;
      trenchPoints = 0;
+
+     if (game.autoLine) {
+      totalPowerCellPoints += 5;
+     }
+
+     totalPowerCellPoints += game.teleopFouls * 3;
+
      if (game.trenchRotate) {
         trenchPoints += 10;
+     }
+     if (game.climbRP) {
+       totalPowerCellPoints += 15;
      }
      if (game.trenchStop) {
        trenchPoints += 20;
      }
-
      let climbPoints;
      climbPoints = 0;
     // tslint:disable-next-line:triple-equals
      if (game.climbStatus == 'טיפס בהצלחה') {
        climbPoints += 25;
-     } else {
-       climbPoints += 5;
-     }
-
-    // tslint:disable-next-line:triple-equals
-     if ((game.autoBottomShots + game.autoUpperTotalShots) != 0) {
-       totalPowerCellPoints += 5;
      }
      return totalPowerCellPoints + trenchPoints + climbPoints;
   }

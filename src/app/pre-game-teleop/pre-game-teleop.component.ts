@@ -129,6 +129,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   blueOuterVector: ChartDataSets[] = [];
   blueBottomVector: ChartDataSets[] = [];
   blueUpperVector: ChartDataSets[] = [];
+  blueFoulsVector: ChartDataSets[] = [];
 
   redInnerAVG = 0;
   redOuterAVG = 0;
@@ -145,6 +146,7 @@ export class PreGameTeleopComponentComponent implements OnInit {
   redOuterVector: ChartDataSets[] = [];
   redBottomVector: ChartDataSets[] = [];
   redUpperVector: ChartDataSets[] = [];
+  redFoulsVector: ChartDataSets[] = [];
 
   constructor() { }
 
@@ -224,6 +226,17 @@ export class PreGameTeleopComponentComponent implements OnInit {
       { data: this.blue1.teleopBottomScoreVector, label: this.blueTeams[0]},
       { data: this.blue2.teleopBottomScoreVector, label: this.blueTeams[1]},
       { data: this.blue3.teleopBottomScoreVector, label: this.blueTeams[2]}
+    );
+
+    this.blueFoulsVector.push(
+      { data: this.blue1.teleopFoulsVector, label: this.blueTeams[0]},
+      { data: this.blue2.teleopFoulsVector, label: this.blueTeams[1]},
+      { data: this.blue3.teleopFoulsVector, label: this.blueTeams[2]}
+    );
+    this.redFoulsVector.push(
+      { data: this.red1.teleopFoulsVector, label: this.redTeams[0]},
+      { data: this.red2.teleopFoulsVector, label: this.redTeams[1]},
+      { data: this.red3.teleopFoulsVector, label: this.redTeams[2]}
     );
     if (this.blue1.gamesPlayed > this.blueGames) {
       this.blueGames = this.blue1.gamesPlayed;

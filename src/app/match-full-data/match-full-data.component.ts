@@ -138,7 +138,7 @@ export class MatchFullDataComponent implements OnInit {
             if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
           this.allTeams = [...this.blueTeams, ...this.redTeams];
-          this.getGames(this.gameNumber);
+          this.getGames(this.eventCode.split('_')[1] + this.gameNumber);
         }
       }, (err) => {
         console.log(err);
@@ -179,8 +179,10 @@ export class MatchFullDataComponent implements OnInit {
       // tslint:disable-next-line:prefer-const
       let gameToReturn: Game = new Game();
       games.forEach((game: Game) => {
+        console.log(game.gameNumber);
+        console.log(gameNumber);
         // tslint:disable-next-line:triple-equals
-        if (Number(game.gameNumber) == Number(gameNumber)) {
+        if (game.gameNumber == gameNumber) {
           gameToReturn = game;
         }
       });

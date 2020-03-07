@@ -42,4 +42,26 @@ export class BackupComponent implements OnInit {
       });
   }
 
+  delete() {
+    const tournament = this.tournamentRef.nativeElement.value;
+
+    this.db.collection('backup').doc(tournament).collection('teams').get()
+      .pipe(take(1))
+      .subscribe(teams => {
+        teams.docs.forEach(team  => {
+          this.db.collection('backup').doc(tournament).collection('teams').doc(team.id).collection('games').get()
+            .pipe(take(1))
+            .subscribe(games => {
+              games.docs.forEach(game => {
+                this.db.collection('backup').doc(tournament).collection('teams').doc(team.id).collection('games').doc(game.id).delete()
+                  .catch(err => console.log(err));
+              });
+              this.db.collection('backup').doc(tournament).collection('teams').doc(team.id).delete()
+                .catch(err => console.log(err));
+            });
+        });
+      });
+
+  }
+
 }

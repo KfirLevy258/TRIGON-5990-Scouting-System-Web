@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {map, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {log} from 'util';
 
 
 export class Team {
@@ -41,7 +40,7 @@ export class Game {
   gameNumber = '';
   color = '';
   gameWon = false;
-  climbRP =false;
+  climbRP = false;
 
   // preGame
   startingPosition = '';

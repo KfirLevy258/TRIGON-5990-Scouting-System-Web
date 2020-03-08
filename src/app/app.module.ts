@@ -57,6 +57,7 @@ import { Alliance2ndScoreParametersDialogComponent
 import { BackupComponent } from './backup/backup.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatchFullDataComponent } from './match-full-data/match-full-data.component';
+import { RankingComponent } from './ranking/ranking.component';
 
 
 const routes: Routes = [
@@ -83,6 +84,11 @@ const routes: Routes = [
   {
     path: 'match_full_data',
     component: MatchFullDataComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'ranking',
+    component: RankingComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
   {
@@ -127,6 +133,7 @@ const routes: Routes = [
     Alliance2ndScoreParametersDialogComponent,
     BackupComponent,
     MatchFullDataComponent,
+    RankingComponent,
 
 
   ],

@@ -26,8 +26,11 @@ export class RankingService {
         .pipe(take(1))
         .subscribe(teams => {
           teams.docs.forEach(team => {
-            const r = new Ranking(team.id);
-            r.RP = this.calcRP(team.id);
+            const r = new Ranking( team.id);
+            this.calcRP(tournament, team.id)
+              .then(rp => {
+                r.RP = rp;
+              });
             r.predictedRP = this.calcPredictedRP(team.id);
             result.push(r);
           });
@@ -36,8 +39,27 @@ export class RankingService {
     }));
   }
 
-  calcRP(teamNumber: string): number {
-    return Number(teamNumber.substring(0,  1));
+  calcRP(tournament: string, teamNumber: string): Promise<number> {
+    return new Promise<number>((resolve) => {
+      this.db.collection('tournaments').doc(tournament).collection('teams').doc(teamNumber).collection('games').get()
+        .pipe(take(1))
+        .subscribe(games => {
+          let rp = 0;
+          games.docs.forEach(game => {
+            if (game.data()['Game scouting'].gameWon) {
+              rp += 2;
+            }
+            if (game.data()['Game scouting'].climbRP) {
+              rp += 1;
+            }
+            if (game.data()['Game scouting'].ballsRP) {
+              rp += 1;
+            }
+          });
+          resolve(games.size !== 0 ? rp / games.size : 0);
+        });
+    });
+
   }
 
   calcPredictedRP(teamNumber: string): number {

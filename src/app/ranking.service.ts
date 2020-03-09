@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {take} from 'rxjs/operators';
 
 export class Ranking {
   RP: number;
@@ -20,16 +19,28 @@ export class RankingService {
 
   constructor(private db: AngularFirestore) { }
 
-  getRanking$(tournament: string): Observable<Array<Ranking>> {
+  getRanking(tournament: string): Promise<Array<Ranking>> {
     const result: Array<Ranking> = new Array<Ranking>();
-    return this.db.collection('tournaments').doc(tournament).collection('teams').get()
-      .pipe(
-        map(teams => {
+    return new Promise<Array<Ranking>>((resolve => {
+      this.db.collection('tournaments').doc(tournament).collection('teams').get()
+        .pipe(take(1))
+        .subscribe(teams => {
           teams.docs.forEach(team => {
-            result.push(new Ranking(team.id));
+            const r = new Ranking(team.id);
+            r.RP = this.calcRP(team.id);
+            r.predictedRP = this.calcPredictedRP(team.id);
+            result.push(r);
           });
-          return result;
-      }
-      ));
+          resolve(result);
+        });
+    }));
+  }
+
+  calcRP(teamNumber: string): number {
+    return Number(teamNumber.substring(0,  1));
+  }
+
+  calcPredictedRP(teamNumber: string): number {
+    return Number(teamNumber.substring(1,  2));
   }
 }

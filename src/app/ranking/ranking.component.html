@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start center" >
 
-  <mat-table [dataSource]="ranking$ | async" class="mat-elevation-z8 user-table">
+  <mat-table #rankingTable [dataSource]="ranking" matSort (matSortChange)="rankingSort($event)" class="mat-elevation-z8 user-table">
 
     <ng-container matColumnDef="teamNumber">
       <mat-header-cell *matHeaderCellDef class="teamNumber"> Team Number </mat-header-cell>
@@ -8,12 +8,12 @@
     </ng-container>
 
     <ng-container matColumnDef="RP">
-      <mat-header-cell *matHeaderCellDef class="RP"> RP </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef class="RP" mat-sort-header> RP </mat-header-cell>
       <mat-cell *matCellDef="let element" class="RP"> {{element.RP }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="predictedRP">
-      <mat-header-cell *matHeaderCellDef class="RP"> predicted RP </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef class="predictedRP" mat-sort-header> predicted RP </mat-header-cell>
       <mat-cell *matCellDef="let element" class="predictedRP"> {{element.predictedRP }} </mat-cell>
     </ng-container>
 

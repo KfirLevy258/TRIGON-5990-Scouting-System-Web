@@ -8,7 +8,7 @@ import {
   MatIconModule, MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatTableModule,
+  MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSortModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -161,6 +161,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatRadioModule,
     MatSelectModule,
+    MatSortModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatTabsModule,

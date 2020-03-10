@@ -182,9 +182,9 @@ export class MatchFullDataComponent implements OnInit {
       let gameToReturn: Game = new Game();
       games.forEach((game: Game) => {
         console.log((game.gameNumber));
-        console.log((gameNumber));
+        console.log(gameKind + gameNumber);
         // tslint:disable-next-line:triple-equals
-        if (game.gameNumber == gameNumber) {
+        if (game.gameNumber == gameKind + gameNumber) {
           gameToReturn = game;
         }
       });

@@ -9,7 +9,7 @@
 
     <ng-container matColumnDef="RP">
       <mat-header-cell *matHeaderCellDef class="RP" mat-sort-header> RP </mat-header-cell>
-      <mat-cell *matCellDef="let element" class="RP"> {{element.RP }} </mat-cell>
+      <mat-cell *matCellDef="let element" class="RP"> {{element.RP | number:'1.2-2'}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="predictedRP">

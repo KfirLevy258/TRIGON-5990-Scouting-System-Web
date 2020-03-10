@@ -13,6 +13,7 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
 
   @Input() tournament;
   @Input() teamNumber;
+  @Input() matchesAmount;
 
   games$: Observable<Game[]>;
   games: Array<Game> = [];
@@ -82,7 +83,7 @@ export class TeamGameScoutingTeleopComponent implements OnInit, OnChanges {
         this.teleopCyclesData = [];
 
         this.games = res;
-        this.processedGames = this.gameService.processGames(res);
+        this.processedGames = this.gameService.processGames(res, this.matchesAmount);
         this.gamesLabels = this.processedGames.gamesVector;
         this.teleopOuterScoreData.push({data: this.processedGames.teleopOuterScoreVector, label: 'Outer Score'});
         this.teleopInnerScoreData.push({data: this.processedGames.teleopInnerScoreVector, label: 'Inner Score'});

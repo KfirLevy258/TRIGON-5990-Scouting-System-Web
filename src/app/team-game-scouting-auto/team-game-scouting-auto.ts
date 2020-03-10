@@ -15,6 +15,7 @@ export class TeamGameScoutingAuto implements OnInit, OnChanges {
 
   @Input() tournament;
   @Input() teamNumber;
+  @Input() matchesAmount;
 
   games$: Observable<Game[]>;
   games: Array<Game> = [];
@@ -93,7 +94,7 @@ export class TeamGameScoutingAuto implements OnInit, OnChanges {
         this.autoTotalScorePctData = [];
 
         this.games = res;
-        this.processedGames = this.gameService.processGames(res);
+        this.processedGames = this.gameService.processGames(res, this.matchesAmount);
         this.gamesLabels = this.processedGames.gamesVector;
         this.autoBottomScoreData.push({ data: this.processedGames.autoBottomScoreVector, label: 'Bottom Score'});
         // this.autoInnerScoreData.push({ data: this.processedGames1.autoInnerScoreVector, label: 'Inner Score'});

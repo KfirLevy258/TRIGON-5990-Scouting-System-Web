@@ -43,6 +43,7 @@ export class MatchFullDataComponent implements OnInit {
   redTeams: Array<string> = [];
   allTeams: Array<string> = [];
   homeTeam: string;
+  matchesAmount: number;
   ourTeam: Array<string>;         // teams including Home Team
   isLoading = false;
 
@@ -98,6 +99,7 @@ export class MatchFullDataComponent implements OnInit {
     this.eventKey = localStorage.getItem('event_key');
     this.tournament = localStorage.getItem('tournament');
     this.homeTeam = localStorage.getItem('homeTeam');
+    this.matchesAmount = 1;
 
     // ToDo - Remove
     // this.gameNumber = '42';
@@ -138,7 +140,7 @@ export class MatchFullDataComponent implements OnInit {
             if (this.blueTeams[i] === this.homeTeam) { this.ourTeam = this.blueTeams; }
           }
           this.allTeams = [...this.blueTeams, ...this.redTeams];
-          this.getGames(this.eventCode.split('_')[1] + this.gameNumber);
+          this.getGames(this.gameNumber, this.eventCode.split('_')[1]);
         }
       }, (err) => {
         console.log(err);
@@ -172,15 +174,15 @@ export class MatchFullDataComponent implements OnInit {
     //   });
   }
 
-  getGames(gameNumber: string) {
+  getGames(gameNumber: string, gameKind: string) {
     this.isLoading = true;
 
     function getTheGame(games: ObservedValueOf<Observable<Game[]>>) {
       // tslint:disable-next-line:prefer-const
       let gameToReturn: Game = new Game();
       games.forEach((game: Game) => {
-        console.log(game.gameNumber);
-        console.log(gameNumber);
+        console.log((game.gameNumber));
+        console.log((gameNumber));
         // tslint:disable-next-line:triple-equals
         if (game.gameNumber == gameNumber) {
           gameToReturn = game;
@@ -206,12 +208,12 @@ export class MatchFullDataComponent implements OnInit {
         this.gameRed2 = getTheGame(res[4]);
         this.gameRed3 = getTheGame(res[5]);
 
-        this.processedGamesBlue1 = this.gameService.processGames([this.gameBlue1]);
-        this.processedGamesBlue2 = this.gameService.processGames([this.gameBlue2]);
-        this.processedGamesBlue3 = this.gameService.processGames([this.gameBlue3]);
-        this.processedGamesRed1 = this.gameService.processGames([this.gameRed1]);
-        this.processedGamesRed2 = this.gameService.processGames([this.gameRed2]);
-        this.processedGamesRed3 = this.gameService.processGames([this.gameRed3]);
+        this.processedGamesBlue1 = this.gameService.processGames([this.gameBlue1], this.matchesAmount);
+        this.processedGamesBlue2 = this.gameService.processGames([this.gameBlue2], this.matchesAmount);
+        this.processedGamesBlue3 = this.gameService.processGames([this.gameBlue3], this.matchesAmount);
+        this.processedGamesRed1 = this.gameService.processGames([this.gameRed1], this.matchesAmount);
+        this.processedGamesRed2 = this.gameService.processGames([this.gameRed2], this.matchesAmount);
+        this.processedGamesRed3 = this.gameService.processGames([this.gameRed3], this.matchesAmount);
         // tslint:disable-next-line:max-line-length
         this.blueScore = this.processedGamesBlue1.predictedGameScore + this.processedGamesBlue2.predictedGameScore + this.processedGamesBlue3.predictedGameScore;
         // tslint:disable-next-line:max-line-length

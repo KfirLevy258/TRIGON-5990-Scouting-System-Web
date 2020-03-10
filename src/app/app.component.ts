@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   tournaments: Observable<any[]>;
   selectedTournament: string;
   homeTeam: string;
+  matchesAmount: string;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
     this.homeTeam = localStorage.getItem('homeTeam');
+    this.matchesAmount = localStorage.getItem('matchesAmount');
 
     if (this.authUser) {
       this.loadTournaments();
@@ -78,6 +80,12 @@ export class AppComponent implements OnInit {
 
   homeTeamChange(event) {
     localStorage.setItem('homeTeam', event.target.value);
+    this.router.navigateByUrl('')
+      .catch(err => console.log(err));
+  }
+
+  matchesAmountChange(event) {
+    localStorage.setItem('matchesAmount', event.target.value);
     this.router.navigateByUrl('')
       .catch(err => console.log(err));
   }

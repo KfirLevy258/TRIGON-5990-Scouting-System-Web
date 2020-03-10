@@ -14,6 +14,7 @@ import {take} from 'rxjs/operators';
 export class TeamFullData implements OnInit {
 
   selectedTournament: string;
+  matchesAmount: number;
   selectedTeamNumber;
   selectedTeamName: string;
   selectedTeam;
@@ -29,6 +30,7 @@ export class TeamFullData implements OnInit {
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
+    this.matchesAmount = Number(localStorage.getItem('matchesAmount'));
 
     this.teams = this.gameService.getTeams$(this.selectedTournament);
 
@@ -58,7 +60,7 @@ export class TeamFullData implements OnInit {
     this.gameService.getGames(this.selectedTournament, this.selectedTeamNumber)
       .subscribe(res => {
         this.games = res;
-        this.processedGames = this.gameService.processGames(res);
+        this.processedGames = this.gameService.processGames(res, this.matchesAmount);
       });
 
   }

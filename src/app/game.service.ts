@@ -257,7 +257,30 @@ export class GameService {
       }));
   }
 
-  processGames(games: Array<Game>) {
+  getNewMatchesArray(games: Array<Game>, matchAmount: number) {
+    let newArray: Array<Game>;
+    newArray = [];
+    // tslint:disable-next-line:only-arrow-functions
+    games.sort(function(a, b) {
+      return Number(b.gameNumber.split('qm')[0]) - Number(a.gameNumber.split('qm')[0]);
+    });
+    if (games.length >= matchAmount) {
+      for (let i = 0; i < matchAmount; i++) {
+        newArray.push(games[i]);
+      }
+    } else {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < games.length; i++) {
+        newArray.push(games[i]);
+      }
+    }
+    console.log(newArray);
+    return newArray;
+  }
+
+  processGames(games: Array<Game>, matchesAmount: number) {
+
+    games = this.getNewMatchesArray(games, matchesAmount);
     const processedGames: ProcessedGames = new ProcessedGames();
     processedGames.gamesPlayed = games.length;
     processedGames.teleopDetailedUpperShots = [];
@@ -398,6 +421,10 @@ export class GameService {
     // tslint:disable-next-line:triple-equals
      if (game.climbStatus == 'טיפס בהצלחה') {
        climbPoints += 25;
+     }
+    // tslint:disable-next-line:triple-equals
+     if (game.climbLocation == 'חנה') {
+       climbPoints += 5;
      }
      return totalPowerCellPoints + trenchPoints + climbPoints;
   }

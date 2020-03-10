@@ -40,6 +40,7 @@ export class RankingItem {
 export class AllianceSelectionComponent implements OnInit {
 
   selectedTournament: string;
+  matchesAmount: number;
   teams: Array<Team> = [];
   firstRankingList: Array<RankingItem> = [];
   firstScoreParameters: FirstScoreParameters = {
@@ -80,6 +81,7 @@ export class AllianceSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTournament = localStorage.getItem('tournament');
+    this.matchesAmount = Number(localStorage.getItem('matchesAmount'));
 
     this.gameService.getTeams$(this.selectedTournament)
     .subscribe(result => {
@@ -110,7 +112,7 @@ export class AllianceSelectionComponent implements OnInit {
 
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
-          const processedGames = this.gameService.processGames(res[i]);
+          const processedGames = this.gameService.processGames(res[i], this.matchesAmount);
           if ((processedGames.autoAVGInner + processedGames.autoAVGOuter) > this.autoBallsTotal) {
             this.autoBallsTotal = (processedGames.autoAVGInner + processedGames.autoAVGOuter);
           }
@@ -129,7 +131,7 @@ export class AllianceSelectionComponent implements OnInit {
         }
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < promises.length; i++) {
-          const processedGames = this.gameService.processGames(res[i]);
+          const processedGames = this.gameService.processGames(res[i], this.matchesAmount);
           temp1stList[i].score =  this.calc1stPickTeamScore(processedGames);
           temp2ndList[i].score =  this.calc2ndPickTeamScore(processedGames);
           }

@@ -46,14 +46,16 @@ export class RankingService {
         .subscribe(games => {
           let rp = 0;
           games.docs.forEach(game => {
-            if (game.data()['Game scouting'].gameWon) {
-              rp += 2;
-            }
-            if (game.data()['Game scouting'].climbRP) {
-              rp += 1;
-            }
-            if (game.data()['Game scouting'].ballsRP) {
-              rp += 1;
+            if (game.data()['Game scouting']) {
+              if (game.data()['Game scouting'].gameWon) {
+                rp += 2;
+              }
+              if (game.data()['Game scouting'].climbRP) {
+                rp += 1;
+              }
+              if (game.data()['Game scouting'].ballsRP) {
+                rp += 1;
+              }
             }
           });
           resolve(games.size !== 0 ? rp / games.size : 0);

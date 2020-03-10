@@ -11,6 +11,7 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
 
   // display hot zones for: 1 team; 3 teams (blue alliance); 6 teams (blue alliance & red alliance)
   @Input() tournament;
+  @Input() matchesAmount;
   @Input() teamNumbers: Array<string>;
 
 
@@ -75,7 +76,7 @@ export class UpperHotZonesComponent implements OnInit, OnChanges {
         // tslint:disable-next-line:forin
         for (const i in res) {
           this.games.push(res[i]);
-          this.processedGames.push(this.gameService.processGames(res[i]));
+          this.processedGames.push(this.gameService.processGames(res[i], this.matchesAmount));
           this.processedGames[i].teleopDetailedUpperShots.forEach(shot => {
             if (Number(i) < 3) {
               this.drawShot(this.fieldCx, this.field, shot.x, shot.y, shot.innerScore + shot.outerScore, shot.shots, Number(i));

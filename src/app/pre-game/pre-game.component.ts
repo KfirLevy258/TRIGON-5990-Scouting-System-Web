@@ -44,6 +44,7 @@ export class PreGameComponent implements OnInit {
   redTeams: Array<string> = [];
   allTeams: Array<string> = [];
   homeTeam: string;
+  matchesAmount: number;
   ourTeam: Array<string>;         // teams including Home Team
   isLoading = false;
 
@@ -98,6 +99,7 @@ export class PreGameComponent implements OnInit {
     this.eventKey = localStorage.getItem('event_key');
     this.tournament = localStorage.getItem('tournament');
     this.homeTeam = localStorage.getItem('homeTeam');
+    this.matchesAmount = Number(localStorage.getItem('matchesAmount'));
 
     // ToDo - Remove
     // this.gameNumber = '42';
@@ -190,12 +192,12 @@ export class PreGameComponent implements OnInit {
         this.gamesRed2 = res[4];
         this.gamesRed3 = res[5];
 
-        this.processedGamesBlue1 = this.gameService.processGames(this.gamesBlue1);
-        this.processedGamesBlue2 = this.gameService.processGames(this.gamesBlue2);
-        this.processedGamesBlue3 = this.gameService.processGames(this.gamesBlue3);
-        this.processedGamesRed1 = this.gameService.processGames(this.gamesRed1);
-        this.processedGamesRed2 = this.gameService.processGames(this.gamesRed2);
-        this.processedGamesRed3 = this.gameService.processGames(this.gamesRed3);
+        this.processedGamesBlue1 = this.gameService.processGames(this.gamesBlue1, this.matchesAmount);
+        this.processedGamesBlue2 = this.gameService.processGames(this.gamesBlue2, this.matchesAmount);
+        this.processedGamesBlue3 = this.gameService.processGames(this.gamesBlue3, this.matchesAmount);
+        this.processedGamesRed1 = this.gameService.processGames(this.gamesRed1, this.matchesAmount);
+        this.processedGamesRed2 = this.gameService.processGames(this.gamesRed2, this.matchesAmount);
+        this.processedGamesRed3 = this.gameService.processGames(this.gamesRed3, this.matchesAmount);
         // tslint:disable-next-line:max-line-length
         this.blueScore = this.processedGamesBlue1.predictedGameScore + this.processedGamesBlue2.predictedGameScore + this.processedGamesBlue3.predictedGameScore;
         // tslint:disable-next-line:max-line-length

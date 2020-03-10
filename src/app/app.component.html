@@ -44,6 +44,11 @@
           <mat-label class="tournament-select">Home Team Number</mat-label>
           <input matInput (change)="homeTeamChange($event)" [value]="homeTeam">
         </mat-form-field>
+
+        <mat-form-field style="margin-left: 15px; margin-top: 20px">
+          <mat-label class="tournament-select">Matches amount</mat-label>
+          <input matInput (change)="matchesAmountChange($event)" [value]="matchesAmount">
+        </mat-form-field>
       </div>
 
 <!--      <div class="main-panel" fxFlex fxLayout="column" fxLayoutAlign="start center">-->

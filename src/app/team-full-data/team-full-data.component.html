@@ -29,15 +29,15 @@
         </mat-tab>
 
         <mat-tab label="Autonomous">
-          <app-team-game-scouting-auto [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-auto>
+          <app-team-game-scouting-auto [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber" [matchesAmount]="matchesAmount"></app-team-game-scouting-auto>
         </mat-tab>
 
         <mat-tab label="Teleop">
-          <app-team-game-scouting-teleop [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber"></app-team-game-scouting-teleop>
+          <app-team-game-scouting-teleop [tournament]="selectedTournament" [teamNumber]="selectedTeamNumber" [matchesAmount]="matchesAmount"></app-team-game-scouting-teleop>
         </mat-tab>
 
         <mat-tab label="Hot zones">
-          <app-upper-hot-zones [tournament]="selectedTournament" [teamNumbers]="selectedTeamArray"></app-upper-hot-zones>
+          <app-upper-hot-zones [tournament]="selectedTournament" [teamNumbers]="selectedTeamArray" [matchesAmount]="matchesAmount"></app-upper-hot-zones>
         </mat-tab>
 
         <mat-tab label="End game">

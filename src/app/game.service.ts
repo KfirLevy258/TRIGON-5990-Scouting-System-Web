@@ -262,7 +262,9 @@ export class GameService {
     newArray = [];
     // tslint:disable-next-line:only-arrow-functions
     games.sort(function(a, b) {
-      return Number(b.gameNumber.split('qm')[0]) - Number(a.gameNumber.split('qm')[0]);
+      return Number(b.gameNumber.match(/\d+/g)[0]) - Number(a.gameNumber.match(/\d+/g)[0]);
+      // if (b.gameNumber.match(/[a-zA-Z]+/g)[0] == 'qm' && a.gameNumber.match(/[a-zA-Z]+/g)[0] == 'qm')
+      // console.log();
     });
     if (games.length >= matchAmount) {
       for (let i = 0; i < matchAmount; i++) {
@@ -274,7 +276,10 @@ export class GameService {
         newArray.push(games[i]);
       }
     }
-    console.log(newArray);
+    // tslint:disable-next-line:only-arrow-functions
+    newArray.sort(function(a, b) {
+      return Number(a.gameNumber.match(/\d+/g)[0]) -  Number(b.gameNumber.match(/\d+/g)[0]);
+    });
     return newArray;
   }
 

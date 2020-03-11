@@ -58,6 +58,7 @@ import { BackupComponent } from './backup/backup.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatchFullDataComponent } from './match-full-data/match-full-data.component';
 import { RankingComponent } from './ranking/ranking.component';
+import { PreGameSuperScoutingComponent } from './pre-game-super-scouting/pre-game-super-scouting.component';
 
 
 const routes: Routes = [
@@ -134,6 +135,7 @@ const routes: Routes = [
     BackupComponent,
     MatchFullDataComponent,
     RankingComponent,
+    PreGameSuperScoutingComponent,
 
 
   ],

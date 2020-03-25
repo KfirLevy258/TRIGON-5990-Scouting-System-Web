@@ -395,7 +395,6 @@ export class GameService {
     processedGames.autoAVGTotalCollect = processedGames.autoAVGTrenchCollect + processedGames.autoAVGClimbCollect;
     processedGames.climbSuccess = (processedGames.climbSuccessfully / processedGames.climbAttempts) * 100;
     processedGames.totalSuccessPercent = Math.round((processedGames.totalGamePieces / processedGames.totalShoots) * 100);
-    console.log(processedGames.teleopFoulsVector);
     return processedGames;
   }
 
@@ -408,9 +407,12 @@ export class GameService {
 
      if (game.autoLine) {
       totalPowerCellPoints += 5;
+     } else {
+       totalPowerCellPoints += 5;
      }
-
-     totalPowerCellPoints += game.teleopFouls * 3;
+     if (game.teleopFouls) {
+       totalPowerCellPoints += game.teleopFouls * 3;
+     }
 
      if (game.trenchRotate) {
         trenchPoints += 10;

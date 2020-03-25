@@ -59,6 +59,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatchFullDataComponent } from './match-full-data/match-full-data.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { PreGameSuperScoutingComponent } from './pre-game-super-scouting/pre-game-super-scouting.component';
+import { SystemAnalysisComponent } from './system-analysis/system-analysis.component';
 
 
 const routes: Routes = [
@@ -95,6 +96,11 @@ const routes: Routes = [
   {
     path: 'users-management',
     component: UsersManagementComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'system-analysis',
+    component: SystemAnalysisComponent,
     canActivate: [AuthGuard, AdminGuard],
   },
   {path: 'login', component: LoginComponent},
@@ -136,6 +142,7 @@ const routes: Routes = [
     MatchFullDataComponent,
     RankingComponent,
     PreGameSuperScoutingComponent,
+    SystemAnalysisComponent,
 
 
   ],

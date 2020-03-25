@@ -1,0 +1,34 @@
+<div>
+  <div *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="start center" fxFlexFill>
+    <label fxFlexAlign="center">Red alliance</label>
+    <div style="display: block" fxFlexFill>
+      <canvas baseChart
+              [datasets]="redScoresVector"
+              [labels]="gamesList"
+              [colors]="lineChartColors"
+              [options]="lineChartOptions"
+              [plugins]="lineChartPlugins"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType">
+      </canvas>
+    </div>
+
+  </div>
+
+  <div *ngIf="!isLoading" fxLayout="column" fxLayoutAlign="start center" fxFlexFill>
+    <label fxFlexAlign="center">Blue alliance</label>
+    <div style="display: block" fxFlexFill>
+      <canvas baseChart
+              [datasets]="blueScoresVector"
+              [labels]="gamesList"
+              [colors]="lineChartColors"
+              [options]="lineChartOptions"
+              [plugins]="lineChartPlugins"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType">
+      </canvas>
+    </div>
+
+  </div>
+
+</div>

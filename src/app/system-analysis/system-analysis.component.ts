@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
 import {Color} from 'ng2-charts';
 import {GameService, ProcessedGames} from '../game.service';
+import {zip} from 'rxjs';
 
 @Component({
   selector: 'app-system-analysis',
@@ -65,24 +66,42 @@ export class SystemAnalysisComponent implements OnInit {
               private gameService: GameService) { }
 
 
-  getAllianceScore(alliance) {
-    let allianceScore;
-    allianceScore = 0;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < alliance.length; i++) {
-      alliance[i] = alliance[i].split('frc')[1];
-    }
+  getAllianceScore(alliance): Promise<number> {
+    return new Promise<number>(resolve => {
+      let allianceScore;
+      allianceScore = 0;
       // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < alliance.length; i++) {
-      // tslint:disable-next-line:prefer-const
-      let processedGames: ProcessedGames;
-      this.gameService.getGames(this.tournament, alliance[i])
+      for (let i = 0; i < alliance.length; i++) {
+        alliance[i] = alliance[i].split('frc')[1];
+      }
+      const obs0 = this.gameService.getGames(this.tournament, alliance[0]);
+      const obs1 = this.gameService.getGames(this.tournament, alliance[1]);
+      const obs2 = this.gameService.getGames(this.tournament, alliance[2]);
+      zip(obs0, obs1, obs2)
         .subscribe(res => {
-          processedGames = this.gameService.processGames(res, 100);
+          let processedGames: ProcessedGames;
+          processedGames = this.gameService.processGames(res[0], 100);
           allianceScore += processedGames.predictedGameScore;
+          processedGames = this.gameService.processGames(res[1], 100);
+          allianceScore += processedGames.predictedGameScore;
+          processedGames = this.gameService.processGames(res[2], 100);
+          allianceScore += processedGames.predictedGameScore;
+          resolve(allianceScore);
         });
-    }
-    return allianceScore;
+      // tslint:disable-next-line:prefer-for-of
+      // for (let i = 0; i < alliance.length; i++) {
+      //   // tslint:disable-next-line:prefer-const
+      //   let processedGames: ProcessedGames;
+      //   this.gameService.getGames(this.tournament, alliance[i])
+      //     .subscribe(res => {
+      //       processedGames = this.gameService.processGames(res, 100);
+      //       allianceScore += processedGames.predictedGameScore;
+      //       resolve(allianceScore);
+      //     });
+      // }
+    });
+
+
   }
 
   getTeams() {
@@ -107,9 +126,13 @@ export class SystemAnalysisComponent implements OnInit {
               }
             }
             this.sortMatches = this.sortMatches.sort(matchSort);
+            console.log(this.sortMatches);
             // tslint:disable-next-line:prefer-for-of
             for (let i = 0; i < this.sortMatches.length; i++) {
-              this.redOurData.push(this.getAllianceScore(this.sortMatches[i].alliances.red.team_keys));
+              this.getAllianceScore(this.sortMatches[i].alliances.red.team_keys)
+                .then(res => {
+                  this.redOurData.push(res);
+                });
               this.blueOurData.push(this.getAllianceScore(this.sortMatches[i].alliances.blue.team_keys));
               this.redTBAScore.push(this.sortMatches[i].alliances.red.score);
               this.blueTBAScore.push(this.sortMatches[i].alliances.blue.score);
@@ -157,15 +180,13 @@ export class SystemAnalysisComponent implements OnInit {
 }
 
 const matchSort = (a, b) => {
-  let aNumber;
-  aNumber = Number(a.match_number);
-  let bNumber;
-  bNumber = Number(b.match_number);
-  if ((aNumber).toString() < bNumber.toString()) {
-    return b;
+  const aNumber = Number(a.match_number);
+  const bNumber = Number(b.match_number);
+  if (aNumber > bNumber) {
+    return 1;
   }
-  if (aNumber.toString() < bNumber.toString()) {
-    return a;
+  if (aNumber < bNumber) {
+    return -1;
   }
   return 0;
 };
